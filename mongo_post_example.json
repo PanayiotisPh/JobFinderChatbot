@@ -1,0 +1,42 @@
+{
+    "Location": [
+        "Paphos",
+        "Larnaca"
+    ],
+    "Company": "XM",
+    "Employment Type": "Fulltime",
+    "Years of Exp": "2",
+    "Education Level": [
+        "BSc"
+    ],  
+    "Education Type": [
+        "Computer Science"
+    ],
+    "Hard Skills": [
+        "Software Deployment",
+        "Business Process",
+        "Security Engineering",
+        "Linux",
+        "Static Application Security Testing (SAST)",
+        "Virtualization",
+        "Data Security",
+        "Penetration Testing",
+        "Cloud Security",
+        "Communications Protocols",
+        "Data Loss Prevention",
+        "Application Security",
+        "Transport Layer Security (TLS)",
+        "Vulnerability",
+        "Computer Science"           
+    ],
+    "Soft Skills": [
+        "Teamwork",
+        "Writing",
+        "Quality Assurance",
+        "English Language",
+        "Problem Solving",
+        "Troubleshooting (Problem Solving)",
+        "Communications",
+        "Problem Solving"
+    ]
+}
