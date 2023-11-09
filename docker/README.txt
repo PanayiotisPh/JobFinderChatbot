@@ -1,2 +1,2 @@
 run docker-compose.yml with
-docker-compose up -d
+command: docker-compose up -d
