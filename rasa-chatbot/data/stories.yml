@@ -2,29 +2,38 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: information getter
   steps:
-  - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - checkpoint: handle_answer
+  
 
-- story: sad path 1
+- story: handle user affirm
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
+  - checkpoint: handle_answer
   - intent: affirm
-  - action: utter_happy
+  - action: utter_collect_location
+  - intent:
+  - action: utter_collect_salary
+  - intent:
+  - action: utter_collect_job_type
+  - intent:
+  - action: utter_collect_company
+  - intent:
+  - action: utter_collect_year_of_xp
+  - intent:
+  - action: utter_collect_education
+  - intent:
+  - action: utter_collect_soft_skills
+  - intent:
+  - action: utter_collect_hard_skills
+  - intent:
 
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+- story: handle user deny
+steps:
+- checkpoint: handle_answer
+- intent: deny
+- action: utter_handle_deny
+- intent: affirm
+- checkpoint: handle_answer
+
