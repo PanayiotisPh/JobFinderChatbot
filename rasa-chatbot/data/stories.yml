@@ -4,6 +4,7 @@ stories:
 
 - story: information getter
   steps:
+  - intent: affirm
   - action: utter_greet
   - checkpoint: handle_answer
   
@@ -13,27 +14,26 @@ stories:
   - checkpoint: handle_answer
   - intent: affirm
   - action: utter_collect_location
-  - intent:
+  - intent: location
   - action: utter_collect_salary
-  - intent:
+  - intent: salary
   - action: utter_collect_job_type
-  - intent:
+  - intent: job_type
   - action: utter_collect_company
-  - intent:
+  - intent: company
   - action: utter_collect_year_of_xp
-  - intent:
+  - intent: year_of_xp
   - action: utter_collect_education
-  - intent:
+  - intent: education
   - action: utter_collect_soft_skills
-  - intent:
+  - intent: soft_skills
   - action: utter_collect_hard_skills
-  - intent:
+  - intent: hard_skills
 
 - story: handle user deny
-steps:
-- checkpoint: handle_answer
-- intent: deny
-- action: utter_handle_deny
-- intent: affirm
-- checkpoint: handle_answer
+  steps:
+  - checkpoint: handle_answer
+  - intent: deny
+  - action: utter_handle_deny
+  - checkpoint: handle_answer
 

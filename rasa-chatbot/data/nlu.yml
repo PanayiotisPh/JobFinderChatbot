@@ -19,3 +19,110 @@ nlu:
     - don't like that
     - no way
     - not really
+
+- intent: location
+  examples: |
+    - Alabama
+    - Arizona
+    - Alaska
+    - Arkansas
+    - California
+    - Colorado
+    - Connecticut
+    - Delaware
+    - Florida
+    - Georgia
+    - Hawaii
+    - Idaho
+    - Illinois
+    - Indiana
+    - Iowa
+    - Kansas
+    - Kentucky
+    - Louisiana
+    - Maine
+    - Maryland
+    - Massachusetts
+    - Michigan
+    - Minnesota
+    - Mississippi
+    - Missouri
+    - Montana
+    - Nebraska
+    - Nevada
+    - New Hampshire
+    - New Jersey
+    - New Mexico
+    - New York
+    - North Carolina
+    - North Dakota
+    - Ohio
+    - Oklahoma
+    - Oregon
+    - Pennsylvania
+    - Rhode Island
+    - South Carolina
+    - South Dakota
+    - Tennessee
+    - Texas
+    - Utah
+    - Vermont
+    - Virginia
+    - Washington
+    - West Virginia
+    - Wisconsin
+    - Wyoming
+ 
+- intent: salary
+  examples: |
+    - 100000 per year
+    - 5000 per month
+    - 10000
+    - 200000
+    - 25 per hour
+
+- intent: job_type
+  examples: |
+    - full time
+    - part time
+    - hybrid
+    - full
+    - part
+  
+- intent: company
+  examples: |
+    - Google
+    - Yahoo
+    - Cisco
+    - Amdocs
+    - MAP
+
+- intent: year_of_xp
+  examples: |
+    - none
+    - 0
+    - I dont have
+    - 1
+    - 2
+    - 3
+
+- intent: education
+  examples: |
+    - university
+    - computer science degree
+    - master in computer science
+    - cs
+
+- intent: soft_skills
+  examples: |
+    - teamwork
+    - leadership
+    - fast learner
+
+- intent: hard_skills
+  examples: |
+    - java
+    - C
+    - python
+    - rasa
+    - networking

@@ -1,16 +1,16 @@
 version: "3.1"
 
 intents:
-  - greet
-  - collect_location
-  - collect_salary
-  - collect_job_type
-  - collect_company
-  - collect_year_of_xp
-  - collect_education
-  - collect_soft_skills
-  - collect_hard_skills
-  - handle_deny
+  - affirm
+  - deny
+  - location
+  - salary
+  - job_type
+  - company
+  - year_of_xp
+  - education
+  - soft_skills
+  - hard_skills
 
 responses:
   utter_greet:
