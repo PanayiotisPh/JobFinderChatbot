@@ -29,7 +29,7 @@ entities:
 
 slots:
   location:
-    type: text
+    type: list
     influence_conversation: true
     mappings:
     - type: from_entity
@@ -47,7 +47,7 @@ slots:
     - type: from_entity
       entity: job_type
   company:
-    type: text
+    type: list
     influence_conversation: true
     mappings:
     - type: from_entity
@@ -59,19 +59,19 @@ slots:
     - type: from_entity
       entity: year_of_xp
   education:
-    type: text
+    type: list
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: education
   soft_skills:
-    type: text
+    type: list
     influence_conversation: true
     mappings:
     - type: from_entity
       entity: soft_skills
   hard_skills:
-    type: text
+    type: list
     influence_conversation: true
     mappings:
     - type: from_entity
