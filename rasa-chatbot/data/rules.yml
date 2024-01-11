@@ -1,3 +1,19 @@
 version: "3.1"
 
 rules:
+
+- rule: Activate form
+  steps:
+  - intent: collect_affirm
+  - action: job_application_form
+  - active_loop: job_application_form
+
+- rule: Submit form
+  condition:
+  - active_loop: job_application_form
+  steps:
+  - action: job_application_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: utter_submit

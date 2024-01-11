@@ -2,38 +2,61 @@ version: "3.1"
 
 stories:
 
-- story: information getter
-  steps:
-  - intent: affirm
-  - action: utter_greet
-  - checkpoint: handle_answer
-  
+# - story: information getter
+#   steps:
+#   - intent: collect_affirm
+#   - action: utter_greet
+#   - checkpoint: handle_answer
 
-- story: handle user affirm
-  steps:
-  - checkpoint: handle_answer
-  - intent: affirm
-  - action: utter_collect_location
-  - intent: location
-  - action: utter_collect_salary
-  - intent: salary
-  - action: utter_collect_job_type
-  - intent: job_type
-  - action: utter_collect_company
-  - intent: company
-  - action: utter_collect_year_of_xp
-  - intent: year_of_xp
-  - action: utter_collect_education
-  - intent: education
-  - action: utter_collect_soft_skills
-  - intent: soft_skills
-  - action: utter_collect_hard_skills
-  - intent: hard_skills
+# - story: handle user affirm
+#   steps:
+#   #- checkpoint: handle_answer
+#   - intent: collect_affirm
+#   - action: job_application_form
+#   - active_loop: job_application_form
+#   - slot_was_set:
+#     - requested_slot: location
+#   - slot_was_set:
+#     - location: texas
+#   - slot_was_set:
+#     - requested_slot: salary
+#   - slot_was_set:
+#     - salary: thousands
+#   - slot_was_set:
+#     - requested_slot: job_type
+#   - slot_was_set:
+#     - job_type: full
+#   - slot_was_set:
+#     - requested_slot: company
+#   - slot_was_set:
+#     - company: google
+#   - slot_was_set:
+#     - requested_slot: year_of_xp
+#   - slot_was_set:
+#     - year_of_xp: five
+#   - slot_was_set:
+#     - requested_slot: education
+#   - slot_was_set:
+#     - education: cs
+#   - slot_was_set:
+#     - requested_slot: soft_skills
+#   - slot_was_set:
+#     - soft_skills: soft
+#   - slot_was_set:
+#     - requested_slot: hard_skills
+#   - slot_was_set:
+#     - hard_skills: hard
+#   - slot_was_set:
+#     - requested_slot: null
+#   - active_loop: null
+#   - action: utter_submit
+  #- checkpoint: handle_answer
 
-- story: handle user deny
-  steps:
-  - checkpoint: handle_answer
-  - intent: deny
-  - action: utter_handle_deny
-  - checkpoint: handle_answer
+
+# - story: handle user deny
+#   steps:
+#   - checkpoint: handle_answer
+#   - intent: collect_deny
+#   - action: utter_handle_deny
+#   - checkpoint: handle_answer
 
