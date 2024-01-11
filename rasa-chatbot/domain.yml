@@ -173,6 +173,6 @@ actions:
   # - utter_ask_education
   # - utter_ask_soft_skills
   # - utter_ask_hard_skills
-  # - utter_handle_deny
+  - utter_handle_deny
   - utter_submit
   
