@@ -2,6 +2,16 @@ version: "3.1"
 
 rules:
 
+- rule: Welcome user
+  steps:
+  - intent: collect_greet
+  - action: utter_greet
+
+- rule: User does not want to proceed
+  steps:
+  - intent: collect_deny
+  - action: utter_handle_deny
+
 - rule: Activate form
   steps:
   - intent: collect_affirm

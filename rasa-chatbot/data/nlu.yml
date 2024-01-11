@@ -1,6 +1,14 @@
 version: "3.1"
 
 nlu:
+
+- intent: collect_greet
+  examples: |
+    - hi
+    - hello
+    - greedings
+    - top of the morings to you ladies
+
 - intent: collect_affirm
   examples: |
     - yes

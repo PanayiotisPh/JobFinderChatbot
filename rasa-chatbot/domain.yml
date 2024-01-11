@@ -5,6 +5,7 @@ session_config:
   carry_over_slots_to_new_session: true
 
 intents:
+  - collect_greet
   - collect_affirm
   - collect_deny
   - collect_location
