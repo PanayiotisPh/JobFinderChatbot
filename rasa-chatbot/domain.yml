@@ -163,6 +163,9 @@ responses:
   utter_submit:
   - text: "Success"
 
+  utter_please_rephrase:
+  - text: "Sorry, I can't handle that request."
+
 actions:
   - utter_greet
   # - utter_ask_location
@@ -175,4 +178,5 @@ actions:
   # - utter_ask_hard_skills
   - utter_handle_deny
   - utter_submit
+  - utter_please_rephrase
   
