@@ -2,15 +2,15 @@ version: "3.1"
 
 stories:
 
-# - story: information getter
-#   steps:
-#   - intent: collect_affirm
-#   - action: utter_greet
-#   - checkpoint: handle_answer
+- story: information getter
+  steps:
+  - intent: collect_greet
+  - action: utter_greet
+  - checkpoint: handle_answer
 
 # - story: handle user affirm
 #   steps:
-#   #- checkpoint: handle_answer
+#   - checkpoint: handle_answer
 #   - intent: collect_affirm
 #   - action: job_application_form
 #   - active_loop: job_application_form
@@ -50,13 +50,60 @@ stories:
 #     - requested_slot: null
 #   - active_loop: null
 #   - action: utter_submit
+#   - checkpoint: handle_answer
+
+
+- story: handle user deny
+  steps:
+  - checkpoint: handle_answer
+  - intent: collect_deny
+  - action: utter_handle_deny
+  - checkpoint: handle_answer
+
+
+- story: Collect User Information
+  steps:
+#  - checkpoint: handle_answer
+  - intent: collect_affirm
+  - action: utter_ask_location
+  - intent: collect_location
+    entities:
+      - location: "New York"
+  - action: action_collect_information
+  - action: utter_ask_salary
+  - intent: collect_salary
+    entities:
+      - salary: "75000"
+  - action: action_collect_information
+  - action: utter_ask_job_type
+  - intent: collect_job_type
+    entities:
+      - job_type: "Software Engineer"
+  - action: action_collect_information
+  - action: utter_ask_company
+  - intent: collect_company
+    entities:
+      - company: "TechCo"
+  - action: action_collect_information
+  - action: utter_ask_year_of_xp
+  - intent: collect_year_of_xp
+    entities:
+      - year_of_xp: "5"
+  - action: action_collect_information
+  - action: utter_ask_education
+  - intent: collect_education
+    entities:
+      - education: "Bachelor's Degree"
+  - action: action_collect_information
+  - action: utter_ask_soft_skills
+  - intent: collect_soft_skills
+    entities:
+      - soft_skills: "Communication, Problem Solving"
+  - action: action_collect_information
+  - action: utter_ask_hard_skills
+  - intent: collect_hard_skills
+    entities:
+      - hard_skills: "Python, Machine Learning"
+  - action: action_collect_information
+  - action: utter_submit
   #- checkpoint: handle_answer
-
-
-# - story: handle user deny
-#   steps:
-#   - checkpoint: handle_answer
-#   - intent: collect_deny
-#   - action: utter_handle_deny
-#   - checkpoint: handle_answer
-

@@ -1,34 +1,34 @@
-version: "3.1"
+# version: "3.1"
 
-rules:
+# rules:
 
-- rule: Welcome user
-  steps:
-  - intent: collect_greet
-  - action: utter_greet
+# - rule: Welcome user
+#   steps:
+#   - intent: collect_greet
+#   - action: utter_greet
 
-- rule: User does not want to proceed
-  steps:
-  - intent: collect_deny
-  - action: utter_handle_deny
+# - rule: User does not want to proceed
+#   steps:
+#   - intent: collect_deny
+#   - action: utter_handle_deny
 
-- rule: Activate form
-  steps:
-  - intent: collect_affirm
-  - action: job_application_form
-  - active_loop: job_application_form
+# - rule: Activate form
+#   steps:
+#   - intent: collect_affirm
+#   - action: job_application_form
+#   - active_loop: job_application_form
 
-- rule: Submit form
-  condition:
-  - active_loop: job_application_form
-  steps:
-  - action: job_application_form
-  - active_loop: null
-  - slot_was_set:
-    - requested_slot: null
-  - action: utter_submit
+# - rule: Submit form
+#   condition:
+#   - active_loop: job_application_form
+#   steps:
+#   - action: job_application_form
+#   - active_loop: null
+#   - slot_was_set:
+#     - requested_slot: null
+#   - action: utter_submit
 
-- rule: Ask the user to rephrase whenever they send a message with low NLU confidence
-  steps:
-  - intent: nlu_fallback
-  - action: utter_please_rephrase
+# - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
+#   steps:
+#   - intent: nlu_fallback
+#   - action: utter_please_rephrase
