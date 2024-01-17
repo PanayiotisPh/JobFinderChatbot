@@ -16,11 +16,12 @@ class ActionCollectInformation(Action):
             global action
            
             if action == "collect_location":
-                location = next(tracker.get_latest_entity_values("location"), None)
-                if location == None:
+                location = list(tracker.get_latest_entity_values("location"))
+                if not location:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Understood! Your location is {location}.")
+                    locations_text = ", ".join(location)
+                    dispatcher.utter_message(f"Understood! Your location is {locations_text}.")
                     action = "null"
 
             elif action == "collect_salary":
@@ -41,11 +42,12 @@ class ActionCollectInformation(Action):
                     action = "null"
 
             elif action == "collect_company":
-                company = next(tracker.get_latest_entity_values("company"), None)
-                if company == None:
+                company = list(tracker.get_latest_entity_values("company"))
+                if not company:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Got it! Your company is {company}.")
+                    companies_text = ", ".join(company)
+                    dispatcher.utter_message(f"Got it! Your company is {companies_text}.")
                     action = "null"
 
             elif action == "collect_year_of_xp":
@@ -65,19 +67,21 @@ class ActionCollectInformation(Action):
                     action = "null"
 
             elif action == "collect_soft_skills":
-                soft_skills = next(tracker.get_latest_entity_values("soft_skills"), None)
-                if soft_skills == None:
+                soft_skills = list(tracker.get_latest_entity_values("soft_skills"))
+                if not soft_skills:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Nice! Your soft skills are {soft_skills}.")
+                    soft_skills_text = ", ".join(soft_skills)
+                    dispatcher.utter_message(f"Nice! Your soft skills are {soft_skills_text}.")
                     action = "null"
 
             elif action == "collect_hard_skills":
-                hard_skills = next(tracker.get_latest_entity_values("hard_skills"), None)
-                if hard_skills == None:
+                hard_skills = list(tracker.get_latest_entity_values("hard_skills"))
+                if not hard_skills:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Got it! Your hard skills are {hard_skills}.")
+                    hard_skills_text = ", ".join(hard_skills)
+                    dispatcher.utter_message(f"Got it! Your hard skills are {hard_skills_text}.")
                     action = "null"
 
             return []
