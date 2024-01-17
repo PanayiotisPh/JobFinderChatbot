@@ -27,47 +27,47 @@ entities:
   - soft_skills
   - hard_skills
 
-slots:
-  location:
-    type: list
-    influence_conversation: false
-    mappings:
-    - type: custom
-  salary:
-    type: text
-    influence_conversation: false
-    mappings:
-    - type: custom
-  job_type:
-    type: text
-    influence_conversation: false
-    mappings:
-    - type: custom
-  company:
-    type: list
-    influence_conversation: false
-    mappings:
-    - type: custom
-  year_of_xp:
-    type: text
-    influence_conversation: false
-    mappings:
-    - type: custom
-  education:
-    type: list
-    influence_conversation: false
-    mappings:
-    - type: custom
-  soft_skills:
-    type: list
-    influence_conversation: false
-    mappings:
-    - type: custom
-  hard_skills:
-    type: list
-    influence_conversation: false
-    mappings:
-    - type: custom
+# slots:
+#   location:
+#     type: list
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   salary:
+#     type: text
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   job_type:
+#     type: text
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   company:
+#     type: list
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   year_of_xp:
+#     type: text
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   education:
+#     type: list
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   soft_skills:
+#     type: list
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
+#   hard_skills:
+#     type: list
+#     influence_conversation: false
+#     mappings:
+#     - type: custom
 
 # slots:
 #   location:

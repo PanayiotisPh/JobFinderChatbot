@@ -81,13 +81,20 @@ nlu:
     - [Wisconsin](location)
     - [Wyoming](location)
 
+- regex: salary
+  examples: |
+    - (\d{4,6})
+    - (\d{4,6})k
+    - (\d{4,6})K
+
 - intent: collect_salary
   examples: |
     - [100000](salary) per year
-    - [5000](salary) per month
     - [10000](salary)
-    - [200000](salary)
-    - [25](salary) per hour
+    - I prefer an annual salary of [26000](salary) thousand
+    - [50000](salary) USD
+    - [20000](salary) dollars
+    - [30000](salary)k
 
 - intent: collect_job_type
   examples: |
