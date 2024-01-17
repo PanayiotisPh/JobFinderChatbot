@@ -210,17 +210,16 @@ responses:
 
 actions:
   - utter_greet
-  # - utter_ask_location
-  # - utter_ask_salary
-  # - utter_ask_job_type
-  # - utter_ask_company
-  # - utter_ask_year_of_xp
-  # - utter_ask_education
-  # - utter_ask_soft_skills
-  # - utter_ask_hard_skills
   - utter_handle_deny
   - utter_submit
-  #- utter_please_rephrase
   - action_collect_information
+  - action_set_location
+  - action_set_salary
+  - action_set_job_type
+  - action_set_company
+  - action_set_year_of_xp
+  - action_set_education
+  - action_set_soft_skills
+  - action_set_hard_skills
 
   

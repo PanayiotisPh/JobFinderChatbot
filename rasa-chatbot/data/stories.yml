@@ -8,50 +8,6 @@ stories:
   - action: utter_greet
   - checkpoint: handle_answer
 
-# - story: handle user affirm
-#   steps:
-#   - checkpoint: handle_answer
-#   - intent: collect_affirm
-#   - action: job_application_form
-#   - active_loop: job_application_form
-#   - slot_was_set:
-#     - requested_slot: location
-#   - slot_was_set:
-#     - location: texas
-#   - slot_was_set:
-#     - requested_slot: salary
-#   - slot_was_set:
-#     - salary: thousands
-#   - slot_was_set:
-#     - requested_slot: job_type
-#   - slot_was_set:
-#     - job_type: full
-#   - slot_was_set:
-#     - requested_slot: company
-#   - slot_was_set:
-#     - company: google
-#   - slot_was_set:
-#     - requested_slot: year_of_xp
-#   - slot_was_set:
-#     - year_of_xp: five
-#   - slot_was_set:
-#     - requested_slot: education
-#   - slot_was_set:
-#     - education: cs
-#   - slot_was_set:
-#     - requested_slot: soft_skills
-#   - slot_was_set:
-#     - soft_skills: soft
-#   - slot_was_set:
-#     - requested_slot: hard_skills
-#   - slot_was_set:
-#     - hard_skills: hard
-#   - slot_was_set:
-#     - requested_slot: null
-#   - active_loop: null
-#   - action: utter_submit
-#   - checkpoint: handle_answer
-
 
 - story: handle user deny
   steps:
@@ -63,47 +19,54 @@ stories:
 
 - story: Collect User Information
   steps:
-#  - checkpoint: handle_answer
+  - checkpoint: handle_answer
   - intent: collect_affirm
   - action: utter_ask_location
+  - action: action_set_location
   - intent: collect_location
     entities:
       - location: "New York"
   - action: action_collect_information
   - action: utter_ask_salary
+  - action: action_set_salary
   - intent: collect_salary
     entities:
       - salary: "75000"
   - action: action_collect_information
   - action: utter_ask_job_type
+  - action: action_set_job_type
   - intent: collect_job_type
     entities:
       - job_type: "Software Engineer"
   - action: action_collect_information
   - action: utter_ask_company
+  - action: action_set_company
   - intent: collect_company
     entities:
       - company: "TechCo"
   - action: action_collect_information
   - action: utter_ask_year_of_xp
+  - action: action_set_year_of_xp
   - intent: collect_year_of_xp
     entities:
       - year_of_xp: "5"
   - action: action_collect_information
   - action: utter_ask_education
+  - action: action_set_education
   - intent: collect_education
     entities:
       - education: "Bachelor's Degree"
   - action: action_collect_information
   - action: utter_ask_soft_skills
+  - action: action_set_soft_skills
   - intent: collect_soft_skills
     entities:
       - soft_skills: "Communication, Problem Solving"
   - action: action_collect_information
   - action: utter_ask_hard_skills
+  - action: action_set_hard_skills
   - intent: collect_hard_skills
     entities:
       - hard_skills: "Python, Machine Learning"
   - action: action_collect_information
   - action: utter_submit
-  #- checkpoint: handle_answer

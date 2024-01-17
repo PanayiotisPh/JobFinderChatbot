@@ -1,6 +1,6 @@
-# version: "3.1"
+# # version: "3.1"
 
-# rules:
+# # rules:
 
 # - rule: Welcome user
 #   steps:
@@ -12,23 +12,39 @@
 #   - intent: collect_deny
 #   - action: utter_handle_deny
 
-# - rule: Activate form
+# - rule: Collect Information
 #   steps:
 #   - intent: collect_affirm
-#   - action: job_application_form
-#   - active_loop: job_application_form
-
-# - rule: Submit form
-#   condition:
-#   - active_loop: job_application_form
-#   steps:
-#   - action: job_application_form
-#   - active_loop: null
-#   - slot_was_set:
-#     - requested_slot: null
+#   - action: utter_ask_location
+#   - action: action_set_location
+#   - intent: collect_location
+#   - action: action_collect_information
+#   - action: utter_ask_salary
+#   - action: action_set_salary
+#   - intent: collect_salary
+#   - action: action_collect_information
+#   - action: utter_ask_job_type
+#   - action: action_set_job_type
+#   - intent: collect_job_type
+#   - action: action_collect_information
+#   - action: utter_ask_company
+#   - action: action_set_company
+#   - intent: collect_company
+#   - action: action_collect_information
+#   - action: utter_ask_year_of_xp
+#   - action: action_set_year_of_xp
+#   - intent: collect_year_of_xp
+#   - action: action_collect_information
+#   - action: utter_ask_education
+#   - action: action_set_education
+#   - intent: collect_education
+#   - action: action_collect_information
+#   - action: utter_ask_soft_skills
+#   - action: action_set_soft_skills
+#   - intent: collect_soft_skills
+#   - action: action_collect_information
+#   - action: utter_ask_hard_skills
+#   - action: action_set_hard_skills
+#   - intent: collect_hard_skills
+#   - action: action_collect_information
 #   - action: utter_submit
-
-# - rule: Ask the user to rephrase whenever they send a message with low NLU confidence
-#   steps:
-#   - intent: nlu_fallback
-#   - action: utter_please_rephrase
