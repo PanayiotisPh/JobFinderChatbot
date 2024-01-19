@@ -28,58 +28,67 @@ nlu:
     - no way
     - not really
 
+- lookup: location
+  examples: |
+    - Alabama
+    - Arizona
+    - Alaska
+    - Arkansas
+    - California
+    - Colorado
+    - Connecticut
+    - Delaware
+    - Florida
+    - Georgia
+    - Hawaii
+    - Idaho
+    - Illinois
+    - Indiana
+    - Iowa
+    - Kansas
+    - Kentucky
+    - Louisiana
+    - Maine
+    - Maryland
+    - Massachusetts
+    - Michigan
+    - Minnesota
+    - Mississippi
+    - Missouri
+    - Montana
+    - Nebraska
+    - Nevada
+    - New Hampshire
+    - New Jersey
+    - New Mexico
+    - New York
+    - North Carolina
+    - North Dakota
+    - Ohio
+    - Oklahoma
+    - Oregon
+    - Pennsylvania
+    - Rhode Island
+    - South Carolina
+    - South Dakota
+    - Tennessee
+    - Texas
+    - Utah
+    - Vermont
+    - Virginia
+    - Washington
+    - West Virginia
+    - Wisconsin
+    - Wyoming
+
 - intent: collect_location
   examples: |
-    - [Alabama](location)
-    - [Arizona](location)
-    - [Alaska](location)
-    - [Arkansas](location)
-    - [California](location)
-    - [Colorado](location)
-    - [Connecticut](location)
-    - [Delaware](location)
-    - [Florida](location)
-    - [Georgia](location)
-    - [Hawaii](location)
-    - [Idaho](location)
-    - [Illinois](location)
-    - [Indiana](location)
-    - [Iowa](location)
-    - [Kansas](location)
-    - [Kentucky](location)
-    - [Louisiana](location)
-    - [Maine](location)
-    - [Maryland](location)
-    - [Massachusetts](location)
-    - [Michigan](location)
-    - [Minnesota](location)
-    - [Mississippi](location)
-    - [Missouri](location)
-    - [Montana](location)
-    - [Nebraska](location)
-    - [Nevada](location)
-    - [New Hampshire](location)
-    - [New Jersey](location)
-    - [New Mexico](location)
-    - [New York](location)
-    - [North Carolina](location)
-    - [North Dakota](location)
-    - [Ohio](location)
-    - [Oklahoma](location)
-    - [Oregon](location)
-    - [Pennsylvania](location)
-    - [Rhode Island](location)
-    - [South Carolina](location)
-    - [South Dakota](location)
-    - [Tennessee](location)
+    - I would prefer a job in [Texas](location) and [New York](location)
+    - I prefer [Oregon](location)
+    - [Ohio](location) and [Utah](location)
+    - [Virginia](location), [Vermont](location), [Montana](location)
+    - [Texas](location), [Missouri](location) and [Utah](location)
     - [Texas](location)
-    - [Utah](location)
-    - [Vermont](location)
-    - [Virginia](location)
-    - [Washington](location)
-    - [West Virginia](location)
-    - [Wisconsin](location)
-    - [Wyoming](location)
 
 - regex: salary
   examples: |
@@ -104,13 +113,23 @@ nlu:
     - [full](job_type)
     - [part](job_type)
   
+- lookup: company
+  examples: |
+    - Google
+    - Yahoo
+    - Cisco
+    - Amdocs
+    - MAP
+
 - intent: collect_company
   examples: |
+    - I would prefer a job at [Google](company) and [Yahoo](company)
+    - I prefer [Cisco](company)
+    - [Amdocs](company) and [Yahoo](company)
+    - [Amdocs](company), [Yahoo](company), [Google](company)
+    - [Amdocs](company), [Yahoo](company) and [Google](company)
     - [Google](company)
-    - [Yahoo](company)
-    - [Cisco](company)
-    - [Amdocs](company)
-    - [MAP](company)
+    
 
 - intent: collect_year_of_xp
   examples: |
