@@ -43,19 +43,29 @@ class ActionCollectInformation(Action):
 
             elif action == "collect_company":
                 company = list(tracker.get_latest_entity_values("company"))
-                if not company:
+                none_company = tracker.latest_message['intent'].get('name')
+
+                if not company and none_company is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    companies_text = ", ".join(company)
-                    dispatcher.utter_message(f"Got it! Your company is {companies_text}.")
+                    if company:
+                        companies_text = ", ".join(company)
+                        dispatcher.utter_message(f"Got it! Your company is {companies_text}.")
+                    else:
+                        dispatcher.utter_message(f"Got it! Your do not have a preference")
                     action = "null"
 
             elif action == "collect_year_of_xp":
                 year_of_xp = next(tracker.get_latest_entity_values("year_of_xp"), None)
-                if year_of_xp == None:
+                none_year_of_xp = tracker.latest_message['intent'].get('name')
+
+                if year_of_xp is None and none_year_of_xp is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Sure! Your years of experience are {year_of_xp}.")
+                    if year_of_xp is None or year_of_xp == '0':
+                        dispatcher.utter_message(f"Sure! You have 0 years of experience")
+                    else:
+                        dispatcher.utter_message(f"Sure! Your years of experience are {year_of_xp}.")
                     action = "null"
 
             elif action == "collect_education":

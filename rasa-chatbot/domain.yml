@@ -16,6 +16,8 @@ intents:
   - collect_education
   - collect_soft_skills
   - collect_hard_skills
+  - collect_none_year_of_xp
+  - collect_none_company
 
 entities:
   - location

@@ -41,15 +41,19 @@ stories:
   - action: action_collect_information
   - action: utter_ask_company
   - action: action_set_company
-  - intent: collect_company
-    entities:
-      - company: "TechCo"
+  - or:
+    - intent: collect_company
+      entities:
+        - company: "Google"
+    - intent: collect_none_company
   - action: action_collect_information
   - action: utter_ask_year_of_xp
   - action: action_set_year_of_xp
-  - intent: collect_year_of_xp
-    entities:
-      - year_of_xp: "5"
+  - or:
+    - intent: collect_year_of_xp
+      entities:
+        - year_of_xp: "5"
+    - intent: collect_none_year_of_xp
   - action: action_collect_information
   - action: utter_ask_education
   - action: action_set_education

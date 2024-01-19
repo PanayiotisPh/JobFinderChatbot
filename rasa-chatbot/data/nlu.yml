@@ -92,9 +92,7 @@ nlu:
 
 - regex: salary
   examples: |
-    - (\d{4,6})
-    - (\d{4,6})k
-    - (\d{4,6})K
+    - \d{4,6}
 
 - intent: collect_salary
   examples: |
@@ -129,16 +127,35 @@ nlu:
     - [Amdocs](company), [Yahoo](company), [Google](company)
     - [Amdocs](company), [Yahoo](company) and [Google](company)
     - [Google](company)
-    
+
+- intent: collect_none_company
+  examples: |
+    - I do not have a preference
+    - whatever company there is
+    - explore various options
+    - no company preference
+    - whatever company is available
+
+- intent: collect_none_year_of_xp
+  examples: |
+    - I dont have
+    - I do not have
+    - I have none
+    - I do not have prior year of expirence
+
+- regex: year_of_xp
+  examples: |
+    - \d{1,2}
 
 - intent: collect_year_of_xp
   examples: |
-    - [none](year_of_xp)
-    - [0](year_of_xp)
-    - [I dont have](year_of_xp)
     - [1](year_of_xp)
     - [2](year_of_xp)
-    - [3](year_of_xp)
+    - [13](year_of_xp)
+    - [3](year_of_xp) years
+    - [5](year_of_xp) years of experience
+    - I have [10](year_of_xp) years of xp
+    - I have [0](year_of_xp) years of experience
 
 - intent: collect_education
   examples: |
