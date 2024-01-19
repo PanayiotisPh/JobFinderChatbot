@@ -69,12 +69,20 @@ class ActionCollectInformation(Action):
                     action = "null"
 
             elif action == "collect_education":
-                education = next(tracker.get_latest_entity_values("education"), None)
-                if education == None:
+                education = list(tracker.get_latest_entity_values("education"))
+                education_level = list(tracker.get_latest_entity_values("education_level"))
+                none_education = tracker.latest_message['intent'].get('name')
+                if education is None and none_education is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
-                    dispatcher.utter_message(f"Great! Your education level is {education}.")
+                    if education or education_level:
+                        education_text = ", ".join(education)
+                        education_level_text = ", ".join(education_level)
+                        dispatcher.utter_message(f"Great! Your education is {education_text} on level {education_level_text}.")
+                    else:
+                        dispatcher.utter_message(f"Sure! looking for a job with no degree")
                     action = "null"
+    
 
             elif action == "collect_soft_skills":
                 soft_skills = list(tracker.get_latest_entity_values("soft_skills"))

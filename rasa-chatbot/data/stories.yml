@@ -57,9 +57,12 @@ stories:
   - action: action_collect_information
   - action: utter_ask_education
   - action: action_set_education
-  - intent: collect_education
-    entities:
-      - education: "Bachelor's Degree"
+  - or:
+    - intent: collect_education
+      entities:
+        - education_level: "Bachelor's Degree"
+        - education: "cs"
+    - intent: collect_none_education
   - action: action_collect_information
   - action: utter_ask_soft_skills
   - action: action_set_soft_skills

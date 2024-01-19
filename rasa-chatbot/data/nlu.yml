@@ -157,12 +157,34 @@ nlu:
     - I have [10](year_of_xp) years of xp
     - I have [0](year_of_xp) years of experience
 
+- lookup: education_level
+  examples: |
+    - phd
+    - master
+    - MA
+    - ph.d
+    - Bachelor's degree
+    - BA
+
+- lookup: education
+  examples: |
+    - computer science
+    - information technology
+    - cs
+
 - intent: collect_education
   examples: |
-    - [university](education)
-    - [computer science degree](education)
-    - [master in computer science](education)
-    - [cs](education)
+    - I have a [BA](education_level) in [cs](education) and a [master](education_level) in [information technology](education)
+    - [BA](education_level) [cs](education) and [master](education_level) [information technology](education)
+    - [BA](education_level) [cs](education), [master](education_level) [information technology](education)
+    - [BA](education_level) [cs](education)
+
+- intent: collect_none_education
+  examples: |
+    - I do not have a degree
+    - I dont have a degree
+    - no degree
+    - i have no education
 
 - intent: collect_soft_skills
   examples: |
