@@ -186,16 +186,31 @@ nlu:
     - no degree
     - i have no education
 
+- lookup: soft_skills
+  examples: |
+    - teamwork
+    - leadership
+    - fast learner
+
 - intent: collect_soft_skills
   examples: |
-    - [teamwork](soft_skills)
+    - I am good at [teamwork](soft_skills)
     - [leadership](soft_skills)
-    - [fast learner](soft_skills)
+    - [fast learner](soft_skills) and [leadership](soft_skills)
+    - [fast learner](soft_skills), [leadership](soft_skills) and [teamwork](soft_skills)
+
+- lookup: hard_skills
+  examples: |
+    - java
+    - C
+    - python
+    - rasa
+    - networking
 
 - intent: collect_hard_skills
   examples: |
-    - [java](hard_skills)
-    - [C](hard_skills)
-    - [python](hard_skills)
-    - [rasa](hard_skills)
-    - [networking](hard_skills)
+    - [java](hard_skills) and [C](hard_skills)
+    - [java](hard_skills), [C](hard_skills) and [python](hard_skills)
+    - I am good at [python](hard_skills) and [C](hard_skills)
+    - I know [rasa](hard_skills)
+    - I know [networking](hard_skills), [rasa](hard_skills) and [C](hard_skills)
