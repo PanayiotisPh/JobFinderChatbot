@@ -90,18 +90,18 @@ nlu:
     - [Texas](location), [Missouri](location) and [Utah](location)
     - [Texas](location)
 
-- regex: salary
-  examples: |
-    - \d{4,6}
+# - regex: salary
+#   examples: |
+#     - \d{4,6}
 
-- intent: collect_salary
-  examples: |
-    - [100000](salary) per year
-    - [10000](salary)
-    - I prefer an annual salary of [26000](salary) thousand
-    - [50000](salary) USD
-    - [20000](salary) dollars
-    - [30000](salary)k
+# - intent: collect_salary
+#   examples: |
+#     - [100000](salary) per year
+#     - [10000](salary)
+#     - I prefer an annual salary of [26000](salary) thousand
+#     - [50000](salary) USD
+#     - [20000](salary) dollars
+#     - [30000](salary)k
 
 - intent: collect_job_type
   examples: |
@@ -165,6 +165,7 @@ nlu:
     - ph.d
     - Bachelor's degree
     - BA
+    - phd
 
 - lookup: education
   examples: |

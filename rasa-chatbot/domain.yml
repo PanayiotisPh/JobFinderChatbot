@@ -9,7 +9,7 @@ intents:
   - collect_affirm
   - collect_deny
   - collect_location
-  - collect_salary
+  #- collect_salary
   - collect_job_type
   - collect_company
   - collect_year_of_xp
@@ -22,7 +22,7 @@ intents:
 
 entities:
   - location
-  - salary
+ # - salary
   - job_type
   - company
   - year_of_xp
@@ -30,110 +30,6 @@ entities:
   - education_level
   - soft_skills
   - hard_skills
-
-# slots:
-#   location:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   salary:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   job_type:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   company:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   year_of_xp:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   education:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   soft_skills:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-#   hard_skills:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: custom
-
-# slots:
-#   location:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: location
-#   salary:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: salary
-#   job_type:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: job_type
-#   company:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: company
-#   year_of_xp:
-#     type: text
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: year_of_xp
-#   education:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: education
-#   soft_skills:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: soft_skills
-#   hard_skills:
-#     type: list
-#     influence_conversation: false
-#     mappings:
-#     - type: from_entity
-#       entity: hard_skills
-
-# forms:
-#   job_application_form:
-#     required_slots:
-#         - location
-#         - salary
-#         - job_type
-#         - company
-#         - year_of_xp
-#         - education
-#         - soft_skills
-#         - hard_skills
 
 responses:
   utter_greet:
@@ -150,12 +46,12 @@ responses:
   - text: "Which states are you targeting for potential job opportunities? Please share as many as you'd like."
   - text: "Tell me, which states are you open to for job hunting? You can mention multiple states that interest you."
 
-  utter_ask_salary:
-  - text: "What salary range are you aiming for in your ideal job?"
-  - text: "Could you please specify the salary range you have in mind for your next job?"
-  - text: "In terms of compensation, what are your salary expectations for a potential job?"
-  - text: "What is your preferred salary range for the job you're seeking?"
-  - text: "When it comes to compensation, what's your desired salary range for your next role?"
+  # utter_ask_salary:
+  # - text: "What salary range are you aiming for in your ideal job?"
+  # - text: "Could you please specify the salary range you have in mind for your next job?"
+  # - text: "In terms of compensation, what are your salary expectations for a potential job?"
+  # - text: "What is your preferred salary range for the job you're seeking?"
+  # - text: "When it comes to compensation, what's your desired salary range for your next role?"
 
   utter_ask_job_type:
   - text: "Are you primarily seeking full-time or part-time job opportunities?"
@@ -218,12 +114,13 @@ actions:
   - utter_submit
   - action_collect_information
   - action_set_location
-  - action_set_salary
+ # - action_set_salary
   - action_set_job_type
   - action_set_company
   - action_set_year_of_xp
   - action_set_education
   - action_set_soft_skills
   - action_set_hard_skills
+  - action_sent_information
 
   

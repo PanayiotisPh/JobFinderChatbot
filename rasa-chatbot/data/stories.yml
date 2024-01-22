@@ -27,12 +27,12 @@ stories:
     entities:
       - location: "New York"
   - action: action_collect_information
-  - action: utter_ask_salary
-  - action: action_set_salary
-  - intent: collect_salary
-    entities:
-      - salary: "75000"
-  - action: action_collect_information
+  # - action: utter_ask_salary
+  # - action: action_set_salary
+  # - intent: collect_salary
+  #   entities:
+  #     - salary: "75000"
+  # - action: action_collect_information
   - action: utter_ask_job_type
   - action: action_set_job_type
   - intent: collect_job_type
@@ -76,4 +76,4 @@ stories:
     entities:
       - hard_skills: "Python, Machine Learning"
   - action: action_collect_information
-  - action: utter_submit
+  - action: action_sent_information
