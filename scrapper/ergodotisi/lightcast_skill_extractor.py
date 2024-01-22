@@ -73,7 +73,7 @@ def extract_skills(access_token, data_list):
 
 def read_file(filename):
     print("start read file")
-    csv_file = f'scrapper\\ergodotisi\\job_descriptions\\{filename}'
+    csv_file = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/job_descriptions/{filename}"
 
     # Open and read the CSV file as a dictionary
     with open(csv_file, newline='', encoding="utf-8") as file:
@@ -102,9 +102,10 @@ def save_to_json(data_list):
     for data in data_list:
         data.pop('Data')
     json_filename = f"job_data_{timestamp}.json"
+    file_path = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/job_data/{json_filename}"
 
     # Save data_map to a JSON file
-    with open(f"scrapper\\ergodotisi\\job_data\\{json_filename}", 'w') as json_file:
+    with open(file_path, 'w') as json_file:
         json.dump(data_list, json_file, indent=4)
 
     print(f"Data saved to {json_filename}")
