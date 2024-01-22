@@ -121,9 +121,9 @@ def run():
 
     # Create the file name with the timestamp
     file_name = f"job_urls_{timestamp}.csv"
-
+    dir  = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/url_files/{file_name}"
     # Save the URLs to a text file with the timestamp
-    df.to_csv(f"scrapper\\ergodotisi\\url_files\\{file_name}", encoding='utf-8', index=False)
+    df.to_csv(dir, encoding='utf-8', index=False)
 
     end_time = time.time()
     duration = end_time - start_time

@@ -16,7 +16,8 @@ def upload_data(ergodotisi_filename, glassdoor_filename):
 
     # Read and insert the large JSON file
     try:
-        with open(f'scrapper\\ergodotisi\\job_data\\{ergodotisi_filename}', 'r') as file:
+        dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/job_data/{ergodotisi_filename}"
+        with open(dir, 'r') as file:
             file_data = json.load(file)
             
             if isinstance(file_data, list):
@@ -36,7 +37,8 @@ def upload_data(ergodotisi_filename, glassdoor_filename):
         print(f"An error occurred: {e}")
     
     try:
-        with open(f'scrapper\\glassdoor\\job_data\\{glassdoor_filename}', 'r') as file:
+        dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/glassdoor/job_data/{glassdoor_filename}"
+        with open(dir, 'r') as file:
             file_data = json.load(file)
             
             if isinstance(file_data, list):

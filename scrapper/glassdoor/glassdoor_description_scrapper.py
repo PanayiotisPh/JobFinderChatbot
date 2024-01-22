@@ -52,7 +52,7 @@ def scrape_job_data(url, loc, file_name):
         # Create a Chrome WebDriver with the configured options
         driver = webdriver.Chrome()
         driver.get(url)
-        time.sleep(1.5)
+        time.sleep(5)
 
         i = 0
         while i < 5:
@@ -95,26 +95,27 @@ def scrape_job_data(url, loc, file_name):
                                       'Data'])
         df = pd.concat([df, pd.DataFrame([job_data])], ignore_index=True)
 
+        dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/glassdoor/job_descriptions/{file_name}"
         # Save the result DataFrame to a CSV file
-        df.to_csv(f"scrapper\\glassdoor\\job_descriptions\\{file_name}", mode='a', encoding='utf-8', index=False, header=False)
+        df.to_csv(dir, mode='a', encoding='utf-8', index=False, header=False)
 
 
 # Read the list of URLs from the file
 def run(url_list):
 #if __name__ == "__main__":
     start_time = time.time()
-    
     # Set the maximum number of threads you want to run concurrently
-    max_threads = 20  # Change this number to your desired limit
+    max_threads = 10  # Change this number to your desired limit
     
     # Save the URLs to a text file
     # Create the file name with the timestamp
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     file_name = f"job_descriptions_{timestamp}.csv"
-
+    dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/glassdoor/job_descriptions/{file_name}"
     headers = ['URL', 'Location', 'Company', 'Employment Type', 'Years of Exp','Education Level' , 'Data']
     header_df = pd.DataFrame([headers])
-    header_df.to_csv(f"scrapper\\glassdoor\\job_descriptions\\{file_name}", index=False, header=False)
+
+    header_df.to_csv(dir, index=False, header=False)
 
     with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
         for _, row in url_list.iterrows():

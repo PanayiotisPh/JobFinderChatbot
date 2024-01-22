@@ -98,7 +98,7 @@ def get_job_url(driver, loc):
     with url_list_lock:
         for href in all_hrefs:
             if "/job-listing/" in href:
-                temp = "https://www.glassdoor.com" + href
+                temp = "" + href
                 job_data = {'URL': temp, 'Location': loc}
                 df = pd.concat([df, pd.DataFrame([job_data])], ignore_index=True)
                 #url_list.append(temp)
@@ -137,7 +137,9 @@ def run():
     #with open(f"url_files\\{file_name}", "w", encoding="utf-8") as file:
     #    for url in url_list:
     #        file.write(url + "\n")
-    df.to_csv(f"scrapper\\glassdoor\\url_files\\{file_name}", encoding='utf-8', index=False)
+    file_path = f"C:/Users/pphot/Desktop/Thesis/scrapper/glassdoor/url_files/{file_name}"
+
+    df.to_csv(file_path, encoding='utf-8', index=False)
 
     end_time = time.time()
     duration = end_time - start_time

@@ -100,9 +100,10 @@ def scrape_job_data(job_id, url, loc, file_name):
                                     'Years of Exp', 'Education Level',
                                       'Data'])
         df = pd.concat([df, pd.DataFrame([job_data])], ignore_index=True)
+        dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/job_descriptions/{file_name}"
 
         # Save the result DataFrame to a CSV file
-        df.to_csv(f"scrapper\\ergodotisi\\job_descriptions\\{file_name}", mode='a', encoding='utf-8', index=False, header=False)
+        df.to_csv(dir, mode='a', encoding='utf-8', index=False, header=False)
 
 
 # Read the list of URLs from the file
@@ -117,10 +118,11 @@ def run(url_list):
     # Create the file name with the timestamp
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     file_name = f"job_descriptions_{timestamp}.csv"
+    dir = f"C:/Users/pphot/Desktop/Thesis/scrapper/ergodotisi/job_descriptions/{file_name}"
 
     headers = ['ID','URL', 'Location', 'Company', 'Employment Type', 'Years of Exp','Education Level' , 'Data']
     header_df = pd.DataFrame([headers])
-    header_df.to_csv(f"scrapper\\ergodotisi\\job_descriptions\\{file_name}", index=False, header=False)
+    header_df.to_csv(dir, index=False, header=False)
 
     with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:
         for _, row in url_list.iterrows():
