@@ -32,7 +32,7 @@ def get_results():
         query_builder["Location"] = {"$in": data["Location"]}
 
     # Check if the "Company" field in data is not empty
-    if data.get("Company"):
+    if data.get("Company") != "None":
         query_builder["Company"] = data["Company"]
 
     # Check if the "Employment Type" field in data is not empty
@@ -41,7 +41,10 @@ def get_results():
 
     # Check if the "Years of Exp" field in data is not empty
     if data.get("Years of Exp"):
-        query_builder["Years of Exp"] = {"$lte": data["Years of Exp"]}
+        query_builder["$or"] = [
+            {"Years of Exp": {"$lte": data["Years of Exp"]}},
+            {"Years of Exp": "not given"}
+        ]
 
     # Check if the "Education Level" field in data is not empty
     if data.get("Education Level"):
