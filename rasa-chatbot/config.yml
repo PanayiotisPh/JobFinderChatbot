@@ -14,7 +14,7 @@ pipeline:
     min_ngram: 1
     max_ngram: 4
   - name: DIETClassifier
-    epochs: 100
+    epochs: 200
     entity_recognition: true
     # Ensure DIET is configured to use patterns for lookup table
     intent_classification: true
@@ -35,4 +35,20 @@ policies:
   - name: RulePolicy
   - name: TEDPolicy
     max_history: 5
-    epochs: 100
+    epochs: 120
+
+
+# to be used in case of incosistent model performance
+# pipeline:
+# - name: WhitespaceTokenizer
+# - name: LexicalSyntacticFeaturizer
+# - name: CountVectorsFeaturizer
+# - name: DIETClassifier
+#   epochs: 150  # Increased epochs
+#   batch_size: [64, 256]  # Using a range for batch_size
+#   entity_recognition: true
+#   intent_classification: true
+#   dropout_rate: 0.2  # Added dropout
+# - name: EntitySynonymMapper
+# - name: ResponseSelector
+#   epochs: 120  # Adjusted epochs for response selector

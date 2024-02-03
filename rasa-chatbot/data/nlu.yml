@@ -129,6 +129,7 @@ nlu:
     - [hybrid](job_type)
     - [full](job_type)
     - [part](job_type)
+    - [Fulltime](job_type)
   
 - lookup: company
   examples: |
@@ -234,6 +235,8 @@ nlu:
     - explore various options
     - no company preference
     - whatever company is available
+    - no specific company
+    - no
 
 - intent: collect_none_year_of_xp
   examples: |
@@ -241,6 +244,7 @@ nlu:
     - I do not have
     - I have none
     - I do not have prior year of expirence
+    - no experience
 
 - regex: year_of_xp
   examples: |
@@ -274,24 +278,30 @@ nlu:
   examples: |
     - computer science
     - information technology
+    - Software Engineering 
+    - computer engineering
+    - data science
+    - Software Development
+    - Systems Engineering
+    - DevOps
     - cs
 
 - intent: collect_education
   examples: |
-    - I have a [BA](education_level) in [cs](education) and a [master](education_level) in [information technology](education)
-    - [BA](education_level) [cs](education) and [master](education_level) [information technology](education)
+    - I have a [BA](education_level) in [Systems Engineering](education) and a [master](education_level) in [information technology](education)
+    - [BA](education_level) [Software Development](education) and [master](education_level) [information technology](education)
     - [BA](education_level) [cs](education), [master](education_level) [information technology](education)
     - [BA](education_level) [cs](education)
     - I have a [PhD](education_level) in [computer science](education) and a [Master's](education_level) in [information technology](education)
     - [BA](education_level) in [information technology](education) and [PhD](education_level) in [computer science](education)
-    - [MSc](education_level) in [computer science](education) and [BSc](education_level) in [information technology](education)
-    - [PhD](education_level) in [computer science](education) and [BA](education_level) in [information technology](education)
+    - [MSc](education_level) in [computer science](education) and [BSc](education_level) in [data science](education)
+    - [PhD](education_level) in [Software Development](education) and [BA](education_level) in [data science](education)
     - [Bachelor's](education_level) in [computer science](education) and [Master's](education_level) in [information technology](education)
-    - [BA](education_level) in [computer science](education) and [PhD](education_level) in [information technology](education)
+    - [BA](education_level) in [Software Development](education) and [PhD](education_level) in [information technology](education)
     - [Master's](education_level) in [information technology](education) and [BA](education_level) in [computer science](education)
     - [BSc](education_level) in [information technology](education) and [Master's](education_level) in [computer science](education)
-    - [PhD](education_level) in [computer science](education) and [BSc](education_level) in [information technology](education)
-    - [BA](education_level) in [computer science](education)
+    - [PhD](education_level) in [Systems Engineering](education) and [BSc](education_level) in [information technology](education)
+    - [BA](education_level) in [Systems Engineering](education)
 
 
 - intent: collect_none_education

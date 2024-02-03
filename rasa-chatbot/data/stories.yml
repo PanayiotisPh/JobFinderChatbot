@@ -37,7 +37,7 @@ stories:
   - action: action_set_job_type
   - intent: collect_job_type
     entities:
-      - job_type: "Software Engineer"
+      - job_type: "full-time"
   - action: action_collect_information
   - action: utter_ask_company
   - action: action_set_company

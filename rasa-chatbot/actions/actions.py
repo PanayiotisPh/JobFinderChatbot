@@ -1,10 +1,18 @@
 from typing import List, Dict, Text, Any
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.events import SlotSet
+from rasa_sdk.types import DomainDict
+from rasa_sdk.events import (
+    SlotSet,
+    UserUtteranceReverted,
+    FollowupAction,
+    EventType,
+)
 
 import json
 import requests
+
+USER_INTENT_OUT_OF_SCOPE = "out_of_scope"
 
 action = "null"
 
@@ -19,6 +27,93 @@ info_soft_skills = ""
 info_hard_skills = ""
 
 class ActionCollectInformation(Action):
+
+    def authentication(self):
+        url = "https://auth.emsicloud.com/connect/token"
+
+        payload = "client_id=qn2hk51fh4z9vzcj&client_secret=8YkRlh2e&grant_type=client_credentials&scope=emsi_open"
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+        response = requests.request("POST", url, data=payload, headers=headers)
+
+        if response.status_code == 200:
+            data = response.json()
+            access_token = data['access_token']
+            return access_token
+        else:
+            print("Error:", response.status_code, response.text)
+
+    def extract_soft_skills(self,access_token, data):
+        #global data_map
+        url_emis = "https://emsiservices.com/skills/versions/latest/extract"
+
+        payload = json.dumps({
+            "text": f"""{ data }""",
+            "confidenceThreshold": 0.6
+        })
+        headers = {
+            'Authorization': f"Bearer {access_token}",
+            'Content-Type': "application/json"
+            }
+        response = requests.request("POST", url_emis, data=payload, headers=headers)
+        # Parse the JSON data
+        emis_data = json.loads(response.text)
+        # Create a dictionary to store skill names and their corresponding type names
+        skill_type_mapping = {}
+        # Extract skill names and type names
+        for item in emis_data["data"]:
+            if "skill" in item:
+                skill = item["skill"]
+                if "name" in skill:
+                    skill_name = skill["name"]
+                    if "type" in skill:
+                        type_name = skill["type"]["name"]
+                        skill_type_mapping[skill_name] = type_name
+        soft_skills = []
+        for skill_name, type_name in skill_type_mapping.items():
+            if type_name == "Common Skill":
+                soft_skills.append(skill_name)
+                
+        return soft_skills
+    
+    def extract_hard_skills(self, access_token, data):
+        #global data_map
+        url_emis = "https://emsiservices.com/skills/versions/latest/extract"
+
+        payload = json.dumps({
+            "text": f"""{ data }""",
+            "confidenceThreshold": 0.6
+        })
+        headers = {
+            'Authorization': f"Bearer {access_token}",
+            'Content-Type': "application/json"
+            }
+        response = requests.request("POST", url_emis, data=payload, headers=headers)
+
+        # Parse the JSON data
+        emis_data = json.loads(response.text)
+
+        # Create a dictionary to store skill names and their corresponding type names
+        skill_type_mapping = {}
+
+        # Extract skill names and type names
+        for item in emis_data["data"]:
+            if "skill" in item:
+                skill = item["skill"]
+                if "name" in skill:
+                    skill_name = skill["name"]
+                    if "type" in skill:
+                        type_name = skill["type"]["name"]
+                        skill_type_mapping[skill_name] = type_name
+
+        hard_skills = []
+        for skill_name, type_name in skill_type_mapping.items():
+            if type_name != "Common Skill":
+                hard_skills.append(skill_name)
+
+        return hard_skills
+
+
     def name(self) -> Text:
         return "action_collect_information"
 
@@ -40,7 +135,10 @@ class ActionCollectInformation(Action):
             if action == "collect_location":
                 location = list(tracker.get_latest_entity_values("location"))
                 if not location:
-                    dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    try:
+                        dispatcher.utter_message(text = "Sorry, I didn't get that. Can you rephrase it?")
+                    except Exception as e:
+                        print(f"Exception: {str(e)}")
                 else:
                     locations_text = ", ".join(location)
                     info_location = location
@@ -116,19 +214,37 @@ class ActionCollectInformation(Action):
                         info_education_level = ""
                     action = "null"
     
-
             elif action == "collect_soft_skills":
-                soft_skills = list(tracker.get_latest_entity_values("soft_skills"))
+                #soft_skills = list(tracker.get_latest_entity_values("soft_skills"))
+                user_message = tracker.latest_message.get('text')
+                soft_skills = []
+                if user_message:
+                    try:
+                        soft_skills = self.extract_soft_skills(self.authentication(), user_message)
+                        print("Extracted Soft_skills:", soft_skills)  # Debugging line
+                    except Exception as e:  # Generic exception handling for demonstration
+                        print(f"Error extracting soft skills: {e}")
+                else:
+                    print("No message found in the tracker.")
+
                 if not soft_skills:
-                    dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    dispatcher.utter_message("Sorry, I didn't get that. Can you rephrase it?")
                 else:
                     soft_skills_text = ", ".join(soft_skills)
                     dispatcher.utter_message(f"Nice! Your soft skills are {soft_skills_text}.")
                     info_soft_skills = soft_skills
                     action = "null"
+                    return [FollowupAction("utter_ask_hard_skills")]
 
             elif action == "collect_hard_skills":
-                hard_skills = list(tracker.get_latest_entity_values("hard_skills"))
+                #hard_skills = list(tracker.get_latest_entity_values("hard_skills"))
+                user_message = tracker.latest_message.get('text')
+                hard_skills = []
+                if user_message:
+                    hard_skills = self.extract_hard_skills(self.authentication(), user_message)
+                else:
+                    print("No message found in the tracker.")
+
                 if not hard_skills:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
                 else:
@@ -136,6 +252,8 @@ class ActionCollectInformation(Action):
                     dispatcher.utter_message(f"Got it! Your hard skills are {hard_skills_text}.")
                     info_hard_skills = hard_skills
                     action = "null"
+                    return [FollowupAction("action_sent_information")]
+
 
             return []
         except Exception as e:
@@ -304,3 +422,4 @@ class ActionSetHardSkills(Action):
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
+        
