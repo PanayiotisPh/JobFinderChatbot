@@ -1,13 +1,50 @@
-version: "3.1"
+# # version: "3.1"
 
-rules:
+# # rules:
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
+# - rule: Welcome user
+#   steps:
+#   - intent: collect_greet
+#   - action: utter_greet
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+# - rule: User does not want to proceed
+#   steps:
+#   - intent: collect_deny
+#   - action: utter_handle_deny
+
+# - rule: Collect Information
+#   steps:
+#   - intent: collect_affirm
+#   - action: utter_ask_location
+#   - action: action_set_location
+#   - intent: collect_location
+#   - action: action_collect_information
+#   - action: utter_ask_salary
+#   - action: action_set_salary
+#   - intent: collect_salary
+#   - action: action_collect_information
+#   - action: utter_ask_job_type
+#   - action: action_set_job_type
+#   - intent: collect_job_type
+#   - action: action_collect_information
+#   - action: utter_ask_company
+#   - action: action_set_company
+#   - intent: collect_company
+#   - action: action_collect_information
+#   - action: utter_ask_year_of_xp
+#   - action: action_set_year_of_xp
+#   - intent: collect_year_of_xp
+#   - action: action_collect_information
+#   - action: utter_ask_education
+#   - action: action_set_education
+#   - intent: collect_education
+#   - action: action_collect_information
+#   - action: utter_ask_soft_skills
+#   - action: action_set_soft_skills
+#   - intent: collect_soft_skills
+#   - action: action_collect_information
+#   - action: utter_ask_hard_skills
+#   - action: action_set_hard_skills
+#   - intent: collect_hard_skills
+#   - action: action_collect_information
+#   - action: utter_submit

@@ -1,36 +1,15 @@
 version: "3.1"
 
 nlu:
-- intent: greet
+
+- intent: collect_greet
   examples: |
-    - hey
-    - hello
     - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - hello
+    - greedings
+    - top of the morings to you ladies
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
-
-- intent: affirm
+- intent: collect_affirm
   examples: |
     - yes
     - y
@@ -39,7 +18,7 @@ nlu:
     - that sounds good
     - correct
 
-- intent: deny
+- intent: collect_deny
   examples: |
     - no
     - n
@@ -49,43 +28,777 @@ nlu:
     - no way
     - not really
 
-- intent: mood_great
+- lookup: location
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - Alabama
+    - Arizona
+    - Alaska
+    - Arkansas
+    - California
+    - Colorado
+    - Connecticut
+    - Delaware
+    - Florida
+    - Georgia
+    - Hawaii
+    - Idaho
+    - Illinois
+    - Indiana
+    - Iowa
+    - Kansas
+    - Kentucky
+    - Louisiana
+    - Maine
+    - Maryland
+    - Massachusetts
+    - Michigan
+    - Minnesota
+    - Mississippi
+    - Missouri
+    - Montana
+    - Nebraska
+    - Nevada
+    - New Hampshire
+    - New Jersey
+    - New Mexico
+    - New York
+    - North Carolina
+    - North Dakota
+    - Ohio
+    - Oklahoma
+    - Oregon
+    - Pennsylvania
+    - Rhode Island
+    - South Carolina
+    - South Dakota
+    - Tennessee
+    - Texas
+    - Utah
+    - Vermont
+    - Virginia
+    - Washington
+    - West Virginia
+    - Wisconsin
+    - Wyoming
 
-- intent: mood_unhappy
+- intent: collect_location
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - I would prefer a job in [Texas](location) and [New York](location)
+    - I prefer [Oregon](location)
+    - [Ohio](location) and [Utah](location)
+    - [Virginia](location), [Vermont](location), [Montana](location)
+    - [Texas](location), [Missouri](location) and [Utah](location)
+    - [Texas](location)
+    - I'm interested in opportunities in [California](location) and [Florida](location)
+    - [Georgia](location) and [Illinois](location) are my preferred locations
+    - Seeking a job in [Arizona](location)
+    - My top choices are [Colorado](location) and [Hawaii](location)
+    - [Indiana](location) is where I'd like to work, but I'm also open to [Kansas](location)
+    - [Louisiana](location) and [Maine](location) are on my list of preferred locations
+    - I'd love to find a job in [Maryland](location) or [Michigan](location)
+    - Considering opportunities in [Minnesota](location) and [Mississippi](location)
+    - [Nebraska](location) and [Nevada](location) are states I'm interested in
+    - My ideal locations include [North Carolina](location) and [North Dakota](location)
+    - [Oklahoma](location) and [Oregon](location) are where I'm looking for job prospects
+    - [Rhode Island](location) is a state I'm considering, along with [South Carolina](location)
+    - [Tennessee](location) and [Washington](location) are at the top of my list
+    - I'm open to opportunities in [Wisconsin](location) and [Wyoming](location)
+    - [Ohio](location)
+    - [Montana](location)
+    - [Oregon](location) and [Kansas](location)
+    - [Iowa](location)
 
-- intent: bot_challenge
+
+# - regex: salary
+#   examples: |
+#     - \d{4,6}
+
+# - intent: collect_salary
+#   examples: |
+#     - [100000](salary) per year
+#     - [10000](salary)
+#     - I prefer an annual salary of [26000](salary) thousand
+#     - [50000](salary) USD
+#     - [20000](salary) dollars
+#     - [30000](salary)k
+
+- intent: collect_job_type
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - [full time](job_type)
+    - [part time](job_type)
+    - [hybrid](job_type)
+    - [full](job_type)
+    - [part](job_type)
+    - [Fulltime](job_type)
+  
+- lookup: company
+  examples: |
+    - SkillOnNet
+    - 3CX Ltd
+    - RISKMATRIX LTD
+    - Columbia Shipmanagement LTD
+    - epic ltd
+    - MysteryTag
+    - Hyperio Software Limited
+    - Mantika
+    - F.C Fluence LTD
+    - IBSCY LTD
+    - HF Markets
+    - Scope Markets Services CY Ltd.
+    - BDSWISS
+    - Rimes Technologies Ltd
+    - Servers.com
+    - Tickmill Europe LTD
+    - EBAS LTD
+    - CareerFinders Recruitment Services Ltd
+    - Hyperion Group
+    - ACE Networks
+    - oneZero Financial Systems
+    - MSOS Maritime security at open seas LTD
+    - CYPRUS SEA LINES CO. LTD
+    - Goldman Solutions
+    - XM
+    - Bevilacqua Research Corporation
+    - STERIS
+    - Applied Analytical Solutions
+    - RocketVox
+    - SAIC
+    - KBR
+    - Element with the specified ID not found.
+    - IERUS Technologies, Inc.
+    - Parsons
+    - UDA Technologies
+    - Xanté Corporation
+    - BAE Systems
+    - Radiance Technologies
+    - Lockheed Martin Corporation
+    - AI Signal Research, Inc (ASRI)
+    - Online Commerce Group (OCG)
+    - Boeing Intelligence & Analytics
+    - Harris Computer Systems
+    - Playrix
+    - AeroVironment
+    - Northrop Grumman
+    - Hoʻolaulima Government Solutions, LLC, (HGS)
+    - GaN
+    - PeopleTec, Inc.
+    - HII
+    - SOSi
+    - Integration Innovation, Inc.
+    - NTA, Inc.
+    - BOEING
+    - Google
+    - Yahoo
+    - Amdocs
+    - Cisco
+
+- intent: collect_company
+  examples: |
+    - I would prefer a job at [Google](company) and [Yahoo](company)
+    - I prefer [Cisco](company)
+    - [Amdocs](company) and [Yahoo](company)
+    - [Amdocs](company), [Yahoo](company), [Google](company)
+    - [Amdocs](company), [Yahoo](company) and [Google](company)
+    - [Google](company)
+    - I would prefer a job at [IBM](company) and [Amazon](company)
+    - I prefer [Intel](company)
+    - [Oracle](company) and [Salesforce](company) are my top choices
+    - [Microsoft](company), [Google](company), and [Facebook](company) are companies I'm interested in
+    - [SpaceX](company) and [NASA](company) are at the top of my list
+    - I'm open to opportunities at [Uber](company) and [Airbnb](company)
+    - [Netflix](company) is where I'd like to work, but I'm also considering [Disney](company)
+    - [Twitter](company) and [Snap](company) are companies I'm looking into
+    - [Reddit](company) and [GitHub](company) are on my list of preferred companies
+    - [Slack](company) is a company I'm considering, along with [Zoom](company)
+    - [Adobe](company) and [Autodesk](company) are where I'm looking for job prospects
+    - [Tesla](company), [General Motors](company), and [Ford](company) are companies I'm considering
+    - [Booz Allen Hamilton](company) and [Lockheed Martin](company) are on my radar
+    - [General Electric](company) and [Siemens](company) are companies I'm interested in
+    - [Intel](company) and [AMD](company) are on my list of preferred companies
+    - [Blue Origin](company) and [Virgin Galactic](company) are companies I'm interested in working for
+    - [Tesla](company), [Ford](company), and [Toyota](company) are where I'm looking for job prospects
+    - [Netflix](company) and [Hulu](company) are companies I'm considering
+    - [Twitter](company) is where I'd like to work, but I'm also open to [LinkedIn](company)
+    - [Salesforce](company), [VMware](company), and [Cisco](company) are on my list of preferred companies
+    - [PayPal](company) and [Square](company) are companies I'm considering
+    - [Reddit](company) and [Discord](company) are companies I'm interested in
+    - [Slack](company) is where I'd like to work, but I'm also open to [Microsoft Teams](company)
+    - [HII](company)
+    - [Parsons](company)
+    - [GaN](company)
+
+
+- intent: collect_none_company
+  examples: |
+    - I do not have a preference
+    - whatever company there is
+    - explore various options
+    - no company preference
+    - whatever company is available
+    - no specific company
+    - no
+
+- intent: collect_none_year_of_xp
+  examples: |
+    - I dont have
+    - I do not have
+    - I have none
+    - I do not have prior year of expirence
+    - no experience
+
+- regex: year_of_xp
+  examples: |
+    - \d{1,2}
+
+- intent: collect_year_of_xp
+  examples: |
+    - [1](year_of_xp)
+    - [2](year_of_xp)
+    - [13](year_of_xp)
+    - [3](year_of_xp) years
+    - [5](year_of_xp) years of experience
+    - I have [10](year_of_xp) years of xp
+    - I have [0](year_of_xp) years of experience
+
+- lookup: education_level
+  examples: |
+    - phd
+    - master
+    - MA
+    - ph.d
+    - Bachelor's degree
+    - BA
+    - phd
+    - MSc
+    - BSc
+    - doctor
+    - bachelor
+
+- lookup: education
+  examples: |
+    - computer science
+    - information technology
+    - Software Engineering 
+    - computer engineering
+    - data science
+    - Software Development
+    - Systems Engineering
+    - DevOps
+    - cs
+
+- intent: collect_education
+  examples: |
+    - I have a [BA](education_level) in [Systems Engineering](education) and a [master](education_level) in [information technology](education)
+    - [BA](education_level) [Software Development](education) and [master](education_level) [information technology](education)
+    - [BA](education_level) [cs](education), [master](education_level) [information technology](education)
+    - [BA](education_level) [cs](education)
+    - I have a [PhD](education_level) in [computer science](education) and a [Master's](education_level) in [information technology](education)
+    - [BA](education_level) in [information technology](education) and [PhD](education_level) in [computer science](education)
+    - [MSc](education_level) in [computer science](education) and [BSc](education_level) in [data science](education)
+    - [PhD](education_level) in [Software Development](education) and [BA](education_level) in [data science](education)
+    - [Bachelor's](education_level) in [computer science](education) and [Master's](education_level) in [information technology](education)
+    - [BA](education_level) in [Software Development](education) and [PhD](education_level) in [information technology](education)
+    - [Master's](education_level) in [information technology](education) and [BA](education_level) in [computer science](education)
+    - [BSc](education_level) in [information technology](education) and [Master's](education_level) in [computer science](education)
+    - [PhD](education_level) in [Systems Engineering](education) and [BSc](education_level) in [information technology](education)
+    - [BA](education_level) in [Systems Engineering](education)
+
+
+- intent: collect_none_education
+  examples: |
+    - I do not have a degree
+    - I dont have a degree
+    - no degree
+    - i have no education
+
+- lookup: soft_skills
+  examples: |
+    - English Language
+    - Consulting
+    - Team Building
+    - Report Writing
+    - Literacy
+    - Quick Learning
+    - Microsoft Windows
+    - Progress Reporting
+    - Knowledge Transfer
+    - Self-Motivation
+    - Willingness To Learn
+    - Virtual Teams
+    - Business Proposals
+    - Budgeting
+    - Quality Assurance
+    - Communication
+    - Ability To Meet Deadlines
+    - Mathematics
+    - Innovation
+    - Coordinating
+    - Security Policies
+    - Positivity
+    - Self-Sufficiency
+    - Multitasking
+    - Creativity
+    - Reliability
+    - Planning
+    - Management
+    - Information Technology
+    - Detail Oriented
+    - Analytical Skills
+    - Data Reporting
+    - Multilingualism
+    - Problem Solving
+    - Proactivity
+    - Training And Development
+    - Organizational Skills
+    - Time Management
+    - Writing
+    - Investigation
+    - Sales
+    - Customer Service
+    - Timelines
+    - Trustworthiness
+    - Critical Thinking
+    - Operations
+    - Relationship Building
+    - Enthusiasm
+    - Editing
+    - Leadership
+    - Problem Solving
+    - Teamwork
+    - Fast Learner
+
+- intent: collect_soft_skills
+  examples: |
+    - I am good at [teamwork](soft_skills)
+    - [leadership](soft_skills)
+    - [fast learner](soft_skills) and [leadership](soft_skills)
+    - [fast learner](soft_skills), [leadership](soft_skills) and [teamwork](soft_skills)
+
+- lookup: hard_skills
+  examples: |
+    - java
+    - C
+    - python
+    - rasa
+    - networking
+    - Serial Peripheral Interface
+    - Link 16
+    - Systems Design
+    - Stm32
+    - Multidisciplinary Research
+    - Airworthiness
+    - User Experience (UX) Design
+    - Technical Writing
+    - Klocwork
+    - Sensors
+    - Microsoft Visual Studio
+    - Processor Architecture
+    - Systems Architecture
+    - Go (Programming Language)
+    - Visual Basic .NET (Programming Language)
+    - Avionics
+    - Cloud Database
+    - Mixed Reality
+    - Coverity
+    - Browser Compatibility
+    - Radar
+    - Corporate Social Responsibility
+    - Code Review
+    - MATLAB
+    - Hololens (VR Technology)
+    - Aspose
+    - Customer Information Systems
+    - DevOps
+    - CompTIA Security+ CE
+    - Electrical Wiring
+    - Chemistry
+    - Automation
+    - SteamVR
+    - Fortran (Programming Language)
+    - Business Process
+    - Web Scraping
+    - Technical Support
+    - Adobe Analytics
+    - Medical Devices
+    - I2C
+    - Software Factory
+    - TypeScript
+    - Version Control
+    - Kibana
+    - Engineering Plans And Specifications
+    - PostgreSQL
+    - Field-Programmable Gate Array (FPGA)
+    - Technology Solutions
+    - Prototyping
+    - Language Experience Approach
+    - Security Clearance
+    - Agile Methodology
+    - Elasticsearch
+    - Electronic Hardware
+    - Project Management
+    - Github
+    - PyTorch (Machine Learning Library)
+    - Embedded Systems
+    - 3D Modeling
+    - Oracle SQL Developer
+    - Dynamic Application Security Testing (DAST)
+    - Computer Engineering
+    - Markdown
+    - Software Development Engineer in Test
+    - Scripting
+    - OpenGL
+    - Artificial Intelligence
+    - Defect Tracking
+    - OpenCL
+    - Technical Leadership
+    - Video Game Development
+    - Electrical Systems
+    - Responsive Web Design
+    - Gradle
+    - Adobe XD
+    - USB
+    - User Experience (UX)
+    - Kubernetes
+    - Stored Procedure
+    - Software Suite
+    - PSIA/AASI Certification
+    - Project Management Office (PMO)
+    - Microsoft SQL Servers
+    - System Software
+    - Software Project Management
+    - Excel Solver
+    - New Product Development
+    - Robotic Systems
+    - Electronic Systems
+    - Computer-Aided Design
+    - Phenomenology
+    - Azure DevOps
+    - Collaborative Software
+    - Performance Testing
+    - Pharmaceuticals
+    - Virtual Training
+    - MSTest
+    - Telerik
+    - Data Security
+    - Electromagnetism
+    - Flight Software
+    - Back End (Software Engineering)
+    - Ubuntu (Operating System)
+    - Algorithms
+    - Toolchain
+    - Windows PowerShell
+    - Database Application
+    - Systems Integration
+    - Technical Performance Measure
+    - Tactical Data Link
+    - Teamcity
+    - Equities
+    - Data Collection
+    - R (Programming Language)
+    - Supplier Performance Management
+    - Visual C++ (Programming Language)
+    - Apache Flex
+    - User Interface (UI) Design
+    - Infrastructure as Code (IaC)
+    - Software Design
+    - Database Queries
+    - Programming Tools
+    - CompTIA A+
+    - Julia (Programming Language)
+    - Launch Vehicle Systems
+    - Simulations
+    - Aviation
+    - Business Intelligence
+    - Human Factors Engineering
+    - Real-Time Operating Systems
+    - Containerization
+    - Generative Adversarial Networks
+    - Engineering Support
+    - Information Assurance
+    - Logstash
+    - JavaScript
+    - Full Stack Development
+    - Eclipse (Software)
+    - Amazon Web Services
+    - Web Applications
+    - Space Exploration
+    - HyperText Markup Language (HTML)
+    - Rapid Prototyping
+    - Amazon S3
+    - Unmanned Underwater Vehicles
+    - C++
+    - Integrated Product Team
+    - Technical Services
+    - Financial Advising
+    - Scientific Methods
+    - Test Equipment
+    - Address Resolution Protocols
+    - Scalability
+    - Virtual Environment
+    - System Programming
+    - Numerical Analysis
+    - Database Security
+    - Soldering
+    - Bash
+    - Open Standards
+    - Diagnostic Tools
+    - Workplace Diversity
+    - Utility Software
+    - PL/SQL
+    - JFrog
+    - Debugging
+    - Acquisition Processes
+    - Sterilization
+    - Verification And Validation
+    - Software Quality (SQA/SQC)
+    - Qt (Software)
+    - Data Processing
+    - Small-Unmanned Aerial Systems (S-UAS)
+    - Terraform
+    - Unmanned Aerial Vehicle
+    - NoSQL
+    - Asynchronous Javascript and XML (AJAX)
+    - Human Factors
+    - Microsoft Azure
+    - Model Based Systems Engineering
+    - Blazor
+    - Software Security
+    - Corporate Strategy
+    - Agile Software Development
+    - System Requirements
+    - Artifactory
+    - Process Improvement
+    - Invision
+    - Database Administration
+    - Software Development
+    - MySQL
+    - Front End
+    - Bootstrap
+    - Database Storage Structures
+    - RESTful API
+    - FreeRTOS
+    - Mobile Application Development
+    - Code Of Federal Regulations
+    - CI/CD
+    - Design Assurance
+    - DO-178B/C
+    - Network Protocols
+    - Application Deployment
+    - Software Systems
+    - Unit Testing
+    - Application Development
+    - Electronics
+    - Automated Storage And Retrieval Systems
+    - Web Services
+    - Ember.js
+    - Hardware Description Language 
+    - HDL
+    - Bitbucket
+    - Top Secret Clearance
+    - Advanced Analytics
+    - Unix
+    - Static Application Security Testing 
+    - SAST
+    - Learning Platforms
+    - Perl
+    - Development Environment
+    - Numerical Computing
+    - Extensible Markup Language
+    - XML
+    - Software Architecture
+    - Technology Life Cycle
+    - Cyber Security
+    - Linux
+    - Data Acquisition
+    - Disability Income
+    - Selenium
+    - Software Development Life Cycle
+    - Network Programming
+    - Docker
+    - Engineering Design Process
+    - Software Design Patterns
+    - Software Installation
+    - Robotics
+    - Java
+    - Big Data Analytics
+    - PTC Creo (CAD Suite)
+    - Source Code Control Systems
+    - SQL Server Analysis Services
+    - Angular (Web Framework)
+    - Vehicle Dynamics
+    - User Acceptance Testing
+    - UAT
+    - IAT Level II Certification
+    - Electronic Warfare
+    - Telemetry
+    - Emerging Technologies
+    - Multitier Architecture
+    - Network Routing
+    - IT Infrastructure
+    - Froglogic Squish
+    - Operating Systems
+    - Electrical Engineering
+    - Embedded Software
+    - Command Controls
+    - Object-Oriented Design
+    - Secret Clearance
+    - Information Systems
+    - Test Planning
+    - Requirements Management
+    - Continuous Delivery
+    - Version Control Software
+    - Continuous Integration
+    - Scenario Testing
+    - Target Acquisition
+    - Export Control
+    - Figma
+    - Functional Requirement
+    - Web Development
+    - Codebase
+    - RS-422
+    - Compilers
+    - Virtual Reality
+    - Service-Oriented Architecture
+    - Database Design
+    - Object-Oriented Programming
+    - VHSIC Hardware Description Language
+    - Systems Analysis
+    - System Testing
+    - CSS
+    - Scrum
+    - Verilog
+    - JSON
+    - Effective Communication
+    - Manual Testing
+    - Solid Edge
+    - Mathematical Modeling
+    - Development Testing
+    - C#
+    - Virtual Camera Systems
+    - Open Source Technology
+    - User Requirements Documents
+    - Transmission
+    - SolidWorks
+    - Mechanical Engineering
+    - Project Management Software
+    - Testability
+    - Build Tools
+    - Django (Web Framework)
+    - Space Flight
+    - Augmented Reality
+    - Business Requirements
+    - Windows Desktop
+    - Military Standards And Specifications
+    - Demonstration Skills
+    - Product Management
+    - PHP (Scripting Language)
+    - Test Automation
+    - Animations
+    - Research And Development
+    - Robot Operating Systems
+    - Loadable Kernel Module
+    - Control Communications
+    - Windows Presentation Foundation
+    - RS-232
+    - Device Drivers
+    - Google Analytics
+    - Flight Testing
+    - IAM Level II Certification
+    - Operations Research
+    - DevExpress
+    - Export Administration Regulations
+    - C
+    - Gitlab
+    - Financial Systems
+    - Engineering Analysis
+    - Agile Product Development
+    - Cyber Threat Intelligence
+    - Computer Science
+    - Windows Forms
+    - Marketing
+    - Graphic Design
+    - CompTIA Security+
+    - Fire-Control Systems
+    - Nunit
+    - Cloud Technologies
+    - Technical Management
+    - Test Engineering
+    - Cyber Operations
+    - Employee Assistance Programs
+    - Software Testing
+    - Software Engineering
+    - ASP.NET
+    - Database Tuning
+    - Mac OS
+    - Data Science
+    - Database Management
+    - Graphical User Interface
+    - PX4 Autopilot
+    - Root Cause Corrective Action
+    - Web Template Systems
+    - Financial Management
+    - MongoDB
+    - API
+    - Physics
+    - ArduPilot
+    - Elastic (ELK) Stack
+    - Industrial Design
+    - Vue.js
+    - Python
+    - Customer Support
+    - SystemVerilog
+    - LabVIEW
+    - Asciidoc
+    - Systems Engineering
+    - Data Management
+    - SQLite
+    - User Interface
+    - PyQt
+    - Infragistics
+    - Testbed
+    - .NET Framework
+    - Component Analysis
+    - TensorFlow
+    - TCP/IP
+    - Statistical Modeling
+    - Continuous Deployment
+    - Visual Basic
+    - Data Normalization
+    - SonarQube
+    - Health Technology
+    - Content Management
+    - JIRA
+    - CompTIA Network+
+    - Risk Mitigation
+    - Battle Management Technology
+    - Front End Design
+    - JQuery
+    - Unmanned Aerial Systems (UAS)
+    - Machine Learning
+    - C-Based Programming Languages
+    - Client Services
+    - Big Data
+    - Business Continuity
+    - Unity Engine
+    - SQL
+    - Top Secret-Sensitive Compartmented Information
+    - Apache Maven
+    - Electric Power Systems
+    - DevSecOps
+    - Model View ViewModel
+    - Concept Of Operations
+    - React.js
+    - Usability
+    - Technical Standard
+    - Space Radiation
+    - Git
+    - HTML5
+    - YAML
+
+- intent: collect_hard_skills
+  examples: |
+    - [java](hard_skills) and [C](hard_skills)
+    - [java](hard_skills), [C](hard_skills) and [python](hard_skills)
+    - I am good at [python](hard_skills) and [C](hard_skills)
+    - I know [rasa](hard_skills)
+    - I know [networking](hard_skills), [rasa](hard_skills) and [C](hard_skills)

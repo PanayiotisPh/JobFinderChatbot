@@ -2,29 +2,78 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: information getter
   steps:
-  - intent: greet
+  - intent: collect_greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - checkpoint: handle_answer
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
 
-- story: sad path 2
+- story: handle user deny
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - checkpoint: handle_answer
+  - intent: collect_deny
+  - action: utter_handle_deny
+  - checkpoint: handle_answer
+
+
+- story: Collect User Information
+  steps:
+  - checkpoint: handle_answer
+  - intent: collect_affirm
+  - action: utter_ask_location
+  - action: action_set_location
+  - intent: collect_location
+    entities:
+      - location: "New York"
+  - action: action_collect_information
+  # - action: utter_ask_salary
+  # - action: action_set_salary
+  # - intent: collect_salary
+  #   entities:
+  #     - salary: "75000"
+  # - action: action_collect_information
+  - action: utter_ask_job_type
+  - action: action_set_job_type
+  - intent: collect_job_type
+    entities:
+      - job_type: "full-time"
+  - action: action_collect_information
+  - action: utter_ask_company
+  - action: action_set_company
+  - or:
+    - intent: collect_company
+      entities:
+        - company: "Google"
+    - intent: collect_none_company
+  - action: action_collect_information
+  - action: utter_ask_year_of_xp
+  - action: action_set_year_of_xp
+  - or:
+    - intent: collect_year_of_xp
+      entities:
+        - year_of_xp: "5"
+    - intent: collect_none_year_of_xp
+  - action: action_collect_information
+  - action: utter_ask_education
+  - action: action_set_education
+  - or:
+    - intent: collect_education
+      entities:
+        - education_level: "Bachelor's Degree"
+        - education: "cs"
+    - intent: collect_none_education
+  - action: action_collect_information
+  - action: utter_ask_soft_skills
+  - action: action_set_soft_skills
+  - intent: collect_soft_skills
+    entities:
+      - soft_skills: "Communication, Problem Solving"
+  - action: action_collect_information
+  - action: utter_ask_hard_skills
+  - action: action_set_hard_skills
+  - intent: collect_hard_skills
+    entities:
+      - hard_skills: "Python, Machine Learning"
+  - action: action_collect_information
+  - action: action_sent_information

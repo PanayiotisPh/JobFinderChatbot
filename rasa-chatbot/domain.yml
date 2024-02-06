@@ -1,34 +1,126 @@
 version: "3.1"
 
-intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
-
-responses:
-  utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
+
+intents:
+  - collect_greet
+  - collect_affirm
+  - collect_deny
+  - collect_location
+  #- collect_salary
+  - collect_job_type
+  - collect_company
+  - collect_year_of_xp
+  - collect_education
+  - collect_soft_skills
+  - collect_hard_skills
+  - collect_none_year_of_xp
+  - collect_none_company
+  - collect_none_education
+
+entities:
+  - location
+ # - salary
+  - job_type
+  - company
+  - year_of_xp
+  - education
+  - education_level
+  - soft_skills
+  - hard_skills
+
+responses:
+  utter_greet:
+  - text: "Greetings! I'm your dedicated Job Finder. To help you discover the perfect job, could you please answer a few questions?"
+  - text: "Hello there! I'm here to assist as your personal Job Finder. Are you prepared to answer some questions so we can start your job search?"
+  - text: "Hi! I'm your Job Finder bot, and I'm excited to assist you in finding your dream job. Ready to begin with a few questions?"
+  - text: "Good day! I'm your friendly Job Finder. To ensure we find the best job matches, could you please take a moment to respond to a few questions?"
+  - text: "Hey! I'm your Job Finder companion. Are you up for a chat to help us identify the ideal job opportunities for you?"
+
+  utter_ask_location:
+  - text: "In which states are you looking for job opportunities? Feel free to list multiple states."
+  - text: "Where would you like to explore job opportunities? You can mention several states if needed."
+  - text: "Are there specific states you're interested in for job searching? You can name more than one."
+  - text: "Which states are you targeting for potential job opportunities? Please share as many as you'd like."
+  - text: "Tell me, which states are you open to for job hunting? You can mention multiple states that interest you."
+
+  # utter_ask_salary:
+  # - text: "What salary range are you aiming for in your ideal job?"
+  # - text: "Could you please specify the salary range you have in mind for your next job?"
+  # - text: "In terms of compensation, what are your salary expectations for a potential job?"
+  # - text: "What is your preferred salary range for the job you're seeking?"
+  # - text: "When it comes to compensation, what's your desired salary range for your next role?"
+
+  utter_ask_job_type:
+  - text: "Are you primarily seeking full-time or part-time job opportunities?"
+  - text: "In terms of job type, do you prefer full-time or part-time roles?"
+  - text: "Would you like to focus on full-time positions, part-time roles?"
+  - text: "When it comes to job hours, are you interested in full-time positions, part-time positions, or a mix of both?"
+  - text: "Could you specify if you're looking for full-time employment, part-time opportunities, or a combination of both in your job search?"
+
+  utter_ask_company:
+  - text: "Do you have any particular companies in mind that you're interested in working for? If not, that's perfectly fine."
+  - text: "Are there specific companies you're keen on exploring for job opportunities, or are you open to any suitable options?"
+  - text: "Would you like to mention any specific companies you have in mind for your job search?"
+  - text: "Are there any particular companies on your radar for potential job applications, or should we explore various options?"
+  - text: "Is there a list of companies you'd like to target for job opportunities, or are you open to suggestions?"
+
+  utter_ask_year_of_xp:
+  - text: "Could you please share your years of professional experience with me?"
+  - text: "How many years have you worked in your field?"
+  - text: "In terms of your work history, how many years of experience can you tell us about?"
+  - text: "Do you have a specific number of years of experience that you'd like to highlight in your job search?"
+  - text: "Could you let us know how much experience you've accumulated in your career so far?"
+
+  utter_ask_education:
+  - text: "Tell me about your academic background. What level of education have you completed?"
+  - text: "Could you share your educational qualifications and degrees with me?"
+  - text: "In terms of your education, what is the highest degree do you hold?"
+  - text: "Do you have any specific academic qualifications or degrees you'd like to mention?"
+  - text: "What is your educational background? Please describe the highest degrees you've obtained."
+
+  utter_ask_soft_skills:
+  - text: "Tell me about your soft skills. What interpersonal strengths do you possess?"
+  - text: "Could you share some of your key soft skills or qualities that make you a valuable team member?"
+  - text: "In terms of your non-technical skills, what would you say are your strengths?"
+  - text: "Do you have any specific soft skills that you'd like to highlight, such as communication or leadership abilities?"
+  - text: "What interpersonal skills or qualities do you bring to the table in a professional setting?"
+
+  utter_ask_hard_skills:
+  - text: "Tell me about your development skills. What programming or technical abilities do you possess?"
+  - text: "Could you share your expertise in development? What languages or technologies are you proficient in?"
+  - text: "In terms of technical skills, what development capabilities do you have in your toolkit?"
+  - text: "Do you have any specific development skills that you'd like to highlight, such as web development or app programming?"
+  - text: "What programming or technical skills can you bring to the table in a professional context?"
+
+  utter_handle_deny:
+  - text: "When you're ready to proceed, kindly respond with 'yes'."
+  - text: "To continue, please type 'yes' when you're prepared."
+  - text: "Ready to move forward? Just reply with 'yes' when you are."
+  - text: "Shall we continue? A 'yes' from you will get us going!"
+  - text: "If you're set to go, simply type 'yes' to confirm."
+
+  utter_submit:
+  - text: "Success"
+
+  utter_please_rephrase:
+  - text: "Sorry, I can't handle that request."
+
+actions:
+  - utter_greet
+  - utter_handle_deny
+  - utter_submit
+  - action_collect_information
+  - action_set_location
+ # - action_set_salary
+  - action_set_job_type
+  - action_set_company
+  - action_set_year_of_xp
+  - action_set_education
+  - action_set_soft_skills
+  - action_set_hard_skills
+  - action_sent_information
+
+  
