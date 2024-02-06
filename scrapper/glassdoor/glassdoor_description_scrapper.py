@@ -57,8 +57,8 @@ def scrape_job_data(url, loc, file_name):
         i = 0
         while i < 5:
             soup = BeautifulSoup(driver.page_source, 'html.parser')
-            element_with_id = soup.find(id="JobDescriptionContainer")
-            company_with_id = soup.find(class_ = 'd-flex align-items-center justify-content-between css-16nw49e e11nt52q1')
+            element_with_id = soup.find(class_ = "JobDetails_jobDescription__6VeBn JobDetails_blurDescription__fRQYh")
+            company_with_id = soup.find(class_ = 'EmployerProfile_employerName__Xemli')
             if element_with_id:
                 break
             else:
