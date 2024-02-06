@@ -80,6 +80,11 @@ nlu:
     - West Virginia
     - Wisconsin
     - Wyoming
+    - Larnaca
+    - Limassol
+    - Nicosia
+    - Paphos
+    - Famagusta
 
 - intent: collect_location
   examples: |
@@ -107,6 +112,11 @@ nlu:
     - [Montana](location)
     - [Oregon](location) and [Kansas](location)
     - [Iowa](location)
+    - [Larnaca](location)
+    - [Limassol](location)
+    - I need a job in [Paphos](location)
+    - [Famagusta](location) or [Nicosia](location) are my preferred locations
+    - [Nicosia](location), [Larnaca](location) or [Limassol](location)
 
 
 # - regex: salary
@@ -122,14 +132,78 @@ nlu:
 #     - [20000](salary) dollars
 #     - [30000](salary)k
 
-- intent: collect_job_type
+- synonym: Fulltime
   examples: |
     - [full time](job_type)
-    - [part time](job_type)
-    - [hybrid](job_type)
-    - [full](job_type)
-    - [part](job_type)
+    - [full-time](job_type)
     - [Fulltime](job_type)
+    - [Full time](job_type)
+
+- synonym: Parttime
+  examples: |
+    - [part time](job_type)
+    - [part-time](job_type)
+    - [Parttime](job_type)
+    - [Part time](job_type)
+
+- synonym: Hybrid
+  examples: |
+    - [hybrid](job_type)
+    - [Hybrid](job_type)
+
+- synonym: Remote
+  examples: |
+    - [remote](job_type)
+    - [Remote](job_type)
+
+- synonym: Flexible
+  examples: |
+    - [flexible](job_type)
+    - [Flexible](job_type)
+
+- synonym: Permanent
+  examples: |
+    - [permanent](job_type)
+    - [Permanent](job_type)
+
+- synonym: Temporary
+  examples: |
+    - [temporary](job_type)
+    - [Temporary](job_type)
+
+
+- intent: collect_job_type
+  examples: |
+    - I am looking for a [full time](job_type:Fulltime) job.
+    - I prefer working [part time](job_type:Parttime).
+    - Is this position [hybrid](job_type:Hybrid)?
+    - I can only work [full](job_type:Fulltime) hours.
+    - Do you have [part](job_type:Parttime) positions available?
+    - I'm interested in [Fulltime](job_type:Fulltime) roles.
+    - I want a [part-time](job_type:Parttime) job.
+    - Are there any [full-time](job_type:Fulltime) openings?
+    - Looking for a [hybrid](job_type:Hybrid) work environment.
+    - [Remote](job_type:Remote) work is what I'm searching for.
+    - I need a [flexible](job_type:Flexible) schedule.
+    - Only interested in [permanent](job_type:Permanent) positions.
+    - I'm open to [temporary](job_type:Temporary) or contract work.
+    - [Flexible](job_type:Flexible) work hours would be ideal for me.
+    - [Parttime](job_type:Parttime) roles suit my current situation best.
+    - Seeking a [remote](job_type:Remote) position in your company.
+    - I prefer a job that is [hybrid](job_type:Hybrid), mixing office and remote work.
+    - Looking for [permanent](job_type:Permanent) employment opportunities.
+    - Are there any [temporary](job_type:Temporary) roles available?
+    - [Fulltime](job_type:Fulltime)
+    - [Parttime](job_type:Parttime)
+    - [Hybrid](job_type:Hybrid)
+    - [Remote](job_type:Remote)
+    - [Flexible](job_type:Flexible)
+    - [Permanent](job_type:Permanent)
+    - [Temporary](job_type:Temporary)
+    - [full time](job_type:Fulltime)
+    - [part time](job_type:Parttime)
+
+
   
 - lookup: company
   examples: |
@@ -373,6 +447,29 @@ nlu:
     - [leadership](soft_skills)
     - [fast learner](soft_skills) and [leadership](soft_skills)
     - [fast learner](soft_skills), [leadership](soft_skills) and [teamwork](soft_skills)
+    - I excel in [communication](soft_skills) and [team building](soft_skills).
+    - My strengths include [critical thinking](soft_skills) and [problem solving](soft_skills).
+    - I possess strong [analytical skills](soft_skills) and [innovation](soft_skills) capabilities.
+    - [Self-motivation](soft_skills) is one of my core qualities.
+    - I have experience with [virtual teams](soft_skills) and [knowledge transfer](soft_skills).
+    - [Consulting](soft_skills), [report writing](soft_skills), and [budgeting](soft_skills) are my expertise areas.
+    - I am known for my [reliability](soft_skills) and [ability to meet deadlines](soft_skills).
+    - Proficient in [quality assurance](soft_skills) and [progress reporting](soft_skills).
+    - My [literacy](soft_skills) in [Microsoft Windows](soft_skills) is very strong.
+    - Demonstrated [leadership](soft_skills) skills in various projects.
+    - Known for [quick learning](soft_skills) and adapting to new technologies.
+    - [Planning](soft_skills) and [management](soft_skills) are among my professional skills.
+    - I have a [willingness to learn](soft_skills) and constantly improve.
+    - Skilled in [coordinating](soft_skills) teams and ensuring [security policies](soft_skills) compliance.
+    - My [positivity](soft_skills) and [self-sufficiency](soft_skills) stand out in challenging situations.
+    - Adept at [multitasking](soft_skills) and [creativity](soft_skills) in problem-solving.
+    - Strong [organizational skills](soft_skills) and [time management](soft_skills) abilities.
+    - [Writing](soft_skills) technical documents and [investigation](soft_skills) reports is my forte.
+    - Effective in [sales](soft_skills) and providing top-notch [customer service](soft_skills).
+    - Maintaining [timelines](soft_skills) and [trustworthiness](soft_skills) in all dealings.
+    - My [enthusiasm](soft_skills) and [editing](soft_skills) skills enhance content quality.
+    - Proven [teamwork](soft_skills) in collaborative projects.
+    - [Fast learner](soft_skills) with a knack for picking up new skills quickly.
 
 - lookup: hard_skills
   examples: |
@@ -394,8 +491,8 @@ nlu:
     - Microsoft Visual Studio
     - Processor Architecture
     - Systems Architecture
-    - Go (Programming Language)
-    - Visual Basic .NET (Programming Language)
+    - Go
+    - Visual Basic .NET
     - Avionics
     - Cloud Database
     - Mixed Reality
@@ -405,7 +502,7 @@ nlu:
     - Corporate Social Responsibility
     - Code Review
     - MATLAB
-    - Hololens (VR Technology)
+    - Hololens
     - Aspose
     - Customer Information Systems
     - DevOps
@@ -414,7 +511,7 @@ nlu:
     - Chemistry
     - Automation
     - SteamVR
-    - Fortran (Programming Language)
+    - Fortran
     - Business Process
     - Web Scraping
     - Technical Support
@@ -427,7 +524,7 @@ nlu:
     - Kibana
     - Engineering Plans And Specifications
     - PostgreSQL
-    - Field-Programmable Gate Array (FPGA)
+    - Field-Programmable Gate Array
     - Technology Solutions
     - Prototyping
     - Language Experience Approach
@@ -437,11 +534,11 @@ nlu:
     - Electronic Hardware
     - Project Management
     - Github
-    - PyTorch (Machine Learning Library)
+    - PyTorch
     - Embedded Systems
     - 3D Modeling
     - Oracle SQL Developer
-    - Dynamic Application Security Testing (DAST)
+    - DAST
     - Computer Engineering
     - Markdown
     - Software Development Engineer in Test
@@ -457,12 +554,12 @@ nlu:
     - Gradle
     - Adobe XD
     - USB
-    - User Experience (UX)
+    - UX
     - Kubernetes
     - Stored Procedure
     - Software Suite
     - PSIA/AASI Certification
-    - Project Management Office (PMO)
+    - PMO
     - Microsoft SQL Servers
     - System Software
     - Software Project Management
@@ -482,8 +579,8 @@ nlu:
     - Data Security
     - Electromagnetism
     - Flight Software
-    - Back End (Software Engineering)
-    - Ubuntu (Operating System)
+    - Back End
+    - Ubuntu
     - Algorithms
     - Toolchain
     - Windows PowerShell
@@ -494,9 +591,9 @@ nlu:
     - Teamcity
     - Equities
     - Data Collection
-    - R (Programming Language)
+    - R 
     - Supplier Performance Management
-    - Visual C++ (Programming Language)
+    - Visual C++
     - Apache Flex
     - User Interface (UI) Design
     - Infrastructure as Code (IaC)
@@ -504,7 +601,7 @@ nlu:
     - Database Queries
     - Programming Tools
     - CompTIA A+
-    - Julia (Programming Language)
+    - Julia
     - Launch Vehicle Systems
     - Simulations
     - Aviation
@@ -518,11 +615,11 @@ nlu:
     - Logstash
     - JavaScript
     - Full Stack Development
-    - Eclipse (Software)
+    - Eclipse
     - Amazon Web Services
     - Web Applications
     - Space Exploration
-    - HyperText Markup Language (HTML)
+    - HTML
     - Rapid Prototyping
     - Amazon S3
     - Unmanned Underwater Vehicles
@@ -553,11 +650,11 @@ nlu:
     - Software Quality (SQA/SQC)
     - Qt (Software)
     - Data Processing
-    - Small-Unmanned Aerial Systems (S-UAS)
+    - S-UAS
     - Terraform
     - Unmanned Aerial Vehicle
     - NoSQL
-    - Asynchronous Javascript and XML (AJAX)
+    - AJAX
     - Human Factors
     - Microsoft Azure
     - Model Based Systems Engineering
@@ -621,10 +718,10 @@ nlu:
     - Robotics
     - Java
     - Big Data Analytics
-    - PTC Creo (CAD Suite)
+    - PTC Creo
     - Source Code Control Systems
     - SQL Server Analysis Services
-    - Angular (Web Framework)
+    - Angular
     - Vehicle Dynamics
     - User Acceptance Testing
     - UAT
@@ -683,7 +780,7 @@ nlu:
     - Project Management Software
     - Testability
     - Build Tools
-    - Django (Web Framework)
+    - Django
     - Space Flight
     - Augmented Reality
     - Business Requirements
@@ -691,7 +788,7 @@ nlu:
     - Military Standards And Specifications
     - Demonstration Skills
     - Product Management
-    - PHP (Scripting Language)
+    - PHP
     - Test Automation
     - Animations
     - Research And Development
@@ -797,8 +894,27 @@ nlu:
 
 - intent: collect_hard_skills
   examples: |
-    - [java](hard_skills) and [C](hard_skills)
-    - [java](hard_skills), [C](hard_skills) and [python](hard_skills)
-    - I am good at [python](hard_skills) and [C](hard_skills)
-    - I know [rasa](hard_skills)
-    - I know [networking](hard_skills), [rasa](hard_skills) and [C](hard_skills)
+    - I have experience in [Java](hard_skills) and [C](hard_skills).
+    - Proficient in [python](hard_skills), [C](hard_skills), and [JavaScript](hard_skills).
+    - My skills include [networking](hard_skills) and [Serial Peripheral Interface](hard_skills).
+    - I've worked with [Link 16](hard_skills) and [Systems Design](hard_skills).
+    - Familiar with [Stm32](hard_skills) and [Multidisciplinary Research](hard_skills).
+    - Specialized in [Airworthiness](hard_skills) and [User Experience (UX) Design](hard_skills).
+    - I can perform [Technical Writing](hard_skills) and use [Klocwork](hard_skills).
+    - Skilled in [Sensors](hard_skills), [Microsoft Visual Studio](hard_skills), and [Processor Architecture](hard_skills).
+    - Experienced with [Systems Architecture](hard_skills) and [Go](hard_skills).
+    - I have [Visual Basic .NET ](hard_skills) and [Avionics](hard_skills) skills.
+    - My expertise includes [Cloud Database](hard_skills), [Mixed Reality](hard_skills), and [Coverity](hard_skills).
+    - I understand [Browser Compatibility](hard_skills) and [Radar](hard_skills) technology.
+    - Capable of [Corporate Social Responsibility](hard_skills) planning and [Code Review](hard_skills).
+    - Proficient in using [MATLAB](hard_skills) and developing for [Hololens (VR Technology)](hard_skills).
+    - Knowledgeable in [Aspose](hard_skills) and [Customer Information Systems](hard_skills).
+    - I excel in [DevOps](hard_skills) and hold a [CompTIA Security+ CE](hard_skills) certification.
+    - My skills are in [Electrical Wiring](hard_skills) and [Chemistry](hard_skills).
+    - I specialize in [Automation](hard_skills) and have experience with [SteamVR](hard_skills).
+    - Expertise in [Fortran](hard_skills) and [Business Process](hard_skills) improvement.
+    - I'm skilled in [Web Scraping](hard_skills) and providing [Technical Support](hard_skills).
+    - Advanced knowledge of [Adobe Analytics](hard_skills) and [Medical Devices](hard_skills) development.
+    - I have a strong background in [I2C](hard_skills) communication and [Software Factory](hard_skills) management.
+    - [Python](hard_skills) and [TypeScript](hard_skills)
+    - [React.js](hard_skills), [Usability](hard_skills), [Git](hard_skills) and [HTML5](hard_skills)

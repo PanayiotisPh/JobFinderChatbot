@@ -30,11 +30,26 @@ def years_of_experience_finder(data):
         return "not given"
 
 def employment_type_finder(data):
-    emptype = ['Full Time', 'Part Time', 'Flexible', 'Hybrid', 'Permanent', 'Temporary', 'Remote']
+    emptype = {
+        "Fulltime": ["Full Time", "Fulltime", "full-time", "full time"],
+        "Parttime": ["Part Time", "Parttime", "part-time", "part time"],
+        "Flexible": ["Flexible", "flexible"],
+        "Hybrid": ["Hybrid", "hybrid"],
+        "Permanent": ["Permanent", "permanent"],
+        "Temporary": ["Temporary", "temporary"],
+        "Remote": ["Remote", "remote"]
+    }
+    #emptype = ['Full Time', 'Part Time', 'Flexible', 'Hybrid', 'Permanent', 'Temporary', 'Remote']
     emptype_found = []
-    for level in emptype:
-        if level in data:
-            emptype_found.append(level)
+    data_lower = data.lower()
+
+    for key, synonyms in emptype.items():
+        for synonym in synonyms:
+            # Check if synonym is in data
+            if synonym.lower() in data_lower:
+                emptype_found.append(key)
+                break  # Break to avoid adding the same employment type more than once
+
     return emptype_found
     
 def education_level_finder(data):

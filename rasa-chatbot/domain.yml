@@ -54,11 +54,11 @@ responses:
   # - text: "When it comes to compensation, what's your desired salary range for your next role?"
 
   utter_ask_job_type:
-  - text: "Are you primarily seeking full-time or part-time job opportunities?"
-  - text: "In terms of job type, do you prefer full-time or part-time roles?"
-  - text: "Would you like to focus on full-time positions, part-time roles?"
-  - text: "When it comes to job hours, are you interested in full-time positions, part-time positions, or a mix of both?"
-  - text: "Could you specify if you're looking for full-time employment, part-time opportunities, or a combination of both in your job search?"
+  - text: "Are you primarily seeking full-time, part-time, flexible or remote job opportunities?"
+  - text: "In terms of job type, do you prefer full-time, part-time, flexible or remote roles?"
+  - text: "Would you like to focus on full-time positions, part-time, flexible or remote?"
+  - text: "When it comes to job hours, are you interested in full-time positions, part-time, flexible or remote?"
+  - text: "Could you specify if you're looking for full-time employment, part-time opportunities, flexible or remote in your job search?"
 
   utter_ask_company:
   - text: "Do you have any particular companies in mind that you're interested in working for? If not, that's perfectly fine."
@@ -82,18 +82,18 @@ responses:
   - text: "What is your educational background? Please describe the highest degrees you've obtained."
 
   utter_ask_soft_skills:
-  - text: "Tell me about your soft skills. What interpersonal strengths do you possess?"
-  - text: "Could you share some of your key soft skills or qualities that make you a valuable team member?"
-  - text: "In terms of your non-technical skills, what would you say are your strengths?"
-  - text: "Do you have any specific soft skills that you'd like to highlight, such as communication or leadership abilities?"
-  - text: "What interpersonal skills or qualities do you bring to the table in a professional setting?"
+  - text: "Tell me about your soft skills. What interpersonal strengths do you possess(e.x communication, leadership, honesty)?"
+  - text: "Could you share some of your key soft skills or qualities that make you a valuable team member(e.x communication, leadership, honesty)?"
+  - text: "In terms of your non-technical skills, what would you say are your strengths(e.x communication, leadership, honesty)?"
+  - text: "Do you have any specific soft skills that you'd like to highlight, such as communication or leadership abilities(e.x communication, leadership, honesty)?"
+  - text: "What interpersonal skills or qualities do you bring to the table in a professional setting(e.x communication, leadership, honesty)?"
 
   utter_ask_hard_skills:
-  - text: "Tell me about your development skills. What programming or technical abilities do you possess?"
-  - text: "Could you share your expertise in development? What languages or technologies are you proficient in?"
-  - text: "In terms of technical skills, what development capabilities do you have in your toolkit?"
-  - text: "Do you have any specific development skills that you'd like to highlight, such as web development or app programming?"
-  - text: "What programming or technical skills can you bring to the table in a professional context?"
+  - text: "Tell me about your development skills. What programming or technical abilities do you possess(e.x python, java, SQL)?"
+  - text: "Could you share your expertise in development? What languages or technologies are you proficient in(e.x python, java, SQL)?"
+  - text: "In terms of technical skills, what development capabilities do you have in your toolkit(e.x python, java, SQL)?"
+  - text: "Do you have any specific development skills that you'd like to highlight, such as web development or app programming(e.x python, java, SQL)?"
+  - text: "What programming or technical skills can you bring to the table in a professional context(e.x python, java, SQL)?"
 
   utter_handle_deny:
   - text: "When you're ready to proceed, kindly respond with 'yes'."

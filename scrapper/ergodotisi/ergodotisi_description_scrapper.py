@@ -87,8 +87,8 @@ def scrape_job_data(job_id, url, loc, file_name):
     data = data.replace("\n", " ")
     
     employment_type = employment_type_finder(data)
-    if employment_type == "Fulltime":
-        employment_type = "Full Time"
+    if employment_type == "Full Time":
+        employment_type = "Fulltime"
     year_of_exp = years_of_experience_finder(data)
     education_level = education_level_finder(data)
 

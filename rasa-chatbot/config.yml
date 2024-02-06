@@ -35,7 +35,7 @@ policies:
   - name: RulePolicy
   - name: TEDPolicy
     max_history: 5
-    epochs: 120
+    epochs: 150
 
 
 # to be used in case of incosistent model performance

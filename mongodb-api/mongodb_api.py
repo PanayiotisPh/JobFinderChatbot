@@ -47,7 +47,7 @@ def get_results():
     # Check if the "Employment Type" field in data is not empty
     if data.get("Employment Type"):
         query_builder["$or"] = [
-            {"Employment Type": {"$in": data["Education Level"]}},
+            {"Employment Type": {"$in": data["Employment Type"]}},
             {"Employment Type": ""}
         ]
 
@@ -79,9 +79,9 @@ def get_results():
         document_soft_skills = set(entry.get("Soft Skills", []))  # Extract the "Soft Skills" field from the document
         hard_skill_similarity = jaccard_similarity(set(data["Hard Skills"]), document_hard_skills)
         soft_skill_similarity = jaccard_similarity(set(data["Soft Skills"]), document_soft_skills)
-        if hard_skill_similarity >= 0.5 and soft_skill_similarity >= 0.2:  # Check if the similarity is at least 50%
+        if hard_skill_similarity >= 0.2 and soft_skill_similarity >= 0.2:  # Check if the similarity is at least 50%
             similar_documents.append(entry)
-        elif hard_skill_similarity >= 0.5 and document_soft_skills == set([]):
+        elif hard_skill_similarity >= 0.3 and document_soft_skills == set([]):
             similar_documents.append(entry)
         elif soft_skill_similarity >= 0.2 and document_hard_skills == set([]):
             similar_documents.append(entry)
