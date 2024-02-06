@@ -1,6 +1,6 @@
 import pymongo
 import json
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -18,6 +18,15 @@ def initialize_connection():
     db = client["mongodb"]
     collection = db["jobs"]
     return collection , client
+
+@app.route('/data', methods=['GET'])
+def get_all_data():
+    collection, client = initialize_connection()
+    data = list(collection.find({}))  # Query to fetch all documents
+    for document in data:
+        document['_id'] = str(document['_id'])  # Convert ObjectId to string
+    client.close()
+    return jsonify(data)
 
 
 @app.route('/get-results', methods=['POST'])
@@ -37,7 +46,10 @@ def get_results():
 
     # Check if the "Employment Type" field in data is not empty
     if data.get("Employment Type"):
-        query_builder["Employment Type"] = data["Employment Type"]
+        query_builder["$or"] = [
+            {"Employment Type": {"$in": data["Education Level"]}},
+            {"Employment Type": ""}
+        ]
 
     # Check if the "Years of Exp" field in data is not empty
     if data.get("Years of Exp"):
@@ -48,11 +60,14 @@ def get_results():
 
     # Check if the "Education Level" field in data is not empty
     if data.get("Education Level"):
-        query_builder["Education Level"] = {"$in": data["Education Level"]}
+        query_builder["$or"] = [
+            {"Education Level": {"$in": data["Education Level"]}},
+            {"Education Level": ""}
+        ]
 
     # Check if the "Education Type" field in data is not empty
-    if data.get("Education Type"):
-        query_builder["Hard Skills"] = {"$in": data["Education Type"]}
+    #if data.get("Education Type"):
+    #    query_builder["Hard Skills"] = {"$in": data["Education Type"]}
 
     matching_entries = collection.find(query_builder)
 
@@ -65,6 +80,12 @@ def get_results():
         hard_skill_similarity = jaccard_similarity(set(data["Hard Skills"]), document_hard_skills)
         soft_skill_similarity = jaccard_similarity(set(data["Soft Skills"]), document_soft_skills)
         if hard_skill_similarity >= 0.5 and soft_skill_similarity >= 0.2:  # Check if the similarity is at least 50%
+            similar_documents.append(entry)
+        elif hard_skill_similarity >= 0.5 and document_soft_skills == set([]):
+            similar_documents.append(entry)
+        elif soft_skill_similarity >= 0.2 and document_hard_skills == set([]):
+            similar_documents.append(entry)
+        elif document_soft_skills == set([]) and document_hard_skills == set([]):
             similar_documents.append(entry)
 
 
