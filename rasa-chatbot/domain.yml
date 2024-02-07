@@ -32,6 +32,9 @@ entities:
   - hard_skills
 
 responses:
+  utter_fallback:
+    - text: "I'm not sure how to respond to that. Can you rephrase?"
+
   utter_greet:
   - text: "Greetings! I'm your dedicated Job Finder. To help you discover the perfect job, could you please answer a few questions?"
   - text: "Hello there! I'm here to assist as your personal Job Finder. Are you prepared to answer some questions so we can start your job search?"
@@ -109,6 +112,7 @@ responses:
   - text: "Sorry, I can't handle that request."
 
 actions:
+  - utter_fallback
   - utter_greet
   - utter_handle_deny
   - utter_submit

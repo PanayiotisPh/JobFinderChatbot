@@ -16,6 +16,10 @@ stories:
   - action: utter_handle_deny
   - checkpoint: handle_answer
 
+- story: fallback story
+  steps:
+  - intent: nlu_fallback
+  - action: utter_fallback
 
 - story: Collect User Information
   steps:
