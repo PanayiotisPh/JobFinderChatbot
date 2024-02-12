@@ -73,7 +73,7 @@ def scrape_job_data(url, loc, file_name):
         while i < 5:
             soup = BeautifulSoup(driver.page_source, 'html.parser')
             element_with_id = soup.find(class_ = "JobDetails_jobDescription__6VeBn JobDetails_blurDescription__fRQYh")
-            company_with_id = soup.find(class_ = 'EmployerProfile_employerName__Xemli')
+            company_with_id = soup.find(class_ = 'EmployerProfile_employerName__8w0tV')
             if element_with_id:
                 break
             else:
