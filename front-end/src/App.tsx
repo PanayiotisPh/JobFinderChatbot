@@ -2,7 +2,9 @@ import React from 'react';
 import './index.css';
 import { Dropdown, Layout, Menu, MenuProps, Space, theme } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import Chat from './components/Chat';
+import "react-chat-elements/dist/main.css"
+import Chat from "./components/Chat";
+
 const { Header, Content, Footer } = Layout;
 
 // const items = new Array(15).fill(null).map((_, index) => ({
@@ -53,7 +55,7 @@ const App: React.FC = () => {
       </Header>
 
 
-      <Content style={{ padding: '0 48px' }}>
+      <Content>
         <Chat />
       </Content>
 
