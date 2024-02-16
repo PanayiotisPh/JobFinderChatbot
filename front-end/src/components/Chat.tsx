@@ -1,5 +1,5 @@
 // Chatbot.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 
 interface Message {
@@ -8,6 +8,8 @@ interface Message {
 }
 
 const Chat: React.FC = () => {
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
   const [messages, setMessages] = useState<Message[]>([
     { text: 'Hello! How can I help you?', user: 'bot' },
   ]);
@@ -62,7 +64,9 @@ const Chat: React.FC = () => {
   };
   
   
-  
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   
   
   return (
@@ -73,6 +77,7 @@ const Chat: React.FC = () => {
             {msg.text}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className="chatbot-input">
         <input

@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { Dropdown, Layout, Menu, MenuProps, Space, theme } from 'antd';
+import { Dropdown, Flex, Layout, Menu, MenuProps, Space, theme } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "react-chat-elements/dist/main.css"
 import Chat from "./components/Chat";
@@ -59,7 +59,7 @@ const App: React.FC = () => {
         <Chat />
       </Content>
 
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer style={{ textAlign: 'center', paddingTop: '9%' }}>
         Panagiotis Fotiadis ©{new Date().getFullYear()}
       </Footer>
 
