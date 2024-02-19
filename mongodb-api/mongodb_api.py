@@ -1,6 +1,7 @@
 import pymongo
 import json
 from flask import Flask, request, jsonify
+import requests
 
 app = Flask(__name__)
 
@@ -10,7 +11,16 @@ def jaccard_similarity(set1, set2):
     union = len(set1 | set2)
     return intersection / union
 
-def initialize_connection():
+def initialize_connection_users():
+    # Connect to MongoDB
+    client = pymongo.MongoClient("mongodb://localhost:27018", 
+                                username='root',
+                                password='password')
+    db = client["mongodbUsers"]
+    collection = db["users"]
+    return collection , client
+
+def initialize_connection_jobs():
     # Connect to MongoDB
     client = pymongo.MongoClient("mongodb://localhost:27017", 
                                 username='root',
@@ -19,20 +29,34 @@ def initialize_connection():
     collection = db["jobs"]
     return collection , client
 
-@app.route('/data', methods=['GET'])
-def get_all_data():
-    collection, client = initialize_connection()
+@app.route('/users-data', methods=['GET'])
+def get_all_users_data():
+    collection, client = initialize_connection_users()
     data = list(collection.find({}))  # Query to fetch all documents
-    for document in data:
-        document['_id'] = str(document['_id'])  # Convert ObjectId to string
     client.close()
     return jsonify(data)
+
+
+@app.route('/data', methods=['GET'])
+def get_all_data():
+    collection, client = initialize_connection_jobs()
+    data = list(collection.find({}))  # Query to fetch all documents
+    client.close()
+    return jsonify(data)
+
+@app.route('/post-data', methods=['POST'])
+def post_data():
+    data = request.json
+    collection, client = initialize_connection_jobs()
+    collection.insert_many(data)
+    client.close()
+    return "Data inserted successfully"
 
 
 @app.route('/get-results', methods=['POST'])
 def get_results():
     data = request.json
-    collection, client = initialize_connection()
+    collection, client = initialize_connection_jobs()
 
     # Specify the desired "Location" value to match
     query_builder = {}
@@ -96,6 +120,7 @@ def get_results():
     client.close()
 
     return json_result
+
 
 if __name__ == '__main__':
     app.run(debug=True)

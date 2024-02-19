@@ -1,24 +1,32 @@
 /* Chatbot.css */
 .chatbot-container {
-  max-width: 80%;
+  max-width: 70%;
   margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  height: 80vh; /* Adjust based on your preference */
+  /* justify-content: flex-end; */
+  height: 87vh;
   background-color: #f9f9f9; /* Light background for the chat area */
   position: relative;
+}
+
+@media (max-width: 750px) {
+  .chatbot-container {
+    max-width: 90% !important;
+    height: 83vh !important;
+  }
 }
 
 .chatbot-messages {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  flex-grow: 1;
   padding: 10px;
-  height: calc(100% - 60px); /* Reserve space for the input area */
+  height: calc(100% - 80px); /* Reserve space for the input area */
 }
 
 .message {
@@ -26,6 +34,7 @@
   margin-bottom: 10px;
   border-radius: 20px;
   max-width: 60%;
+  font-size: 16px;
 }
 
 .user {
@@ -46,7 +55,10 @@
   padding: 10px;
   background-color: #fff;
   border-top: 1px solid #ccc;
+  height: 60px; /* Adjust based on your design */
+  display: flex; /* Ensures its children are properly aligned */
 }
+
 
 input, button {
   border: 1px solid #ccc;

@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* In your CSS file */
+.logo-img-home {
+  margin-top: 20px;
+  max-height: 100%;
+  max-width: 130px;
+  height: auto;
+  width: auto;
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 600px) {
+  .logo-img-home {
+    margin-top: 20px; /* Less space on top for small devices */
+    max-width: 110px; /* Smaller max width for small devices */
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center; /* Vertically center align items in the header */
+  justify-content: space-between; /* Pushes logo to the left and other content to the right */
+  padding: 0px 15px; /* Add padding on the sides of the header */
+  height: 100px; /* Adjust based on your design */
+  /* Add other styling for your header here */
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 10px 15px; /* Smaller padding on small devices */
+    height: 80px; /* Optional: Adjust height for smaller screens */
+  }
+}
+
+.text {
+  color: white;
+  font-size: 30px;
+  margin-left: -15px;
+}
+
+@media (max-width: 600px) {
+  .text {
+    color: white;
+    font-size: 23px;
+  }
+}

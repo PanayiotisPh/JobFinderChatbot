@@ -3,16 +3,16 @@ version: '3.8'
 services:
   mongodb:
     image: mongo:latest
-    container_name: mongodb
+    container_name: mongodbUsers
     restart: always
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
-      - mongo-data:/data/db
+      - mongo-data-users:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: jobs  # Optional: specify a default database to be created
+      MONGO_INITDB_DATABASE: users
 
 volumes:
-  mongo-data:
+  mongo-data-users:
