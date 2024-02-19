@@ -348,6 +348,7 @@ nlu:
     - doctor
     - bachelor
 
+#TD: lightcast
 - lookup: education
   examples: |
     - computer science

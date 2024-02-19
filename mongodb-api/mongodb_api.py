@@ -36,6 +36,14 @@ def get_all_users_data():
     client.close()
     return jsonify(data)
 
+@app.route('/post-users', methods=['POST'])
+def post_users():
+    data = request.json
+    collection, client = initialize_connection_users()
+    collection.insert_many(data)
+    client.close()
+    return "Data inserted successfully"
+
 
 @app.route('/data', methods=['GET'])
 def get_all_data():
