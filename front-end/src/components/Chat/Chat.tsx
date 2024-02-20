@@ -18,21 +18,24 @@ const Chat: React.FC = () => {
 
   const sendToRasa = async (userMessage: string): Promise<Message[]> => {
     try {
-      const rasaEndpoint = 'http://localhost:5005/webhooks/rest/webhook';
-      const response = await fetch(rasaEndpoint, {
+      // Your Flask API endpoint for forwarding messages to Rasa
+      const apiEndpoint = 'http://127.0.0.1:5000/api/messages';
+      const token = localStorage.getItem('token'); // Retrieve JWT from local storage
+  
+      const response = await fetch(apiEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the JWT in the request
         },
         body: JSON.stringify({
-          sender: 'user',
           message: userMessage,
         }),
       });
   
       const data = await response.json();
   
-      // Transform all responses from Rasa into Message objects
+      // Transform the responses from your Flask API into Message objects
       const botReplies: Message[] = data.map((reply: any) => ({
         text: reply.text,
         user: 'bot',
@@ -40,13 +43,12 @@ const Chat: React.FC = () => {
   
       return botReplies;
     } catch (error) {
-      console.error('Error sending message to Rasa:', error);
+      console.error('Error sending message through API:', error);
       return [{ text: 'Error communicating with the bot.', user: 'bot' }];
     }
   };
   
   
-
 
   const handleSendMessage = async () => {
     if (input.trim() !== '') {

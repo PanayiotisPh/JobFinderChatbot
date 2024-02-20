@@ -3,21 +3,33 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import './App.css';
+import { Navigate, Outlet } from "react-router-dom";
 
-const App: React.FC = () => {
+const ProtectedRoute = () => {
+  // Check if the user has a token
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return <Navigate to="/login" />;
+  }
+  
+  return <Outlet />;
+  
+};
+
+const App = () => {
   return (
-    <div className="App">
-
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<div>404 Page Not Found</div>} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ProtectedRoute />}>
+          <Route index element={<Home />} /> {/* Protected Home Page */}
+          {/* Any other protected routes go here */}
+        </Route>
+        <Route path="/login" element={<Login />} /> {/* Public Login Page */}
+        <Route path="/register" element={<Register />} /> {/* Public Register Page */}
+        {/* Redirect or 404 Page Not Found can also be placed here */}
+      </Routes>
+    </BrowserRouter>
   );
 };
 

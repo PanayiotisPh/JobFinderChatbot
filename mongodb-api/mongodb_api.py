@@ -2,9 +2,18 @@ import pymongo
 import json
 from flask import Flask, request, jsonify
 import requests
+from werkzeug.security import check_password_hash
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+import secrets
+from flask_cors import CORS
+from werkzeug.security import generate_password_hash
+
 
 app = Flask(__name__)
-
+CORS(app)
+secret_key = secrets.token_urlsafe(32)
+app.config['JWT_SECRET_KEY'] = "BSOXl7U6DC8BA8M22QLE55d6Y-8S0TSFlRIge5_inuQ"
+jwt = JWTManager(app)
 
 def jaccard_similarity(set1, set2):
     intersection = len(set1 & set2)
@@ -129,6 +138,84 @@ def get_results():
 
     return json_result
 
+@app.route('/login', methods=['POST'])
+def login():
+    email = request.json.get('email', None)
+    password = request.json.get('password', None)
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": email})
+
+    if user['_id'] == email and check_password_hash(user['password'], password):
+        # Create JWT token
+        access_token = create_access_token(identity=user['_id'])
+        client.close()
+        return jsonify(access_token=access_token), 200
+    
+    client.close()
+    return jsonify({"msg": "Bad username or password"}), 401
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": email})
+
+    if user:
+        client.close()
+        return jsonify({"message": "Email already in use"}), 400
+
+    # Hash password and create new user
+    hashed_password = generate_password_hash(password)
+    data = {
+        "_id": email,
+        "username": username,
+        "password": hashed_password,
+        "results": []
+    }
+    collection.insert_one(data)
+
+    client.close()
+    return jsonify({"message": "Registration successful"}), 201
+
+@app.route('/delete-users', methods=['DELETE'])
+def delete_users():
+    collection, client = initialize_connection_users()
+    collection.delete_many({})
+    client.close()
+    return "Data deleted successfully"
+
+@app.route('/api/messages', methods=['POST'])
+@jwt_required()
+def send_to_rasa():
+    user_identity = get_jwt_identity()
+    message_data = request.json.get('message')
+
+    # Your Rasa endpoint
+    rasa_endpoint = 'http://localhost:5005/webhooks/rest/webhook'
+
+    # Forward the message to Rasa
+    response = requests.post(rasa_endpoint, json={
+        'sender': user_identity,  # Using the JWT identity as the sender
+        'message': message_data,
+    })
+
+    if response.ok:
+        # Return Rasa's response back to the client
+        return jsonify(response.json()), 200
+    else:
+        return jsonify({'message': 'Failed to communicate with Rasa.'}), 500
+
+@app.route('/get-username', methods=['GET'])
+@jwt_required()
+def get_username():
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_identity})
+    client.close()
+    return jsonify(user['username']), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
