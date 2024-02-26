@@ -105,8 +105,8 @@ const Sidebar: React.FC = () => {
           <div className="session-item" onClick={() => handleSessionClick(session.chatId)}>
             <div className="session-date">{new Date(session.date).toLocaleDateString()}</div>
             <Popconfirm
-              title="Delete the task"
-              description="Are you sure to delete this task?"
+              title="Delete chat"
+              description="Are you sure to delete this chat?"
               okText="Yes"
               cancelText="No"
               onConfirm={() => handleDeleteSession(session.chatId)}

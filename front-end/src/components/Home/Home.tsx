@@ -46,10 +46,14 @@ const Home: React.FC = () => {
 
   const items: MenuProps['items'] = [
     {
-      label: <div style={{fontSize: "20px"}} onClick={logout}>Log Out</div>,
-      danger: true,
+      label: <Link to="/change-credentials" style={{fontSize: "20px"}}>Change Credentials</Link>,
       key: '0',
     },
+    {
+      label: <div style={{fontSize: "20px"}} onClick={logout}>Log Out</div>,
+      danger: true,
+      key: '1',
+    }
   ];
 
 

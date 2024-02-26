@@ -6,6 +6,7 @@ import Register from './components/Register/Register';
 import { Navigate, Outlet } from "react-router-dom";
 import ChatHistory from './components/ChatHistory/ChatHistory';
 import Chat from './components/Chat/Chat';
+import ChangeCredentials from './components/ChangeCredentials/ChangeCredentials';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/" element={<ProtectedRoute><Home /></ ProtectedRoute>}>
             <Route index element={<Chat key={window.location.pathname} />} />
             <Route path="chat/:chatId" element={<ChatHistory />} />
+            <Route path="/change-credentials" element={<ChangeCredentials />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
