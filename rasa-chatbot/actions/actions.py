@@ -268,6 +268,7 @@ class ActionSentInformation(Action):
         self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
         try:
+            global action
             global info_location
             # global info_salary
             global info_job_type
@@ -307,6 +308,21 @@ class ActionSentInformation(Action):
                 print(f"Error: {response.status_code}")
                 print(response.text)
 
+            action = "null"
+
+            info_location = ""
+            info_job_type = ""
+            info_company = ""
+            info_year_of_xp = ""
+            info_education = ""
+            info_education_level = ""
+            info_soft_skills = ""
+            info_hard_skills = ""
+
+            dispatcher.utter_message("To start over, type 'hi'.")
+
+            return [FollowupAction("action_restart")]   
+             
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []

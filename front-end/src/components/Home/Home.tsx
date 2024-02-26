@@ -3,12 +3,12 @@ import './Home.css';
 import { Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import "react-chat-elements/dist/main.css"
-import Chat from "../Chat/Chat";
-import { useNavigate } from 'react-router-dom';
+import Sidebar from "../Sidebar/Sidebar";
+import { useNavigate, Link, Outlet } from 'react-router-dom';
 
 
 const Home: React.FC = () => {
-  const { Header, Content, Footer } = Layout;
+  const { Header, Content, Footer, Sider } = Layout;
   const navigate = useNavigate();
   const [username, setUsername] = useState('User');
 
@@ -55,40 +55,31 @@ const Home: React.FC = () => {
 
   return (
     <Layout>
-
-      <Header className='header'>
-        <div>
-          <img src="/images/logo.png" alt='logo' className='logo-img-home' />
-        </div>
-        <div className='text'>Job Finder</div>
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          // items={items}
-          style={{ flex: 1, minWidth: 0 }}
-        />
-
-        <Dropdown menu={{ items }} trigger={['click']}>
-          <a onClick={(e) => e.preventDefault()}>
-          <Space>
-            <div style={{color: "white", padding: "10px", fontSize: "20px"}}>
-              {username}
-              <DownOutlined style={{color: "white", padding: "5px", fontSize: "20px"}}/>
-            </div>
-          </Space>
-          </a>
-        </Dropdown>
-
-      </Header>
-
-
-      <Content>
-        <Chat />
-      </Content>
-
-      <Footer style={{ textAlign: 'center' }}>Job Finder ©2024 Created by Panagiotis Fotiadis</Footer>
-
+      <Sider width={200} className="site-layout-background">
+        <Sidebar />
+      </Sider>
+      <Layout style={{ paddingLeft: '200px' }}>
+        <Header className='header'>
+          <div className='header-content'>
+            <img src="/images/logo.png" alt='logo' className='logo-img-home' />
+            <div className='text'>Job Finder</div>
+          </div>
+          <Dropdown menu={{ items }} trigger={['click']}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                <div style={{color: "white", padding: "10px", fontSize: "25px"}}>
+                  {username}
+                  <DownOutlined style={{color: "white", padding: "5px", fontSize: "21px"}}/>
+                </div>
+              </Space>
+            </a>
+          </Dropdown>
+        </Header>
+        <Content>
+          <Outlet />
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Job Finder ©2024 Created by Panagiotis Fotiadis</Footer>
+      </Layout>
     </Layout>
   );
 };

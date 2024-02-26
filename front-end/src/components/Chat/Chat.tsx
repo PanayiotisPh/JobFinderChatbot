@@ -62,7 +62,12 @@ const Chat: React.FC = () => {
         userMessage,
         ...botResponses,
       ]);
-  
+
+      const shouldSaveConversation = botResponses.some(response => response.text === "To start over, type 'hi'.");
+      if (shouldSaveConversation) {
+        saveConversation([...messages, userMessage, ...botResponses]);
+      }
+    
       setInput('');
       setIsLoading(false);
     }
@@ -73,6 +78,27 @@ const Chat: React.FC = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
   
+  const saveConversation = async (conversation: Message[]) => {
+    try {
+      const apiEndpoint = 'http://127.0.0.1:5000/save-chat';
+      const token = localStorage.getItem('token'); // Retrieve JWT from local storage
+  
+      await fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include the JWT in the request
+        },
+        body: JSON.stringify({
+          messages: conversation,
+        }),
+      });
+  
+      console.log('Conversation saved successfully');
+    } catch (error) {
+      console.error('Error saving conversation:', error);
+    }
+  };
   
   return (
     <div className="chatbot-container">

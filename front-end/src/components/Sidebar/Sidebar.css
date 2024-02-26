@@ -1,0 +1,53 @@
+/* Sidebar.css */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #001529;    /* Dark background for the sidebar */
+    color: white;
+    padding: 5px;
+    height: 100vh; /* Full height */
+    padding-top: 60%; /* Space for the header */
+  }
+  
+  .sidebar-link, .sidebar div {
+    cursor: pointer;
+    margin: 5px 0; /* Spacing between items */
+    padding: 5px !important;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* Text color for links */
+  }
+  
+  
+  .sidebar-link:hover, .sidebar div:hover {
+    background-color: #00386d; /* Highlight on hover */
+    color: white; /* Text color for links */
+  }
+
+  .activeSession {
+    background-color: #00386d !important;
+    padding: 5px !important;
+  }
+
+  .session-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .trash-icon {
+    color: #ffffff; /* Default icon color */
+    cursor: pointer;
+    font-size: 18px; /* Adjust icon size */
+    margin-left: auto;
+  }
+
+  .session-date {
+    flex-grow: 1; /* Allows the date to take up as much space as needed, pushing the icon to the end */
+  }
+  
+  .trash-icon:hover {
+    color: red; /* Color changes to red on hover */
+  }
+
+  

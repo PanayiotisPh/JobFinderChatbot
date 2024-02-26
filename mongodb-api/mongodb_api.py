@@ -7,6 +7,8 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 import secrets
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash
+from bson.objectid import ObjectId
+import datetime
 
 
 app = Flask(__name__)
@@ -216,6 +218,83 @@ def get_username():
     user = collection.find_one({"_id": user_identity})
     client.close()
     return jsonify(user['username']), 200
+
+@app.route('/save-chat', methods=['POST'])
+@jwt_required()
+def save_chat():
+    user_email = get_jwt_identity()
+    data = request.json
+    chat = {
+        "chatId": str(ObjectId()), # Generates a unique ID for the chat
+        "date": datetime.datetime.utcnow().isoformat(),
+        "messages": data['messages']
+    }
+
+    collection, client = initialize_connection_users()
+
+    # Update the user's document to push the new chat into the results array
+    collection.update_one(
+        {"_id": user_email},
+        {"$push": {"results": chat}}
+    )
+
+    client.close()
+
+    return jsonify({"message": "Chat saved successfully"}), 200
+
+@app.route('/api/sessions', methods=['GET'])
+@jwt_required()
+def get_sessions():
+    collection, client = initialize_connection_users()
+    current_user = get_jwt_identity()  # Get the identity of the current user
+    user_sessions = collection.find_one({"_id": current_user}, {"results": 1, "_id": 0})
+    
+    if not user_sessions:
+        client.close()  # Ensure you close the client connection
+        return jsonify({"msg": "No sessions found"}), 404
+
+    client.close()  # Ensure you close the client connection
+    return jsonify(user_sessions["results"]), 200
+
+@app.route('/api/chat/<chatId>', methods=['GET'])
+@jwt_required()
+def get_chat_by_chatId(chatId):
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+
+    # Find the user document
+    user_document = collection.find_one({"_id": user_identity})
+    
+
+    if user_document:
+        # Iterate through the results to find the matching chatId
+        for result in user_document.get('results', []):
+            if result.get('chatId') == chatId:
+                print(json.dumps(result.get('messages'), indent=4))
+                return jsonify(result.get('messages')), 200
+        return jsonify({"msg": "Chat session not found"}), 404
+    else:
+        return jsonify({"msg": "User not found"}), 404
+
+@app.route('/api/chat/<chatId>', methods=['DELETE'])
+@jwt_required()
+def delete_chat_by_chatId(chatId):
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+
+    # Attempt to update the user's document by pulling the chat session from the results array
+    update_result = collection.update_one(
+        {"_id": user_identity},
+        {"$pull": {"results": {"chatId": chatId}}}
+    )
+
+    if update_result.modified_count > 0:
+        # If the update modified a document, the chat session was successfully deleted
+        return jsonify({"msg": "Chat session deleted successfully"}), 200
+    else:
+        # If no documents were modified, the chat session was not found for the user
+        return jsonify({"msg": "Chat session not found"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)

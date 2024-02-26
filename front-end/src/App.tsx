@@ -1,33 +1,32 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import { Navigate, Outlet } from "react-router-dom";
+import ChatHistory from './components/ChatHistory/ChatHistory';
+import Chat from './components/Chat/Chat';
 
-const ProtectedRoute = () => {
-  // Check if the user has a token
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const token = localStorage.getItem('token');
-
-  if (!token) {
-    return <Navigate to="/login" />;
-  }
-  
-  return <Outlet />;
-  
+  return token ? <>{children}</> : <Navigate to="/login" />;
 };
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ProtectedRoute />}>
-          <Route index element={<Home />} /> {/* Protected Home Page */}
-          {/* Any other protected routes go here */}
+        <Route path="/" element={<ProtectedRoute><Home /></ ProtectedRoute>}>
+            <Route index element={<Chat key={window.location.pathname} />} />
+            <Route path="chat/:chatId" element={<ChatHistory />} />
         </Route>
-        <Route path="/login" element={<Login />} /> {/* Public Login Page */}
-        <Route path="/register" element={<Register />} /> {/* Public Register Page */}
-        {/* Redirect or 404 Page Not Found can also be placed here */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

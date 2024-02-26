@@ -14,29 +14,42 @@ code {
 
 /* In your CSS file */
 .logo-img-home {
-  margin-top: 20px;
-  max-height: 100%;
-  max-width: 130px;
-  height: auto;
-  width: auto;
+  height: 140px; /* Adjust based on your preference for default */
+  width: auto; /* Keep the aspect ratio of the image */
+  margin-right: 15px; /* Adds some space between the image and the text */
 }
 
 /* Adjustments for smaller screens */
 @media (max-width: 600px) {
   .logo-img-home {
+    height: 110px; /* Smaller height for small devices */
     margin-top: 20px; /* Less space on top for small devices */
     max-width: 110px; /* Smaller max width for small devices */
+    
   }
 }
 
 .header {
+  width: 100%; /* Ensure full viewport width */
+  position: fixed; /* Keep it fixed at the top */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left side */
   display: flex;
-  align-items: center; /* Vertically center align items in the header */
-  justify-content: space-between; /* Pushes logo to the left and other content to the right */
-  padding: 0px 15px; /* Add padding on the sides of the header */
-  height: 100px; /* Adjust based on your design */
-  /* Add other styling for your header here */
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  height: 100px; /* Adjust as needed */
+  color: white;
+  z-index: 1000; /* Ensure it's above other content */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
+
+.header-content {
+  display: flex;
+  align-items: center; /* Aligns items vertically center */
+  margin-left: -10px;
+}
+
 
 @media (max-width: 600px) {
   .header {
@@ -48,12 +61,14 @@ code {
 .text {
   color: white;
   font-size: 30px;
-  margin-left: -15px;
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
   .text {
     color: white;
-    font-size: 23px;
+    font-size: 30px;
+    margin-top: 7px;
+    margin-left: -20px;
   }
 }
