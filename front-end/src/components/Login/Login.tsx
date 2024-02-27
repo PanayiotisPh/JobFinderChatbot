@@ -27,6 +27,21 @@ const Login: React.FC = () => {
       });
     }
   }, [location]);
+
+  useEffect(() => {
+    // Check if we navigated here after a successful registration
+    if (location.state?.fromCredentials) {
+      toast.success('Successfully Changed Credentials. Please log in.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }, [location]);
     
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

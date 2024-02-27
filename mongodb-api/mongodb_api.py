@@ -135,7 +135,6 @@ def get_results():
     matching_entries_list = list(similar_documents)
     urls = [entry['URL'] for entry in matching_entries_list]
     json_result = json.dumps(urls, default=str, indent=4)
-    #print(json_result)    
     client.close()
 
     return json_result
@@ -270,7 +269,6 @@ def get_chat_by_chatId(chatId):
         # Iterate through the results to find the matching chatId
         for result in user_document.get('results', []):
             if result.get('chatId') == chatId:
-                print(json.dumps(result.get('messages'), indent=4))
                 return jsonify(result.get('messages')), 200
         return jsonify({"msg": "Chat session not found"}), 404
     else:
@@ -295,6 +293,62 @@ def delete_chat_by_chatId(chatId):
         # If no documents were modified, the chat session was not found for the user
         return jsonify({"msg": "Chat session not found"}), 404
 
+@app.route('/api/change-password', methods=['POST'])
+@jwt_required()
+def change_password():
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    data = request.json
+
+    # Retrieve the user from the database
+    user = collection.find_one({"_id": user_identity})  # Assuming username is unique and provided
+    print(data["oldPassword"])
+
+    if user:
+        # Verify the old password
+        if check_password_hash(user["password"], data["oldPassword"]):
+            # Hash the new password before storing it
+            hashed_password = generate_password_hash(data["newPassword"])
+
+            # Update the user's password in the database
+            collection.update_one(
+                {"_id": user_identity},
+                {"$set": {"password": hashed_password}}
+            )
+
+            return jsonify({"message": "Password updated successfully"}), 200
+        else:
+            return jsonify({"error": "Old password is incorrect"}), 400
+    else:
+        return jsonify({"error": "User not found"}), 404
+
+
+@app.route('/api/change-username', methods=['POST'])
+@jwt_required()
+def change_username():
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    data = request.json
+
+    # Retrieve the user from the database
+    user = collection.find_one({"_id": user_identity})  # Assuming username is unique and provided
+
+    if user:
+        # Verify the old username
+        if user["username"].lower() == data["oldUsername"].lower():
+
+            # Update the user's username in the database
+            collection.update_one(
+                {"_id": user_identity},
+                {"$set": {"username": data["newUsername"]}}
+            )
+
+            return jsonify({"message": "Username updated successfully"}), 200
+        else:
+            return jsonify({"error": "Old username is incorrect"}), 400
+    else:
+        return jsonify({"error": "User not found"}), 404
+    
 
 if __name__ == '__main__':
     app.run(debug=True)
