@@ -23,7 +23,6 @@ def jaccard_similarity(set1, set2):
     return intersection / union
 
 def initialize_connection_users():
-    # Connect to MongoDB
     client = pymongo.MongoClient("mongodb://localhost:27018", 
                                 username='root',
                                 password='password')
@@ -32,7 +31,6 @@ def initialize_connection_users():
     return collection , client
 
 def initialize_connection_jobs():
-    # Connect to MongoDB
     client = pymongo.MongoClient("mongodb://localhost:27017", 
                                 username='root',
                                 password='password')
@@ -174,7 +172,16 @@ def register():
         "_id": email,
         "username": username,
         "password": hashed_password,
-        "results": []
+        "results": [],
+        "action": "",
+        "info_location": [],
+        "info_job_type": [],
+        "info_company": [],
+        "info_years_of_exp": [],
+        "info_education_level": [],
+        "info_education_type": [],
+        "info_soft_skills": [],
+        "info_hard_skills": []
     }
     collection.insert_one(data)
 
@@ -202,6 +209,7 @@ def send_to_rasa():
         'sender': user_identity,  # Using the JWT identity as the sender
         'message': message_data,
     })
+    print(user_identity, message_data)
 
     if response.ok:
         # Return Rasa's response back to the client
@@ -322,7 +330,6 @@ def change_password():
     else:
         return jsonify({"error": "User not found"}), 404
 
-
 @app.route('/api/change-username', methods=['POST'])
 @jwt_required()
 def change_username():
@@ -349,6 +356,134 @@ def change_username():
     else:
         return jsonify({"error": "User not found"}), 404
     
+@app.route('/action/<user_id>/<action>', methods=['POST'])
+def info_action(user_id, action):
+    collection, client = initialize_connection_users()
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"action": action}}
+    )
+    client.close()
+    return "Action updated successfully", 200
+
+@app.route('/info_location/<user_id>', methods=['POST'])
+def info_location(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_location": data['location']}}
+    )
+    client.close()
+    return "Info location updated successfully", 200
+
+@app.route('/info_job_type/<user_id>', methods=['POST'])
+def info_job_type(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_job_type": data["job_type"]}}
+    )
+    client.close()
+    return "Info job type updated successfully", 200
+
+@app.route('/info_company/<user_id>', methods=['POST'])
+def info_company(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_company": data["company"]}}
+    )
+    client.close()
+    return "Info company updated successfully", 200
+
+@app.route('/info_years_of_exp/<user_id>', methods=['POST'])
+def info_years_of_exp(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_years_of_exp": data["years_of_exp"]}}
+    )
+    client.close()
+    return "Info years of experience updated successfully", 200
+
+@app.route('/info_education/<user_id>', methods=['POST'])
+def info_education(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_education_level": data["education_level"], "info_education_type": data["education_type"]}}
+    )
+    client.close()
+    return "Info education updated successfully", 200
+
+
+@app.route('/info_soft_skills/<user_id>', methods=['POST'])
+def info_soft_skills(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_soft_skills": data["soft_skills"]}}
+    )
+    client.close()
+    return "Info soft skills updated successfully", 200
+
+@app.route('/info_hard_skills/<user_id>', methods=['POST'])
+def info_hard_skills(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"info_hard_skills": data["hard_skills"]}}
+    )
+    client.close()
+    return "Info hard skills updated successfully", 200
+
+@app.route('/get_rasa/<user_id>', methods=['GET'])
+def get_rasa(user_id):
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_id})
+    # Update the user's document to set the info_location field
+    
+    client.close()
+    return jsonify({"info_location": user["info_location"],
+                    "info_job_type": user["info_job_type"],
+                    "info_company": user["info_company"],
+                    "info_years_of_exp": user["info_years_of_exp"],
+                    "info_education_level": user["info_education_level"],
+                    "info_education_type": user["info_education_type"],
+                    "info_soft_skills": user["info_soft_skills"],
+                    "info_hard_skills": user["info_hard_skills"]}), 200
+    
+@app.route('/reset_rasa/<user_id>', methods=['POST'])
+def reset_rasa(user_id):
+    collection, client = initialize_connection_users()
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"action": "", 
+                  "info_location": [], 
+                  "info_job_type": [], 
+                  "info_company": [], 
+                  "info_years_of_exp": [], 
+                  "info_education_level": [], 
+                  "info_education_type": [], 
+                  "info_soft_skills": [], 
+                  "info_hard_skills": []}}
+    )
+    client.close()
+    return "Rasa reset successfully", 200
+
+@app.route('/get_action/<user_id>', methods=['GET'])
+def get_action(user_id):
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_id})
+    client.close()
+    return jsonify(user['action']), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
