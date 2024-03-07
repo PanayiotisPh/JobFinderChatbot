@@ -73,7 +73,12 @@ const Login: React.FC = () => {
   
       const { access_token } = await response.json();
       localStorage.setItem('token', access_token);
-  
+      await fetch(`http://127.0.0.1:5000/reset_rasa`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
       navigate('/');
     } catch (error) {
       console.error(error);

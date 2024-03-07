@@ -478,6 +478,26 @@ def reset_rasa(user_id):
     client.close()
     return "Rasa reset successfully", 200
 
+@app.route('/reset_rasa', methods=['POST'])
+@jwt_required()
+def reset():
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    collection.update_one(
+        {"_id": user_identity},
+        {"$set": {"action": "", 
+                  "info_location": [], 
+                  "info_job_type": [], 
+                  "info_company": [], 
+                  "info_years_of_exp": [], 
+                  "info_education_level": [], 
+                  "info_education_type": [], 
+                  "info_soft_skills": [], 
+                  "info_hard_skills": []}}
+    )
+    client.close()
+    return "Rasa reset successfully", 200
+
 @app.route('/get_action/<user_id>', methods=['GET'])
 def get_action(user_id):
     collection, client = initialize_connection_users()

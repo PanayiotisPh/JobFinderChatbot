@@ -33,6 +33,7 @@
   .session-item {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
   
   .trash-icon {
@@ -50,4 +51,19 @@
     color: red; /* Color changes to red on hover */
   }
 
+  .refresh-chat-button {
+    background-color: #007bff;
+    border-radius: 20px;
+    cursor: pointer;
+    padding: 10px 20px; /* Adjusted padding for better visual */
+    margin: 5px 0; /* Ensure it has some margin */
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .refresh-chat-button:hover {
+    background-color: #0056b3;
+  }
+  
   

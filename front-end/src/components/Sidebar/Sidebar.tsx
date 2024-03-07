@@ -90,9 +90,26 @@ const Sidebar: React.FC = () => {
     }
   };
 
+  const refreshChat = async () => {
+    const response = await fetch(`http://127.0.0.1:5000/reset_rasa`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error('Failed to delete session');
+    }
+  };
+
   return (
     <>
       <div className="sidebar">
+        <div className='refresh-chat-button' onClick={() => refreshChat()}>
+          Refresh Chat
+        </div>
         <Link to="/" className={`sidebar-link ${isCurrentChatActive() ? "activeSession" : ""}`}>
           New Chat
         </Link>
