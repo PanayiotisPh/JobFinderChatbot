@@ -25,36 +25,36 @@ stories:
   steps:
   - checkpoint: handle_answer
   - intent: collect_affirm
-  - action: utter_ask_location
   - action: action_set_location
+  - action: utter_ask_location
   - intent: collect_location
     entities:
       - location: "New York"
   - action: action_collect_information
-  - action: utter_ask_job_type
   - action: action_set_job_type
+  - action: utter_ask_job_type
   - intent: collect_job_type
     entities:
       - job_type: "full-time"
   - action: action_collect_information
-  - action: utter_ask_company
   - action: action_set_company
+  - action: utter_ask_company
   - or:
     - intent: collect_company
       entities:
         - company: "Google"
     - intent: collect_none_company
   - action: action_collect_information
-  - action: utter_ask_year_of_xp
   - action: action_set_year_of_xp
+  - action: utter_ask_year_of_xp
   - or:
     - intent: collect_year_of_xp
       entities:
         - year_of_xp: "5"
     - intent: collect_none_year_of_xp
   - action: action_collect_information
-  - action: utter_ask_education
   - action: action_set_education
+  - action: utter_ask_education
   - or:
     - intent: collect_education
       entities:
@@ -62,14 +62,14 @@ stories:
         - education: "cs"
     - intent: collect_none_education
   - action: action_collect_information
-  - action: utter_ask_soft_skills
   - action: action_set_soft_skills
+  - action: utter_ask_soft_skills
   - intent: collect_soft_skills
     entities:
       - soft_skills: "Communication, Problem Solving"
   - action: action_collect_information
-  - action: utter_ask_hard_skills
   - action: action_set_hard_skills
+  - action: utter_ask_hard_skills
   - intent: collect_hard_skills
     entities:
       - hard_skills: "Python, Machine Learning"

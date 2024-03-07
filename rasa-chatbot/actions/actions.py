@@ -118,17 +118,19 @@ class ActionCollectInformation(Action):
             if action == "collect_location":
                 location = list(tracker.get_latest_entity_values("location"))
                 if not location:
+                    print("No location found")
                     try:
                         dispatcher.utter_message(text = "Sorry, I didn't get that. Can you rephrase it?")
                     except Exception as e:
                         print(f"Exception: {str(e)}")
+                    return [FollowupAction("utter_ask_location")]
                 else:
                     payload = {"location": location}
                     url = f"http://localhost:5000/info_location/{tracker.sender_id}"
                     requests.request("POST", url, json=payload)
                     locations_text = ", ".join(location)
                     dispatcher.utter_message(f"Understood! Your location is {locations_text}.")
-                    return [FollowupAction("utter_ask_job_type")]
+                    return [FollowupAction("action_set_job_type")]
 
             # elif action == "collect_salary":
             #     salary = next(tracker.get_latest_entity_values("salary"), None)
@@ -143,11 +145,12 @@ class ActionCollectInformation(Action):
                 job_type = next(tracker.get_latest_entity_values("job_type"), None)
                 if job_type == None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_job_type")]
                 else:
                     payload = {"job_type": job_type}
                     requests.request("POST", f"http://localhost:5000/info_job_type/{tracker.sender_id}", json=payload)
                     dispatcher.utter_message(f"Noted! Your job type is {job_type}.")
-                    return [FollowupAction("utter_ask_company")]
+                    return [FollowupAction("action_set_company")]
 
             elif action == "collect_company":
                 company = list(tracker.get_latest_entity_values("company"))
@@ -155,6 +158,7 @@ class ActionCollectInformation(Action):
 
                 if not company and none_company is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_company")]
                 else:
                     if company:
                         companies_text = ", ".join(company)
@@ -165,7 +169,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Got it! Your do not have a preference")
                         payload = {"company": "None"}
                         requests.request("POST", f"http://localhost:5000/info_company/{tracker.sender_id}", json=payload)
-                    return [FollowupAction("utter_ask_year_of_xp")]
+                    return [FollowupAction("action_set_year_of_xp")]
 
             elif action == "collect_year_of_xp":
                 year_of_xp = next(tracker.get_latest_entity_values("year_of_xp"), None)
@@ -173,6 +177,7 @@ class ActionCollectInformation(Action):
 
                 if year_of_xp is None and none_year_of_xp is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_year_of_xp")]
                 else:
                     if year_of_xp is None or year_of_xp == '0':
                         dispatcher.utter_message(f"Sure! You have 0 years of experience")
@@ -182,7 +187,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Sure! Your years of experience are {year_of_xp}.")
                         payload = {"years_of_exp": year_of_xp}
                         requests.request("POST", f"http://localhost:5000/info_years_of_exp/{tracker.sender_id}", json=payload)
-                    return [FollowupAction("utter_ask_education")]
+                    return [FollowupAction("action_set_education")]
 
             elif action == "collect_education":
                 education = list(tracker.get_latest_entity_values("education"))
@@ -190,6 +195,7 @@ class ActionCollectInformation(Action):
                 none_education = tracker.latest_message['intent'].get('name')
                 if education is None and none_education is None:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_education")]
                 else:
                     if education or education_level:
                         education_text = ", ".join(education)
@@ -201,7 +207,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Sure! looking for a job with no degree")
                         payload = {"education": "", "education_level": ""}
                         requests.request("POST", f"http://localhost:5000/info_education/{tracker.sender_id}", json=payload)
-                    return [FollowupAction("utter_ask_soft_skills")]
+                    return [FollowupAction("action_set_soft_skills")]
     
             elif action == "collect_soft_skills":
                 #soft_skills = list(tracker.get_latest_entity_values("soft_skills"))
@@ -217,12 +223,13 @@ class ActionCollectInformation(Action):
 
                 if not soft_skills:
                     dispatcher.utter_message("Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_soft_skills")]
                 else:
                     soft_skills_text = ", ".join(soft_skills)
                     dispatcher.utter_message(f"Nice! Your soft skills are {soft_skills_text}.")
                     payload = {"soft_skills": soft_skills}
                     requests.request("POST", f"http://localhost:5000/info_soft_skills/{tracker.sender_id}", json=payload)
-                    return [FollowupAction("utter_ask_hard_skills")]
+                    return [FollowupAction("action_set_hard_skills")]
 
             elif action == "collect_hard_skills":
                 #hard_skills = list(tracker.get_latest_entity_values("hard_skills"))
@@ -235,6 +242,7 @@ class ActionCollectInformation(Action):
 
                 if not hard_skills:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_hard_skills")]
                 else:
                     hard_skills_text = ", ".join(hard_skills)
                     dispatcher.utter_message(f"Got it! Your hard skills are {hard_skills_text}.")
@@ -307,6 +315,7 @@ class ActionSetLocation(Action):
             global action
             action = "collect_location"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_location")
+            return [FollowupAction("utter_ask_location")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -336,6 +345,7 @@ class ActionSetJobType(Action):
             global action
             action = "collect_job_type"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_job_type")
+            return [FollowupAction("utter_ask_job_type")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -351,6 +361,7 @@ class ActionSetCompany(Action):
             global action
             action = "collect_company"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_company")
+            return [FollowupAction("utter_ask_company")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -366,6 +377,7 @@ class ActionSetYearOfXp(Action):
             global action
             action = "collect_year_of_xp"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_year_of_xp")
+            return [FollowupAction("utter_ask_year_of_xp")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -381,6 +393,7 @@ class ActionSetEducation(Action):
             global action
             action = "collect_education"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_education")
+            return [FollowupAction("utter_ask_education")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -396,6 +409,7 @@ class ActionSetSoftSkills(Action):
             global action
             action = "collect_soft_skills"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_soft_skills")
+            return [FollowupAction("utter_ask_soft_skills")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -411,6 +425,7 @@ class ActionSetHardSkills(Action):
             global action
             action = "collect_hard_skills"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_hard_skills")
+            return [FollowupAction("utter_ask_hard_skills")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
