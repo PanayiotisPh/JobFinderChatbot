@@ -128,6 +128,7 @@ class ActionCollectInformation(Action):
                     requests.request("POST", url, json=payload)
                     locations_text = ", ".join(location)
                     dispatcher.utter_message(f"Understood! Your location is {locations_text}.")
+                    return [FollowupAction("utter_ask_job_type")]
 
             # elif action == "collect_salary":
             #     salary = next(tracker.get_latest_entity_values("salary"), None)
@@ -146,6 +147,7 @@ class ActionCollectInformation(Action):
                     payload = {"job_type": job_type}
                     requests.request("POST", f"http://localhost:5000/info_job_type/{tracker.sender_id}", json=payload)
                     dispatcher.utter_message(f"Noted! Your job type is {job_type}.")
+                    return [FollowupAction("utter_ask_company")]
 
             elif action == "collect_company":
                 company = list(tracker.get_latest_entity_values("company"))
@@ -163,6 +165,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Got it! Your do not have a preference")
                         payload = {"company": "None"}
                         requests.request("POST", f"http://localhost:5000/info_company/{tracker.sender_id}", json=payload)
+                    return [FollowupAction("utter_ask_year_of_xp")]
 
             elif action == "collect_year_of_xp":
                 year_of_xp = next(tracker.get_latest_entity_values("year_of_xp"), None)
@@ -179,6 +182,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Sure! Your years of experience are {year_of_xp}.")
                         payload = {"years_of_exp": year_of_xp}
                         requests.request("POST", f"http://localhost:5000/info_years_of_exp/{tracker.sender_id}", json=payload)
+                    return [FollowupAction("utter_ask_education")]
 
             elif action == "collect_education":
                 education = list(tracker.get_latest_entity_values("education"))
@@ -197,6 +201,7 @@ class ActionCollectInformation(Action):
                         dispatcher.utter_message(f"Sure! looking for a job with no degree")
                         payload = {"education": "", "education_level": ""}
                         requests.request("POST", f"http://localhost:5000/info_education/{tracker.sender_id}", json=payload)
+                    return [FollowupAction("utter_ask_soft_skills")]
     
             elif action == "collect_soft_skills":
                 #soft_skills = list(tracker.get_latest_entity_values("soft_skills"))
