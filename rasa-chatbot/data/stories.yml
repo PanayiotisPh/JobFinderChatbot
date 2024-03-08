@@ -74,4 +74,12 @@ stories:
     entities:
       - hard_skills: "Python, Machine Learning"
   - action: action_collect_information
+  - action: action_set_github_username
+  - action: utter_ask_github_username
+  - or:
+    - intent: collect_github_username
+      entities:
+        - github_username: "john_doe"
+    - intent: collect_none_github_username
+  - action: action_collect_information
   - action: action_sent_information

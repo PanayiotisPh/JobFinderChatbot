@@ -444,6 +444,18 @@ def info_hard_skills(user_id):
     client.close()
     return "Info hard skills updated successfully", 200
 
+@app.route('/info_github_username/<user_id>', methods=['POST'])
+def info_github(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$addToSet": {"info_hard_skills": data["languages"]}}
+    )
+    client.close()
+    return "Info github updated successfully", 200
+
+
 @app.route('/get_rasa/<user_id>', methods=['GET'])
 def get_rasa(user_id):
     collection, client = initialize_connection_users()

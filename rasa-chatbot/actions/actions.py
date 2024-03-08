@@ -101,6 +101,29 @@ class ActionCollectInformation(Action):
 
         return hard_skills
 
+    def get_github_user_languages(self, username):
+        repos_url = f'https://api.github.com/users/{username}/repos'
+        languages = set()
+
+        try:
+            # Fetch the list of repositories for the given user
+            repos_response = requests.get(repos_url)
+            repos_response.raise_for_status()  # Raise an exception for HTTP errors
+            repos = repos_response.json()
+
+            for repo in repos:
+                # Fetch the languages for each repository
+                languages_url = repo['languages_url']
+                languages_response = requests.get(languages_url)
+                repo_languages = languages_response.json()
+
+                # Add the languages to the set
+                languages.update(repo_languages.keys())
+        
+        except requests.RequestException as e:
+            print(f'Error fetching data from GitHub API: {e}')
+
+        return list(languages)
 
     def name(self) -> Text:
         return "action_collect_information"
@@ -248,6 +271,25 @@ class ActionCollectInformation(Action):
                     dispatcher.utter_message(f"Got it! Your hard skills are {hard_skills_text}.")
                     payload = {"hard_skills": hard_skills}
                     requests.request("POST", f"http://localhost:5000/info_hard_skills/{tracker.sender_id}", json=payload)
+                    return [FollowupAction("action_set_github_username")]
+                
+            elif action == "collect_github_username":
+                github_username = list(tracker.get_latest_entity_values("github_username"))
+                no_username = tracker.latest_message['intent'].get('name')
+                print(f"Github username: {github_username}")
+
+                if not github_username and not no_username:
+                    dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")
+                    return [FollowupAction("utter_ask_github_username")]
+                elif github_username:
+                    language = self.get_github_user_languages(github_username[0])
+                    language_text = ", ".join(language)
+                    dispatcher.utter_message(f"Understood! Your github username is {github_username[0]} and the detected languages are {language_text}.")
+                    payload = {"languages": language}
+                    requests.request("POST", f"http://localhost:5000/info_github_username/{tracker.sender_id}", json=payload)
+                    return [FollowupAction("action_sent_information")]
+                else:
+                    dispatcher.utter_message(f"Sure! You do not have a github account.")
                     return [FollowupAction("action_sent_information")]
 
 
@@ -430,3 +472,18 @@ class ActionSetHardSkills(Action):
             print(f"Exception: {str(e)}")
             return []
         
+class ActionSetGithubUsername(Action):
+    def name(self) -> Text:
+        return "action_set_github_username"
+
+    def run(
+        self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        try:
+            global action
+            action = "collect_github_username"
+            requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_github_username")
+            return [FollowupAction("utter_ask_github_username")]
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return []
