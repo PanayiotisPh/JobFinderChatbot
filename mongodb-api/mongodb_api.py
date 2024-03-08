@@ -209,7 +209,6 @@ def send_to_rasa():
         'sender': user_identity,  # Using the JWT identity as the sender
         'message': message_data,
     })
-    print(user_identity, message_data)
 
     if response.ok:
         # Return Rasa's response back to the client
@@ -310,7 +309,6 @@ def change_password():
 
     # Retrieve the user from the database
     user = collection.find_one({"_id": user_identity})  # Assuming username is unique and provided
-    print(data["oldPassword"])
 
     if user:
         # Verify the old password
