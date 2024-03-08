@@ -276,7 +276,6 @@ class ActionCollectInformation(Action):
             elif action == "collect_github_username":
                 github_username = list(tracker.get_latest_entity_values("github_username"))
                 no_username = tracker.latest_message['intent'].get('name')
-                print(f"Github username: {github_username}")
 
                 if not github_username and not no_username:
                     dispatcher.utter_message(f"Sorry, I didn't get that. Can you rephrase it?")

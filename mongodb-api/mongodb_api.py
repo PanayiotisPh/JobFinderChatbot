@@ -448,9 +448,10 @@ def info_hard_skills(user_id):
 def info_github(user_id):
     collection, client = initialize_connection_users()
     data = request.json
+    languages = data["languages"] if isinstance(data["languages"], list) else [data["languages"]]
     collection.update_one(
         {"_id": user_id},
-        {"$addToSet": {"info_hard_skills": data["languages"]}}
+        {"$addToSet": {"info_hard_skills": {"$each": languages}}}
     )
     client.close()
     return "Info github updated successfully", 200
