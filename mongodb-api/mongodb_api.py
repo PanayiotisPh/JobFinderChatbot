@@ -9,6 +9,8 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash
 from bson.objectid import ObjectId
 import datetime
+import PyPDF2
+import docx
 
 
 app = Flask(__name__)
@@ -181,7 +183,9 @@ def register():
         "info_education_level": [],
         "info_education_type": [],
         "info_soft_skills": [],
-        "info_hard_skills": []
+        "info_hard_skills": [],
+        "cv_hard_skills": [],
+        "cv_soft_skills": []
     }
     collection.insert_one(data)
 
@@ -428,6 +432,13 @@ def info_soft_skills(user_id):
         {"_id": user_id},
         {"$set": {"info_soft_skills": data["soft_skills"]}}
     )
+    user_doc = collection.find_one({"_id": user_id})
+    cv_soft_skills = user_doc.get("cv_soft_skills", [])
+    for skill in cv_soft_skills:
+        collection.update_one(
+            {"_id": user_id},
+            {"$addToSet": {"info_soft_skills": skill}}
+        )
     client.close()
     return "Info soft skills updated successfully", 200
 
@@ -439,6 +450,13 @@ def info_hard_skills(user_id):
         {"_id": user_id},
         {"$set": {"info_hard_skills": data["hard_skills"]}}
     )
+    user_doc = collection.find_one({"_id": user_id})
+    cv_hard_skills = user_doc.get("cv_hard_skills", [])
+    for skill in cv_hard_skills:
+        collection.update_one(
+            {"_id": user_id},
+            {"$addToSet": {"info_hard_skills": skill}}
+        )
     client.close()
     return "Info hard skills updated successfully", 200
 
@@ -516,8 +534,135 @@ def get_action(user_id):
     client.close()
     return jsonify(user['action']), 200
 
+def authentication():
+    url = "https://auth.emsicloud.com/connect/token"
+
+    payload = "client_id=qn2hk51fh4z9vzcj&client_secret=8YkRlh2e&grant_type=client_credentials&scope=emsi_open"
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        access_token = data['access_token']
+        return access_token
+    else:
+        print("Error:", response.status_code, response.text)
+
+def extract_skills(access_token, text):
+    url_emis = "https://emsiservices.com/skills/versions/latest/extract"
+
+    payload = json.dumps({
+        "text": f"""{ text }""",
+        "confidenceThreshold": 0.6
+    })
+    headers = {
+        'Authorization': f"Bearer {access_token}",
+        'Content-Type': "application/json"
+        }
+    response = requests.request("POST", url_emis, data=payload, headers=headers)
+
+    # Parse the JSON data
+    emis_data = json.loads(response.text)
+
+    # Create a dictionary to store skill names and their corresponding type names
+    skill_type_mapping = {}
+
+    # Extract skill names and type names
+    for item in emis_data["data"]:
+        if "skill" in item:
+            skill = item["skill"]
+            if "name" in skill:
+                skill_name = skill["name"]
+                if "type" in skill:
+                    type_name = skill["type"]["name"]
+                    skill_type_mapping[skill_name] = type_name
+
+    hard_skills = []
+    soft_skills = []
+
+    for skill_name, type_name in skill_type_mapping.items():
+        if type_name == "Common Skill":
+            soft_skills.append(skill_name)
+        else:
+            hard_skills.append(skill_name)
+    return hard_skills, soft_skills
+
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = {'pdf', 'docx'}
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+def extract_file_text(file):
+    extension = file.filename.rsplit('.', 1)[1].lower()
+    if extension == 'pdf':
+        return extract_text_from_pdf(file)
+    elif extension == 'docx':
+        return extract_text_from_docx(file)
+
+def extract_text_from_pdf(file):
+    reader = PyPDF2.PdfReader(file)
+    text = []
+    for page in reader.pages:
+        text.append(page.extract_text())
+    hard_skills, soft_skills = extract_skills(authentication(), text)
+    skills_data = {
+        'hard_skills': hard_skills,
+        'soft_skills': soft_skills
+    }
+    return skills_data
+
+def extract_text_from_docx(file):
+    doc = docx.Document(file)
+    text = [paragraph.text for paragraph in doc.paragraphs]
+    hard_skills, soft_skills = extract_skills(authentication(), text)
+    skills_data = {
+        'hard_skills': hard_skills,
+        'soft_skills': soft_skills
+    }
+    return skills_data
+
+@app.route('/analyse-text', methods=['POST'])
+@jwt_required()
+def extract_text():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    if file and allowed_file(file.filename):
+        try:
+            skills_data = extract_file_text(file)
+            user_email = get_jwt_identity()
+            collection, client = initialize_connection_users()
+            collection.update_one(
+                {"_id": user_email},
+                {"$set": {"cv_hard_skills": skills_data['hard_skills'], "cv_soft_skills": skills_data['soft_skills']}}
+            )
+            client.close()
+            return jsonify(skills_data), 200
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'error': 'Unsupported file type'}), 400
+
+@app.route('/get-cv-soft-skills', methods=['GET'])
+@jwt_required()
+def get_cv_soft_skills():
+    user_email = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_email})
+    client.close()
+    return jsonify(user['cv_soft_skills']), 200
+
+@app.route('/get-cv-hard-skills', methods=['GET'])
+@jwt_required()
+def get_cv_hard_skills():
+    user_email = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_email})
+    client.close()
+    return jsonify(user['cv_hard_skills']), 200
+
 if __name__ == '__main__':
     app.run(debug=True)
-# Close the MongoDB connection
-#get_results()
-

@@ -66,7 +66,6 @@ const Sidebar: React.FC = () => {
   };
 
   const isActiveSession = (chatId: string) => {
-    console.log(location.pathname ,location.pathname == `/chat/${chatId}`);
     return location.pathname === `/chat/${chatId}`;
   };
 
@@ -104,12 +103,19 @@ const Sidebar: React.FC = () => {
     }
   };
 
+  const isCvActive = () => {
+    return location.pathname === "/cv-details"; // Check if the current pathname is the home page
+  };
+
   return (
     <>
       <div className="sidebar">
         <div className='refresh-chat-button' onClick={() => refreshChat()}>
           Refresh Chat
         </div>
+        <Link to="/cv-details" className={`sidebar-link ${isCvActive() ? "activeSession" : ""}`}>
+          Resume/CV Details
+        </Link>
         <Link to="/" className={`sidebar-link ${isCurrentChatActive() ? "activeSession" : ""}`}>
           New Chat
         </Link>

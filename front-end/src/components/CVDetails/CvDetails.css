@@ -1,0 +1,41 @@
+.upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 2%;
+    cursor: pointer;
+    left: 0px; /* Adjust based on the actual width of your sidebar */
+    margin-bottom: 30px;
+}
+
+.lists{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    margin-top: 0%;
+    cursor: pointer;
+    left: 0px; /* Adjust based on the actual width of your sidebar */
+}
+
+.list{
+    margin-right: 10px;
+}
+
+.title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6%;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600; 
+    text-align: center;
+}
+
+@media (max-width: 1400px) {
+    .title {
+        margin-top: 14%; /* Increase margin-top for narrower screens */
+    }
+}
