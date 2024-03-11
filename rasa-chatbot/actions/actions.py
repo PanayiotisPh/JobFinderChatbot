@@ -148,6 +148,7 @@ class ActionCollectInformation(Action):
                         print(f"Exception: {str(e)}")
                     return [FollowupAction("utter_ask_location")]
                 else:
+                    location = list(dict.fromkeys([loc.capitalize() for loc in location]))
                     payload = {"location": location}
                     url = f"http://localhost:5000/info_location/{tracker.sender_id}"
                     requests.request("POST", url, json=payload)
@@ -184,6 +185,7 @@ class ActionCollectInformation(Action):
                     return [FollowupAction("utter_ask_company")]
                 else:
                     if company:
+                        company = list(dict.fromkeys([com.capitalize() for com in company]))
                         companies_text = ", ".join(company)
                         dispatcher.utter_message(f"Got it! Your company is {companies_text}.")
                         payload = {"company": company}
@@ -221,6 +223,8 @@ class ActionCollectInformation(Action):
                     return [FollowupAction("utter_ask_education")]
                 else:
                     if education or education_level:
+                        education = list(dict.fromkeys([edu.capitalize() for edu in education]))
+                        education_level = list(dict.fromkeys([edu.capitalize() for edu in education_level]))
                         education_text = ", ".join(education)
                         education_level_text = ", ".join(education_level)
                         dispatcher.utter_message(f"Great! Your education is {education_text} on level {education_level_text}.")
