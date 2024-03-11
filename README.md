@@ -1,12 +1,12 @@
 # Job Finder
 ## Requirements
-'''bash=
+```bash=
 python 3.10.0
 React.js 18.2.0
 Docker
-'''
+```
 ## Installation Guide
-'''bash=
+```bash=
 pip install -r requirements.txt
 
 cd docker
@@ -14,9 +14,9 @@ docker-compose up -d
 
 cd front-end
 npm install
-'''
+```
 ## How to run
-'''bash=
+```bash=
 1) Open docker and make sure Users and Docker containers are running
 2) Go to mongodb-api and run the .py file with python
 3) Go to scrapper and run python data_extractor_manager.py
@@ -25,4 +25,4 @@ npm install
    rasa run -m models\20240308-030246-champagne-lagoon.tar.gz --enable-api --cors "*"
 5) Open front-end folder and run
    npm start dev
-'''
+```
