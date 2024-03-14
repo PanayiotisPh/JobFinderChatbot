@@ -58,7 +58,8 @@ def upload_data(ergodotisi_filename, glassdoor_filename):
     except Exception as e:
         print(f"An error occurred: {e}")
 
-
 glassdoor_filename = glassdoorScrapper.run()
 ergodotisi_filename = ergodotisiScrapper.run()
+#ergodotisi_filename = "job_data_20240313185702.json"
+#glassdoor_filename = "job_data_20240313185501.json"
 upload_data(ergodotisi_filename, glassdoor_filename)

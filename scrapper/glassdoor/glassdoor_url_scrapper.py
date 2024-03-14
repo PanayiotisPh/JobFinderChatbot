@@ -2,10 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 import time
 import threading
@@ -28,7 +24,7 @@ states = [
     "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
     "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
 ]
-states = ["Alabama"]
+# states = ["Alabama"]
 #url_list = []
 df = pd.DataFrame(columns=['URL', 'Location', 'Company'])
 
@@ -76,7 +72,7 @@ def expand_listing(driver):
         left_column = driver.find_element(By.ID, "left-column")
     except:
         return
-    for i in range(0, 1):
+    for i in range(0, 40):
         new_scroll_top = left_column.get_property("scrollHeight")
         script = f"arguments[0].scrollTop = {new_scroll_top-1000};"
         driver.execute_script(script, left_column)
@@ -116,7 +112,7 @@ def run():
     # Limit the number of concurrent threads to 10
     start_time = time.time()
 
-    max_threads = 1
+    max_threads = 10
 
     # Use a thread pool to manage the threads
     with concurrent.futures.ThreadPoolExecutor(max_threads) as executor:

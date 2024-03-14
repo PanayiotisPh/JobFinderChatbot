@@ -20,6 +20,7 @@ def run():
 
     url_list = glassdoor_url_scrapper.run()
     file_name = glassdoor_description_scrapper.run(url_list)
+    #file_name = "job_descriptions_20240312004835.csv"
     json_filename = lightcast_skill_extractor.run(file_name)
 
     end_time = time.time()
