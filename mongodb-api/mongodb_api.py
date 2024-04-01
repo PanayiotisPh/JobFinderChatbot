@@ -124,7 +124,7 @@ def get_results():
         soft_skill_similarity = jaccard_similarity(set(data["Soft Skills"]), document_soft_skills)
         if hard_skill_similarity >= 0.2 and soft_skill_similarity >= 0.2:  # Check if the similarity is at least 50%
             similar_documents.append(entry)
-        elif hard_skill_similarity >= 0.3 and document_soft_skills == set([]):
+        elif hard_skill_similarity >= 0.2 and document_soft_skills == set([]):
             similar_documents.append(entry)
         elif soft_skill_similarity >= 0.2 and document_hard_skills == set([]):
             similar_documents.append(entry)
