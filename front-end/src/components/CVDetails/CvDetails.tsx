@@ -2,15 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './CvDetails.css';
 import { InboxOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { message, Upload, Divider, List, } from 'antd';
+import { message, Upload, Divider, List, Input, } from 'antd';
 import type { RcFile } from 'antd/lib/upload';
-
+import Search from 'antd/es/input/Search';
+import { FaGithub } from 'react-icons/fa';
 
 const { Dragger } = Upload;
 
 const CvDetails: React.FC = () => {
     const [softskills, setSoftskills] = useState<string[]>([]);
     const [hardskills, setHardskills] = useState<string[]>([]);
+    const [githubskills, setGithubskills] = useState<string[]>([]);
 
     const fetchSoftSkills = async () => {
         try {
@@ -64,6 +66,54 @@ const CvDetails: React.FC = () => {
         fetchHardSkills();
     }, []);
         
+    const fetchGithubSkills = async (username: string) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/info_github`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch github skills');
+            }
+
+            const data = await response.json();
+            setGithubskills(data); // Assuming the response has a 'githubskills' field
+        } catch (error) {
+            console.error('Error fetching github skills:', error);
+            message.error('Failed to load github skills');
+        }
+    }
+
+    const fetchGithubSkillsOnLoad = async () => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/get_github`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch github skills');
+            }
+
+            const data = await response.json();
+            setGithubskills(data);
+        } catch (error) {
+            console.error('Error fetching github skills:', error);
+            message.error('Failed to load github skills');
+        }
+    }
+
+    // useEffect hook to fetch github skills on component mount
+    useEffect(() => {
+        fetchGithubSkillsOnLoad();
+    }, []);
 
     const handleFileUpload = async (file: File) => {
         const formData = new FormData();
@@ -137,6 +187,14 @@ const CvDetails: React.FC = () => {
                     </p>
                 </Dragger>
             </div>
+            <div className='upload'>
+                <Search 
+                    placeholder="Github Username" 
+                    prefix={<FaGithub style={{ marginRight: '10px' }} />} 
+                    style={{ width: 200, margin: 10 }}
+                    onSearch={(value) => fetchGithubSkills(value)}
+                />
+            </div>
             <div className='lists'>
                 <div>
                     <div style={{fontSize: 20, fontWeight: 'bold', marginBottom: 5, marginRight: 15}}>Soft Skills Detected</div>
@@ -150,12 +208,23 @@ const CvDetails: React.FC = () => {
                     />
                 </div>
                 <div>
-                    <div style={{fontSize: 20, fontWeight: 'bold', marginBottom: 5}}>Hard Skills Detected</div>
+                    <div style={{fontSize: 20, fontWeight: 'bold', marginBottom: 5, marginRight: 15}}>Hard Skills Detected</div>
                     <List
                         size="small"
                         bordered
                         pagination={{ pageSize: 10 }}
                         dataSource={hardskills}
+                        renderItem={(item) => <List.Item>{item}</List.Item>}
+                        className='list'
+                    />
+                </div>
+                <div>
+                    <div style={{fontSize: 20, fontWeight: 'bold', marginBottom: 5}}>Languages Detected on Github</div>
+                    <List
+                        size="small"
+                        bordered
+                        pagination={{ pageSize: 10 }}
+                        dataSource={githubskills}
                         renderItem={(item) => <List.Item>{item}</List.Item>}
                         className='list'
                     />

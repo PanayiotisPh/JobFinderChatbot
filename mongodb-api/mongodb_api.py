@@ -185,7 +185,8 @@ def register():
         "info_soft_skills": [],
         "info_hard_skills": [],
         "cv_hard_skills": [],
-        "cv_soft_skills": []
+        "cv_soft_skills": [],
+        "github_hard_skills": [],
     }
     collection.insert_one(data)
 
@@ -457,21 +458,61 @@ def info_hard_skills(user_id):
             {"_id": user_id},
             {"$addToSet": {"info_hard_skills": skill}}
         )
+    github_hard_skills = user_doc.get("github_hard_skills", [])
+    for skill in github_hard_skills:
+        collection.update_one(
+            {"_id": user_id},
+            {"$addToSet": {"info_hard_skills": skill}}
+        )
     client.close()
     return "Info hard skills updated successfully", 200
 
-@app.route('/info_github_username/<user_id>', methods=['POST'])
-def info_github(user_id):
+def get_github_user_languages(username):
+        repos_url = f'https://api.github.com/users/{username}/repos'
+        languages = set()
+
+        try:
+            # Fetch the list of repositories for the given user
+            repos_response = requests.get(repos_url)
+            repos_response.raise_for_status()  # Raise an exception for HTTP errors
+            repos = repos_response.json()
+
+            for repo in repos:
+                # Fetch the languages for each repository
+                languages_url = repo['languages_url']
+                languages_response = requests.get(languages_url)
+                repo_languages = languages_response.json()
+
+                # Add the languages to the set
+                languages.update(repo_languages.keys())
+        
+        except requests.RequestException as e:
+            print(f'Error fetching data from GitHub API: {e}')
+
+        return list(languages)
+
+@app.route('/info_github', methods=['POST'])
+@jwt_required()
+def info_github():
+    user_identity = get_jwt_identity()
     collection, client = initialize_connection_users()
     data = request.json
-    languages = data["languages"] if isinstance(data["languages"], list) else [data["languages"]]
+    github = get_github_user_languages(data["username"])
     collection.update_one(
-        {"_id": user_id},
-        {"$addToSet": {"info_hard_skills": {"$each": languages}}}
+        {"_id": user_identity},
+        {"$set": {"github_hard_skills": {"$each": github}}}
     )
     client.close()
-    return "Info github updated successfully", 200
+    return github, 200
 
+@app.route('/get_github', methods=['GET'])
+@jwt_required()
+def get_github():
+    user_identity = get_jwt_identity()
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_identity})
+    client.close()
+    return jsonify(user['github_hard_skills']), 200
 
 @app.route('/get_rasa/<user_id>', methods=['GET'])
 def get_rasa(user_id):

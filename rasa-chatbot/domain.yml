@@ -19,9 +19,7 @@ intents:
   - collect_none_year_of_xp
   - collect_none_company
   - collect_none_education
-  - collect_github_username
-  - collect_none_github_username
-
+  
 entities:
   - location
  # - salary
@@ -32,7 +30,6 @@ entities:
   - education_level
   - soft_skills
   - hard_skills
-  - github_username
 
 responses:
   utter_fallback:
@@ -114,11 +111,6 @@ responses:
   utter_please_rephrase:
   - text: "Sorry, I can't handle that request."
 
-  utter_ask_github_username:
-  - text: "To give you a more personalized experience, I can analyze your GitHub repositories for additional hard skills. Could you please share your GitHub username (Give only your username)?"
-  - text: "Got any cool projects on GitHub? Share your username, and let's see what awesome skills you've got hidden in your repos! (Give only your username)"
-  - text: "If you're comfortable sharing your GitHub username, I can look into your projects for a deeper skill analysis. Don't worry, your privacy and data are respected here. (Give only your username)"
-
 actions:
   - utter_fallback
   - utter_greet
@@ -134,6 +126,4 @@ actions:
   - action_set_soft_skills
   - action_set_hard_skills
   - action_sent_information
-  - action_set_github_username
-
   
