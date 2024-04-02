@@ -22,7 +22,7 @@ npm install
 3) Go to scrapper and run python data_extractor_manager.py
 4) Once finished go to rasa-chatbot and in 2 seperate terminals run
    rasa run actions
-   rasa run -m models\20240402-012837-hot-bias.tar.gz --enable-api --cors "*"
+   rasa run -m models\20240402-212431-blue-marimba.tar.gz --enable-api --cors "*"
 5) Open front-end folder and run
    npm start dev
 ```

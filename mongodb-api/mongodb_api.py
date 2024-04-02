@@ -198,7 +198,7 @@ def register():
         "cv_hard_skills": [],
         "cv_soft_skills": [],
         "github_hard_skills": [],
-        "github_location": [],
+        "github_location": "None",
     }
     collection.insert_one(data)
 
@@ -488,7 +488,7 @@ def get_github_user_languages(username):
             repos_response = requests.get(repos_url)
             repos_response.raise_for_status()  # Raise an exception for HTTP errors
             repos = repos_response.json()
-
+            print(repos)
             for repo in repos:
                 # Fetch the languages for each repository
                 languages_url = repo['languages_url']
@@ -497,15 +497,25 @@ def get_github_user_languages(username):
 
                 # Add the languages to the set
                 languages.update(repo_languages.keys())
-            
-            location = repos.get('location', "")
-            split_chars = [',', ' ', '-']
-            words = [word.strip() for char in split_chars for word in location.split(char)]
-            words = list(filter(None, words))
-            location_detected = "None"
-            for word in words:
-                if word in states:
-                    location_detected = word
+
+            url = f'https://api.github.com/users/{username}'
+            headers = {'Accept': 'application/vnd.github.v3+json'}
+            try:
+                response = requests.get(url, headers=headers)
+                response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+                user_data = response.json()
+                location = user_data.get('location')
+                split_chars = [',', ' ', '-']
+                words = [word.strip() for char in split_chars for word in location.split(char)]
+                words = list(filter(None, words))
+                location_detected = "None"
+                for word in words:
+                    if word in states:
+                        location_detected = word
+            except requests.exceptions.RequestException as e:
+                print(f"Error fetching user data: {e}")
+                location_detected = "None"
+
                 
         except requests.RequestException as e:
             print(f'Error fetching data from GitHub API: {e}')
@@ -730,6 +740,24 @@ def get_cv_hard_skills():
     user = collection.find_one({"_id": user_email})
     client.close()
     return jsonify(user['cv_hard_skills']), 200
+
+@app.route('/get-github-location/<user_id>', methods=['GET'])
+def get_github_location(user_id):
+    collection, client = initialize_connection_users()
+    user = collection.find_one({"_id": user_id})
+    client.close()
+    return jsonify(user['github_location']), 200
+
+@app.route('/set_github_location/<user_id>', methods=['POST'])
+def set_github_location(user_id):
+    collection, client = initialize_connection_users()
+    data = request.json
+    collection.update_one(
+        {"_id": user_id},
+        {"$set": {"github_location": data["location"]}}
+    )
+    client.close()
+    return "Github location updated successfully", 200
 
 
 if __name__ == '__main__':

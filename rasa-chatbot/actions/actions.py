@@ -124,6 +124,9 @@ class ActionCollectInformation(Action):
                         print(f"Exception: {str(e)}")
                     return [FollowupAction("utter_ask_location")]
                 else:
+                    response = requests.request("GET", f"http://localhost:5000/get-github-location/{tracker.sender_id}")
+                    data = response.json()
+                    location.append(data)
                     location = list(dict.fromkeys([loc.capitalize() for loc in location]))
                     payload = {"location": location}
                     url = f"http://localhost:5000/info_location/{tracker.sender_id}"
@@ -317,7 +320,7 @@ class ActionSetLocation(Action):
             global action
             action = "collect_location"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_location")
-            return [FollowupAction("utter_ask_location")]
+            return [FollowupAction("action_check_location")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []
@@ -428,6 +431,45 @@ class ActionSetHardSkills(Action):
             action = "collect_hard_skills"
             requests.request("POST", f"http://localhost:5000/action/{tracker.sender_id}/collect_hard_skills")
             return [FollowupAction("utter_ask_hard_skills")]
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return []
+        
+class ActionCheckLocation(Action):
+    def name(self) -> Text:
+        return "action_check_location"
+    
+    def run(
+        self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        try:
+            response = requests.request("GET", f"http://localhost:5000/get-github-location/{tracker.sender_id}")
+            if response.status_code == 200:
+                data = response.json()
+                if data == "None":
+                    return [FollowupAction("utter_ask_location")]
+                else:
+                    dispatcher.utter_message(f"From your github I found this location, {data}. Do you want to add more locations?")
+        except Exception as e:
+            print(f"Exception: {str(e)}")
+            return []
+
+class ActionCheckJobType(Action):
+    def name(self) -> Text:
+        return "action_deny_location"
+    
+    def run(
+        self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        try:
+            response = requests.request("GET", f"http://localhost:5000/get-github-location/{tracker.sender_id}")
+            if response.status_code == 200:
+                data = response.json()
+                payload = {"location": data}
+                url = f"http://localhost:5000/info_location/{tracker.sender_id}"
+                requests.request("POST", url, json=payload)
+                dispatcher.utter_message(f"Understood! Your location is {data}.")
+                return [FollowupAction("action_set_job_type")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []

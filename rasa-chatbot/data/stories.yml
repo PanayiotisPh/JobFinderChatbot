@@ -21,11 +21,20 @@ stories:
   - intent: nlu_fallback
   - action: utter_fallback
 
+- story: location_question
+  steps:
+  - checkpoint: handle_location
+  - intent: collect_deny
+  - action: action_deny_location
+
 - story: Collect User Information
   steps:
   - checkpoint: handle_answer
   - intent: collect_affirm
   - action: action_set_location
+  - action: action_check_location
+  - checkpoint: handle_location
+  - intent: collect_affirm   
   - action: utter_ask_location
   - intent: collect_location
     entities:

@@ -23,9 +23,9 @@ pipeline:
     use_lookup_tables: true
   - name: ResponseSelector
     epochs: 100
-  - name: FallbackClassifier
-    threshold: 0.3
-    ambiguity_threshold: 0.1
+  # - name: FallbackClassifier
+  #   threshold: 0.8
+  #   ambiguity_threshold: 0.1
 
 policies:
   - name: MemoizationPolicy

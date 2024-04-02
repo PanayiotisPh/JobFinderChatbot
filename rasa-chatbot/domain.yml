@@ -126,4 +126,6 @@ actions:
   - action_set_soft_skills
   - action_set_hard_skills
   - action_sent_information
+  - action_check_location
+  - action_deny_location
   
