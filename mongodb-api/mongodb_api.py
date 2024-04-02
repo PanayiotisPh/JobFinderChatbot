@@ -19,6 +19,17 @@ secret_key = secrets.token_urlsafe(32)
 app.config['JWT_SECRET_KEY'] = "BSOXl7U6DC8BA8M22QLE55d6Y-8S0TSFlRIge5_inuQ"
 jwt = JWTManager(app)
 
+states = [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+    "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+    "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+    "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire",
+    "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
+    "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
+    "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
+    "Larnaca", "Limassol", "Nicosia", "Paphos", "Famagusta"
+]
+
 def jaccard_similarity(set1, set2):
     intersection = len(set1 & set2)
     union = len(set1 | set2)
@@ -187,6 +198,7 @@ def register():
         "cv_hard_skills": [],
         "cv_soft_skills": [],
         "github_hard_skills": [],
+        "github_location": [],
     }
     collection.insert_one(data)
 
@@ -485,11 +497,21 @@ def get_github_user_languages(username):
 
                 # Add the languages to the set
                 languages.update(repo_languages.keys())
-        
+            
+            location = repos.get('location', "")
+            split_chars = [',', ' ', '-']
+            words = [word.strip() for char in split_chars for word in location.split(char)]
+            words = list(filter(None, words))
+            location_detected = "None"
+            for word in words:
+                if word in states:
+                    location_detected = word
+                
         except requests.RequestException as e:
             print(f'Error fetching data from GitHub API: {e}')
+            return [], "None"
 
-        return list(languages)
+        return list(languages), location_detected
 
 @app.route('/info_github', methods=['POST'])
 @jwt_required()
@@ -497,10 +519,14 @@ def info_github():
     user_identity = get_jwt_identity()
     collection, client = initialize_connection_users()
     data = request.json
-    github = get_github_user_languages(data["username"])
+    github, location = get_github_user_languages(data["username"])
     collection.update_one(
         {"_id": user_identity},
-        {"$set": {"github_hard_skills": {"$each": github}}}
+        {"$set": {"github_hard_skills":  github}}
+    )
+    collection.update_one(
+        {"_id": user_identity},
+        {"$set": {"github_location":  location}}
     )
     client.close()
     return github, 200
@@ -704,6 +730,7 @@ def get_cv_hard_skills():
     user = collection.find_one({"_id": user_email})
     client.close()
     return jsonify(user['cv_hard_skills']), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
