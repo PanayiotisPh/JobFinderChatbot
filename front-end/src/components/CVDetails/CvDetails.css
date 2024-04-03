@@ -19,6 +19,17 @@
     left: 0px; /* Adjust based on the actual width of your sidebar */
 }
 
+@media (max-width: 700px) {
+    .lists {
+        margin-top: 40%;
+        margin-bottom: 40%;
+        flex-direction: column; /* Change to column layout for narrower screens */
+        align-items: center; /* Center items vertically */
+        justify-content: center; /* Center items horizontally */
+        height: 100vh; /* Make sure the container takes up the full height of the viewport */
+    }
+}
+
 .list{
     margin-right: 10px;
 }
@@ -27,7 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 6%;
+    margin-top: 7%;
     margin-bottom: 10px;
     font-size: 16px;
     font-weight: 600; 
@@ -36,6 +47,9 @@
 
 @media (max-width: 1400px) {
     .title {
-        margin-top: 14%; /* Increase margin-top for narrower screens */
+        margin-top: 25%; /* Increase margin-top for narrower screens */
     }
 }
+
+
+  

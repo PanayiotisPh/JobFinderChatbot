@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import { Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import { Drawer, Dropdown, Layout, Menu, MenuProps, Space } from 'antd';
+import { DownOutlined, SearchOutlined  } from '@ant-design/icons';
 import "react-chat-elements/dist/main.css"
 import Sidebar from "../Sidebar/Sidebar";
 import { useNavigate, Link, Outlet } from 'react-router-dom';
@@ -56,16 +56,45 @@ const Home: React.FC = () => {
     }
   ];
 
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 600); 
+  const [collapsed, setCollapsed] = useState(true);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const toggleSidebar = () => {
+    setCollapsed(!collapsed);
+  };
+
+  const toggleDrawer = () => {
+    setDrawerVisible(!drawerVisible);
+  };
 
   return (
     <Layout>
-      <Sider width={200} className="site-layout-background">
-        <Sidebar />
-      </Sider>
-      <Layout style={{ paddingLeft: '200px' }}>
+      {isSmallScreen ? (
+        <Sider
+            collapsible
+            collapsed={collapsed}
+            onCollapse={toggleSidebar}
+            breakpoint="lg"
+            collapsedWidth="0"
+            width={200}
+            className="site-layout-background"
+            style={{ position: 'fixed', left: 0, zIndex: 1 }}
+          >
+          <Sidebar />
+        </Sider>
+      ): (
+        <Sider width={200} className="site-layout-background">
+          <Sidebar />
+        </Sider>
+      )}
+      <Layout style={{ marginLeft: collapsed ? 0 : 200 }}>
         <Header className='header'>
-          <div className='header-content'>
-            <img src="/images/logo.png" alt='logo' className='logo-img-home' />
+        <div className='header-content'>
+            {isSmallScreen ? (
+              <SearchOutlined style={{ fontSize: '25px', color: '#fff', marginRight: '30px', marginTop: '10px' }} />
+            ) : (
+              <img src="/images/logo.png" alt='logo' className='logo-img-home' />
+            )}
             <div className='text'>Job Finder</div>
           </div>
           <Dropdown menu={{ items }} trigger={['click']}>

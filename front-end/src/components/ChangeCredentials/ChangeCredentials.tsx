@@ -160,11 +160,11 @@ const ChangeCredentials: React.FC = () => {
                 name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                style={{ maxWidth: 600 }}
                 initialValues={{ remember: true }}
                 onFinish={onFinishPassword}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                style={{marginTop: "120px"}}
                 className='change-credentials-form'
             >
                 <Form.Item<FieldTypePassword>
@@ -206,7 +206,7 @@ const ChangeCredentials: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className='button-style'>
                     Change Password
                 </Button>
                 </Form.Item>
@@ -216,12 +216,11 @@ const ChangeCredentials: React.FC = () => {
                 name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                style={{ maxWidth: 600 }}
                 initialValues={{ remember: true }}
                 onFinish={onFinishUsername}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
-                className='change-credentials-form-username'
+                className='change-credentials-form'
             >
                 <Form.Item<FieldTypeUsername>
                 label="Old Username"
@@ -262,7 +261,7 @@ const ChangeCredentials: React.FC = () => {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" className='button-style'>
                     Change Username
                 </Button>
                 </Form.Item>
