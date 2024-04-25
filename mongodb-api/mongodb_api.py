@@ -51,28 +51,6 @@ def initialize_connection_jobs():
     collection = db["jobs"]
     return collection , client
 
-@app.route('/users-data', methods=['GET'])
-def get_all_users_data():
-    collection, client = initialize_connection_users()
-    data = list(collection.find({}))  # Query to fetch all documents
-    client.close()
-    return jsonify(data)
-
-@app.route('/post-users', methods=['POST'])
-def post_users():
-    data = request.json
-    collection, client = initialize_connection_users()
-    collection.insert_many(data)
-    client.close()
-    return "Data inserted successfully"
-
-
-@app.route('/data', methods=['GET'])
-def get_all_data():
-    collection, client = initialize_connection_jobs()
-    data = list(collection.find({}))  # Query to fetch all documents
-    client.close()
-    return jsonify(data)
 
 @app.route('/post-data', methods=['POST'])
 def post_data():
@@ -81,7 +59,6 @@ def post_data():
     collection.insert_many(data)
     client.close()
     return "Data inserted successfully"
-
 
 @app.route('/get-results', methods=['POST'])
 def get_results():
