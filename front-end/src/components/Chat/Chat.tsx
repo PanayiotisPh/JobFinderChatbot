@@ -16,7 +16,7 @@ const Chat: React.FC = () => {
   const navigate = useNavigate();
 
   const [messages, setMessages] = useState<Message[]>([
-    { text: "Say 'hi' to start the conversation!!!", user: 'bot' },
+    { text: "Say 'hi' to start the conversation!!! Don't forget to upload your CV and GitHub at 'Resume/CV Details' for more personalized results", user: 'bot' },
   ]);
   const [input, setInput] = useState<string>('');
 
