@@ -22,6 +22,7 @@ const CvDetails: React.FC = () => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning': 'true',
                 }, 
             });
 
@@ -48,6 +49,7 @@ const CvDetails: React.FC = () => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning': 'true',
                 }, 
             });
 
@@ -75,6 +77,7 @@ const CvDetails: React.FC = () => {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true',
                 },
                 body: JSON.stringify({ username }),
             });
@@ -97,6 +100,7 @@ const CvDetails: React.FC = () => {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning': 'true',
                 },
             });
 
@@ -127,6 +131,7 @@ const CvDetails: React.FC = () => {
                 body: formData,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'ngrok-skip-browser-warning': 'true',
                   },            
                 });
 

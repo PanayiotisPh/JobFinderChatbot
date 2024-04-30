@@ -20,6 +20,7 @@ const ChatHistory: React.FC = () => {
         const response = await fetch(`${url}/api/chat/${chatId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'ngrok-skip-browser-warning': 'true',
           },
         });
         if (!response.ok) {

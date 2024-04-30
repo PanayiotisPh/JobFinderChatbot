@@ -21,6 +21,7 @@ const Sidebar: React.FC = () => {
       const response = await fetch(`${url}/api/sessions`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'ngrok-skip-browser-warning': 'true',
         },
       });
       if (response.ok) {
@@ -45,6 +46,7 @@ const Sidebar: React.FC = () => {
     const response = await fetch(`${url}/api/sessions`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'ngrok-skip-browser-warning': 'true',
       },
     });
     if (response.ok) {
@@ -80,6 +82,7 @@ const Sidebar: React.FC = () => {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'ngrok-skip-browser-warning': 'true',
       },
     });
     if (response.ok) {
@@ -95,6 +98,7 @@ const Sidebar: React.FC = () => {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        'ngrok-skip-browser-warning': 'true',
       },
     });
     if (response.ok) {

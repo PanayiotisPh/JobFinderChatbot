@@ -29,6 +29,7 @@ const Chat: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Include the JWT in the request
+          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({
           message: userMessage,
@@ -90,6 +91,7 @@ const Chat: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Include the JWT in the request
+          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({
           messages: conversation,

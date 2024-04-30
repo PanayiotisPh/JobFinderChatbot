@@ -27,6 +27,7 @@ const ChangeCredentials: React.FC = () => {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ensure the token is correctly retrieved
+                'ngrok-skip-browser-warning': 'true',
             },
             body: JSON.stringify({
                 oldPassword: values.oldPassword,
@@ -92,6 +93,7 @@ const ChangeCredentials: React.FC = () => {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('token')}`, // Ensure the token is correctly retrieved
+                'ngrok-skip-browser-warning': 'true',
             },
             body: JSON.stringify({
                 oldUsername: values.oldUsername,

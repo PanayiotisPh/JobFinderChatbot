@@ -55,6 +55,7 @@ const Login: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': 'true',
         },
         body: JSON.stringify({ email, password }),
       });
@@ -79,6 +80,7 @@ const Login: React.FC = () => {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'ngrok-skip-browser-warning': 'true',
         },
       });
       navigate('/');
