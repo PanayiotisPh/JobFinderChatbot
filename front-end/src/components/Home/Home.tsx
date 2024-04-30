@@ -5,6 +5,7 @@ import { DownOutlined, SearchOutlined  } from '@ant-design/icons';
 import "react-chat-elements/dist/main.css"
 import Sidebar from "../Sidebar/Sidebar";
 import { useNavigate, Link, Outlet } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 
 const Home: React.FC = () => {
@@ -122,6 +123,7 @@ const Home: React.FC = () => {
         </Header>
         <Content>
           <Outlet />
+          <Analytics />
         </Content>
         <Footer style={{ textAlign: 'center' }}>Job Finder ©2024 Created by Panagiotis Fotiadis</Footer>
       </Layout>
