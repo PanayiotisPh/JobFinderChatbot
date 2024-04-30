@@ -13,10 +13,12 @@ const CvDetails: React.FC = () => {
     const [softskills, setSoftskills] = useState<string[]>([]);
     const [hardskills, setHardskills] = useState<string[]>([]);
     const [githubskills, setGithubskills] = useState<string[]>([]);
+    const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+
 
     const fetchSoftSkills = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/get-cv-soft-skills', {
+            const response = await fetch(`${url}/get-cv-soft-skills`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -42,7 +44,7 @@ const CvDetails: React.FC = () => {
 
     const fetchHardSkills = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5000/get-cv-hard-skills', {
+            const response = await fetch(`${url}/get-cv-hard-skills`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -68,7 +70,7 @@ const CvDetails: React.FC = () => {
         
     const fetchGithubSkills = async (username: string) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/info_github`, {
+            const response = await fetch(`${url}/info_github`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -91,7 +93,7 @@ const CvDetails: React.FC = () => {
 
     const fetchGithubSkillsOnLoad = async () => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/get_github`, {
+            const response = await fetch(`${url}/get_github`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -120,7 +122,7 @@ const CvDetails: React.FC = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/analyse-text', {
+            const response = await fetch(`${url}/analyse-text`, {
                 method: 'POST',
                 body: formData,
                 headers: {

@@ -11,6 +11,8 @@ const Home: React.FC = () => {
   const { Header, Content, Footer, Sider } = Layout;
   const navigate = useNavigate();
   const [username, setUsername] = useState('User');
+  const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+
 
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -20,7 +22,7 @@ const Home: React.FC = () => {
     const fetchUsername = async () => {
       const token = localStorage.getItem('token'); // Assuming you store the JWT token in local storage
       try {
-        const response = await fetch('http://127.0.0.1:5000/get-username', {
+        const response = await fetch(`${url}/get-username`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -31,6 +33,8 @@ const Home: React.FC = () => {
         }
         const data = await response.json();
         setUsername(capitalizeFirstLetter(data));
+        console.log(data);
+        console.log(username);
       } catch (error) {
         console.error("Could not fetch username:", error);
       }

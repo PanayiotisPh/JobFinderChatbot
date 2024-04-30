@@ -12,11 +12,12 @@ const ChatHistory: React.FC = () => {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const { chatId } = useParams<{ chatId: string }>(); // Use useParams to get the session ID from the URL
+  const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
 
   useEffect(() => {
     const fetchChatHistory = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/api/chat/${chatId}`, {
+        const response = await fetch(`${url}/api/chat/${chatId}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },

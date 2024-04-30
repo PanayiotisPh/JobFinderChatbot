@@ -10,6 +10,8 @@ interface Message {
 const Chat: React.FC = () => {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+
 
   const [messages, setMessages] = useState<Message[]>([
     { text: "Say 'hi' to start the conversation!!!", user: 'bot' },
@@ -19,7 +21,7 @@ const Chat: React.FC = () => {
   const sendToRasa = async (userMessage: string): Promise<Message[]> => {
     try {
       // Your Flask API endpoint for forwarding messages to Rasa
-      const apiEndpoint = 'http://127.0.0.1:5000/api/messages';
+      const apiEndpoint = `${url}/api/messages`;
       const token = localStorage.getItem('token'); // Retrieve JWT from local storage
   
       const response = await fetch(apiEndpoint, {
@@ -80,7 +82,7 @@ const Chat: React.FC = () => {
   
   const saveConversation = async (conversation: Message[]) => {
     try {
-      const apiEndpoint = 'http://127.0.0.1:5000/save-chat';
+      const apiEndpoint = `${url}/save-chat`;
       const token = localStorage.getItem('token'); // Retrieve JWT from local storage
   
       await fetch(apiEndpoint, {

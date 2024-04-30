@@ -10,6 +10,8 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [username, setUsername] = useState('');
   const navigate = useNavigate();
+  const [url, setUrl] = useState(' https://beetle-upward-yak.ngrok-free.app');
+
 
     // Construct the user data
   const userData = {
@@ -35,7 +37,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/register', { // Change URL to your backend endpoint
+      const response = await fetch(`${url}/register`, { // Change URL to your backend endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -14,10 +14,11 @@ const Sidebar: React.FC = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [url, setUrl] = useState(' https://beetle-upward-yak.ngrok-free.app');
   
   useEffect(() => {
     const fetchSessions = async () => {
-      const response = await fetch('http://127.0.0.1:5000/api/sessions', {
+      const response = await fetch(`${url}/api/sessions`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
@@ -41,7 +42,7 @@ const Sidebar: React.FC = () => {
   }, []);
 
   const fetchSessions = async () => {
-    const response = await fetch('http://127.0.0.1:5000/api/sessions', {
+    const response = await fetch(`${url}/api/sessions`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
       },
@@ -75,7 +76,7 @@ const Sidebar: React.FC = () => {
 
   const handleDeleteSession = async (chatId: string) => {
     // API call to delete the session
-    const response = await fetch(`http://127.0.0.1:5000/api/chat/${chatId}`, {
+    const response = await fetch(`${url}/api/chat/${chatId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -90,7 +91,7 @@ const Sidebar: React.FC = () => {
   };
 
   const refreshChat = async () => {
-    const response = await fetch(`http://127.0.0.1:5000/reset_rasa`, {
+    const response = await fetch(`${url}/reset_rasa`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,

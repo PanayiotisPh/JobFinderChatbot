@@ -12,6 +12,8 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+
 
   useEffect(() => {
     // Check if we navigated here after a successful registration
@@ -49,7 +51,7 @@ const Login: React.FC = () => {
     setLoading(true);
   
     try {
-      const response = await fetch('http://127.0.0.1:5000/login', {
+      const response = await fetch(`${url}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +75,7 @@ const Login: React.FC = () => {
   
       const { access_token } = await response.json();
       localStorage.setItem('token', access_token);
-      await fetch(`http://127.0.0.1:5000/reset_rasa`, {
+      await fetch(`${url}/reset_rasa`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,

@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 const ChangeCredentials: React.FC = () => {
 
     const navigate = useNavigate();
+    const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+
 
 
     interface PasswordFormValues {
@@ -20,7 +22,7 @@ const ChangeCredentials: React.FC = () => {
             // Make the API call
             console.log('Success:', values);
 
-            const response = await fetch('http://127.0.0.1:5000/api/change-password', {
+            const response = await fetch(`${url}/api/change-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -85,7 +87,7 @@ const ChangeCredentials: React.FC = () => {
             // Make the API call
             console.log('Success:', values);
 
-            const response = await fetch('http://127.0.0.1:5000/api/change-username', {
+            const response = await fetch(`${url}/api/change-username`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
