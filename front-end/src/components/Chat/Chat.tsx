@@ -1,6 +1,8 @@
 // Chatbot.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 interface Message {
   text: string;
@@ -11,12 +13,19 @@ const Chat: React.FC = () => {
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
-
+  const navigate = useNavigate();
 
   const [messages, setMessages] = useState<Message[]>([
     { text: "Say 'hi' to start the conversation!!!", user: 'bot' },
   ]);
   const [input, setInput] = useState<string>('');
+
+  useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+          navigate('/login');
+      }
+  }, []);
 
   const sendToRasa = async (userMessage: string): Promise<Message[]> => {
     try {

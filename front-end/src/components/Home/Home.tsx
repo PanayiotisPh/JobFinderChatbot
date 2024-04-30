@@ -13,6 +13,13 @@ const Home: React.FC = () => {
   const [username, setUsername] = useState('User');
   const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        navigate('/login');
+    }
+  }, []);
+
 
   const capitalizeFirstLetter = (string: string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);

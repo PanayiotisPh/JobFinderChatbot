@@ -15,6 +15,13 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [url, setUrl] = useState(' https://beetle-upward-yak.ngrok-free.app');
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        navigate('/login');
+    }
+  }, []);
   
   useEffect(() => {
     const fetchSessions = async () => {

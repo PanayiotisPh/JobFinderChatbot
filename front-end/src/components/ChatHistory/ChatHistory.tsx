@@ -1,7 +1,7 @@
 // ChatHistory.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatHistory.css';
-import { useParams } from 'react-router-dom'; // Import useParams
+import { useParams, useNavigate } from 'react-router-dom'; // Import useParams
 
 interface Message {
   text: string;
@@ -13,6 +13,14 @@ const ChatHistory: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const { chatId } = useParams<{ chatId: string }>(); // Use useParams to get the session ID from the URL
   const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        navigate('/login');
+    }
+  }, []);
 
   useEffect(() => {
     const fetchChatHistory = async () => {

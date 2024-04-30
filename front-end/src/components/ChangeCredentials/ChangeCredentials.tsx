@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './ChangeCredentials.css';
 import { Button, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -156,6 +156,13 @@ const ChangeCredentials: React.FC = () => {
         oldUsername?: string;
         newUsername?: string;
     };
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, []);
 
     return(
         <>

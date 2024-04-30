@@ -6,6 +6,8 @@ import { message, Upload, Divider, List, Input, } from 'antd';
 import type { RcFile } from 'antd/lib/upload';
 import Search from 'antd/es/input/Search';
 import { FaGithub } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 const { Dragger } = Upload;
 
@@ -14,6 +16,14 @@ const CvDetails: React.FC = () => {
     const [hardskills, setHardskills] = useState<string[]>([]);
     const [githubskills, setGithubskills] = useState<string[]>([]);
     const [url, setUrl] = useState('https://beetle-upward-yak.ngrok-free.app');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, []);
 
 
     const fetchSoftSkills = async () => {
