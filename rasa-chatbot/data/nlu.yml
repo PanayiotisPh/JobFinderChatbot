@@ -17,6 +17,7 @@ nlu:
     - of course
     - that sounds good
     - correct
+    - lets go
 
 - intent: collect_deny
   examples: |
@@ -310,7 +311,6 @@ nlu:
     - no company preference
     - whatever company is available
     - no specific company
-    - no
 
 - intent: collect_none_year_of_xp
   examples: |

@@ -105,11 +105,6 @@ responses:
   - text: "Shall we continue? A 'yes' from you will get us going!"
   - text: "If you're set to go, simply type 'yes' to confirm."
 
-  utter_submit:
-  - text: "Success"
-
-  utter_please_rephrase:
-  - text: "Sorry, I can't handle that request."
 
 actions:
   - utter_fallback

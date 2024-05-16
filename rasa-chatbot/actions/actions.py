@@ -116,8 +116,9 @@ class ActionCollectInformation(Action):
 
             if action == "collect_location":
                 location = list(tracker.get_latest_entity_values("location"))
-                if not location:
-                    print("No location found")
+                deny_location = tracker.latest_message['intent'].get('name')
+                print(deny_location)
+                if not location and not deny_location == "collect_deny":
                     try:
                         dispatcher.utter_message(text = "Sorry, I didn't get that. Can you rephrase it?")
                     except Exception as e:
@@ -449,7 +450,8 @@ class ActionCheckLocation(Action):
                 if data == "None":
                     return [FollowupAction("utter_ask_location")]
                 else:
-                    dispatcher.utter_message(f"From your github I found this location, {data}. Do you want to add more locations?")
+                    dispatcher.utter_message(f"From your github I found this location, {data}. If you dont want to add another location answer 'no'.")
+                return [FollowupAction("utter_ask_location")]
         except Exception as e:
             print(f"Exception: {str(e)}")
             return []

@@ -21,24 +21,17 @@ stories:
   - intent: nlu_fallback
   - action: utter_fallback
 
-- story: location_question
-  steps:
-  - checkpoint: handle_location
-  - intent: collect_deny
-  - action: action_deny_location
-
 - story: Collect User Information
   steps:
   - checkpoint: handle_answer
   - intent: collect_affirm
   - action: action_set_location
-  - action: action_check_location
-  - checkpoint: handle_location
-  - intent: collect_affirm   
   - action: utter_ask_location
-  - intent: collect_location
-    entities:
-      - location: "New York"
+  - or:
+    - intent: collect_location
+      entities:
+        - location: "New York"
+    - intent: collect_deny
   - action: action_collect_information
   - action: action_set_job_type
   - action: utter_ask_job_type
@@ -53,6 +46,7 @@ stories:
       entities:
         - company: "Google"
     - intent: collect_none_company
+    - intent: collect_deny
   - action: action_collect_information
   - action: action_set_year_of_xp
   - action: utter_ask_year_of_xp
@@ -70,6 +64,7 @@ stories:
         - education_level: "Bachelor's Degree"
         - education: "cs"
     - intent: collect_none_education
+    - intent: collect_deny
   - action: action_collect_information
   - action: action_set_soft_skills
   - action: utter_ask_soft_skills

@@ -17,15 +17,16 @@ pipeline:
     entity_recognition: true
     intent_classification: true
     entity_classification: true
+    constrain_similarities: True
   - name: EntitySynonymMapper
   - name: RegexEntityExtractor
     case_sensitive: false
     use_lookup_tables: true
   - name: ResponseSelector
     epochs: 100
-  # - name: FallbackClassifier
-  #   threshold: 0.8
-  #   ambiguity_threshold: 0.1
+  - name: FallbackClassifier
+    threshold: 0.4
+    ambiguity_threshold: 0.3
 
 policies:
   - name: MemoizationPolicy
